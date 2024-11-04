@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+package request;
+
+message C2SRegisterRequest {
+    string id = 1;
+    string password = 2;
+    string email = 3;
+}

@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package request;
+
+message C2STowerPurchaseRequest {
+    float x = 1;
+    float y = 2;
+}
