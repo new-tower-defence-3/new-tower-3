@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package request;
-
-message C2SMonsterDeathNotification {
-    int32 monsterId = 1;
-}

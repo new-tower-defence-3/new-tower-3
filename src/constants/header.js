@@ -1,12 +1,11 @@
-export const PACKET_TYPE_LENGTH = 2;
+export const PACKET_TYPE = 2;
 export const VERSION_LENGTH = 1;
-export const VERSION = 5;
 export const SEQUENCE = 4;
 export const PAYLOAD_LENGTH = 4;
-export const TOTAL_LENGTH = 12;
-// PACKET_TYPE_LENGTH + VERSION_LENGTH + VERSION + SEQUENCE + PAYLOAD_LENGTH;
 
-export const PACKET_TYPE = {
+export const TOTAL_LENGTH = PACKET_TYPE + VERSION_LENGTH + SEQUENCE + PAYLOAD_LENGTH;
+
+export const PacketType = {
   // 회원가입 및 로그인
   REGISTER_REQUEST: 1,
   REGISTER_RESPONSE: 2,

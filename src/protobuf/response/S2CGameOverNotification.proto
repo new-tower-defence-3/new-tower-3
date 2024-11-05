@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package response;
-
-message S2CGameOverNotification {
-    bool isWin = 1; // 받는 플레이어가 승리했으면 true
-}

@@ -1,49 +1,46 @@
-import { CLIENT_VERSION } from '../../constants/env.js';
-import { getProtoTypeNameByHandlerId } from '../../handler/index.js';
+// packetParser.js
 import { getProtoMessages } from '../../init/loadProto.js';
 
+/**
+ * 패킷 데이터를 파싱하여 핸들러 ID와 페이로드를 추출합니다.
+ * @param {Buffer} data - 수신된 패킷 데이터
+ * @returns {Object} 핸들러 ID와 페이로드
+ */
 export const packetParser = (data) => {
   const protoMessages = getProtoMessages();
 
-  const commonPacket = protoMessages.common.Packet;
+  const gamePacket = protoMessages.GamePacket;
+
+  if (!gamePacket) {
+    throw new Error('GamePacket 메시지를 찾을 수 없습니다.');
+  }
+
   let packet;
-
   try {
-    packet = commonPacket.decode(data);
+    packet = gamePacket.decode(data);
+    console.log('Decoded GamePacket:', packet);
   } catch (e) {
-    console.error(e);
+    console.error('GamePacket 디코딩 오류:', e);
+    throw e;
   }
 
-  const handlerId = packet.handlerId;
-  const userId = packet.userId;
-  const clientVersion = packet.version;
-
-  if (clientVersion !== CLIENT_VERSION) {
-    throw Error();
+  // 'payload' oneof 필드 객체 가져오기
+  const payloadOneOf = packet.$type.oneofs.payload;
+  if (!payloadOneOf) {
+    throw new Error('payload oneof 필드를 찾을 수 없습니다.');
   }
 
-  const protoTypeName = getProtoTypeNameByHandlerId(handlerId);
-  if (!protoTypeName) {
-    throw Error();
+  // 'oneof' 배열 내에서 활성화된 필드 찾기
+  const activeField = payloadOneOf.oneof.find(field => packet[field] !== undefined);
+  if (!activeField) {
+    throw new Error('Payload가 비어 있습니다.');
   }
 
-  const [namespace, typeName] = protoTypeName.split('.');
-  const payloadType = protoMessages[namespace][typeName];
-  let payload;
-
-  try {
-    payload = payloadType.decode(packet.payload);
-  } catch (e) {
-    console.error(e);
+  console.log(activeField);
+  const messageData = packet[activeField];
+  if (!messageData) {
+    throw new Error(`Payload에 ${activeField} 데이터가 없습니다.`);
   }
 
-  const expectedFields = Object.keys(payloadType.fields);
-  const actualFields = Object.keys(payload);
-  const missingFields = expectedFields.filter((field) => !actualFields.includes(field));
-
-  if (missingFields > 0) {
-    throw Error();
-  }
-
-  return { handlerId, userId, payload };
+  return messageData;
 };

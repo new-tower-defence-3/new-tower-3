@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package response;
-
-message S2CEnemyMonsterDeathNotification {
-    int32 monsterId = 1;
-}

@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package request;
-
-message C2STowerAttackRequest {
-    int32 towerId = 1;
-    int32 monsterId = 2;
-}

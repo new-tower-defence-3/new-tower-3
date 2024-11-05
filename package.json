@@ -1,7 +1,7 @@
 {
-  "name": "tower_defence_re",
+  "name": "multiplaygame",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
     "dev": "nodemon src/server.js",
     "migrate": "node src/db/migration/createSchema.js"
@@ -19,6 +19,7 @@
     "dotenv": "^16.4.5",
     "lodash": "^4.17.21",
     "mysql2": "^3.11.3",
-    "protobufjs": "^7.4.0"
+    "protobufjs": "^7.4.0",
+    "uuid": "^11.0.2"
   }
 }

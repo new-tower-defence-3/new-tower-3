@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package response;
-
-message S2CRegisterResponse {
-    bool success = 1;
-    string message = 2;
-    GlobalFailCode failCode = 3;
-}
