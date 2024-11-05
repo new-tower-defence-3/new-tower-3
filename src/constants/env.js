@@ -1,9 +1,10 @@
-import dotenv from "dotenv";
+import dotenv from 'dotenv';
 
 dotenv.config();
 
-export const HOST = process.env.HOST || "localhost";
-export const PORT = process.env.PORT || "5555";
+export const HOST = process.env.HOST || 'localhost';
+export const PORT = process.env.PORT || '5555';
+export const CLIENT_VERSION = process.env.CLIENT_VERSION;
 
 export const DB_NAME = process.env.DB_NAME;
 export const DB_USER = process.env.DB_USER;

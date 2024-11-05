@@ -1,4 +1,6 @@
-export const PacketType = {
+export const RESPONSE_SUCCESS_CODE = 0;
+
+export const HANDLER_IDS = {
   // 회원가입 및 로그인
   REGISTER_REQUEST: 1,
   REGISTER_RESPONSE: 2,
