@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package response;
-
-message S2CTowerPurchaseResponse {
-    int32 towerId = 1;
-}

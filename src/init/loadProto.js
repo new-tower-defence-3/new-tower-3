@@ -1,14 +1,19 @@
+// loadProto.js
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import protobuf from 'protobufjs';
-import { packetNames } from '../protobuf/packetNames.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// 최상위 경로
 const protoDir = path.join(__dirname, '../protobuf');
 
+/**
+ * 지정된 디렉토리에서 모든 .proto 파일을 재귀적으로 찾습니다.
+ * @param {string} dir - 탐색할 디렉토리 경로
+ * @param {string[]} fileList - 누적된 파일 경로 리스트
+ * @returns {string[]} 모든 .proto 파일의 경로 리스트
+ */
 const getAllProtoFiles = (dir, fileList = []) => {
   const files = fs.readdirSync(dir);
 
@@ -28,42 +33,46 @@ const getAllProtoFiles = (dir, fileList = []) => {
 const protoFiles = getAllProtoFiles(protoDir);
 
 const protoMessages = {};
-const protoEnums = {}; // 추가된 부분
 
+/**
+ * 모든 .proto 파일을 로드하고, protoMessages 객체에 모든 타입을 매핑합니다.
+ */
 export const loadProtos = async () => {
   try {
     const root = new protobuf.Root();
 
+    // 모든 .proto 파일을 비동기적으로 로드
     await Promise.all(protoFiles.map((file) => root.load(file)));
 
-    for (const [packageName, types] of Object.entries(packetNames)) {
-      protoMessages[packageName] = {};
-      protoEnums[packageName] = {};
-      for (const [type, typeName] of Object.entries(types)) {
-        // 타입이 메시지인지 열거형인지 확인
-        const currentObject = root.lookup(typeName);
-        if (currentObject instanceof protobuf.Type) {
-          // 메시지 타입인 경우
-          protoMessages[packageName][type] = currentObject;
-        } else if (currentObject instanceof protobuf.Enum) {
-          // 열거형 타입인 경우
-          protoEnums[packageName][type] = currentObject;
-        } else {
-          console.warn(`알 수 없는 타입: ${typeName}`);
+    // 모든 타입을 해석
+    root.resolveAll();
+
+    /**
+     * 재귀적으로 모든 네임스페이스를 탐색하여 타입을 protoMessages에 추가합니다.
+     * @param {protobuf.Namespace} namespace - 현재 탐색 중인 네임스페이스
+     */
+    const processNamespace = (namespace) => {
+      for (const [typeName, type] of Object.entries(namespace.nested)) {
+        if (type instanceof protobuf.Type || type instanceof protobuf.Enum) {
+          protoMessages[typeName] = type;
+        } else if (type instanceof protobuf.Namespace) {
+          processNamespace(type);
         }
       }
-    }
+    };
 
-    console.log('Protobuf 파일이 로드되었습니다.');
-  } catch (error) {
-    console.error('Protobuf 파일 로드 중 오류가 발생했습니다: ', error);
+    processNamespace(root);
+
+    console.log('Protobuf 파일이 모두 로드되었습니다.');
+  } catch (e) {
+    console.error('Protobuf 파일 로드 중 오류가 발생하였습니다.', e);
   }
 };
 
+/**
+ * 로드된 모든 Protobuf 메시지 타입을 반환합니다.
+ * @returns {Object} 로드된 모든 메시지 타입
+ */
 export const getProtoMessages = () => {
   return { ...protoMessages };
-};
-
-export const getProtoEnums = () => {
-  return { ...protoEnums };
 };
