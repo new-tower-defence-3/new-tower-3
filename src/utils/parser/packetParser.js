@@ -25,13 +25,12 @@ export const packetParser = (data) => {
     throw new Error('payload oneof 필드를 찾을 수 없습니다.');
   }
 
-  // 'oneof' 배열 내에서 활성화된 필드 찾기
-  const activeField = payloadOneOf.oneof.find(field => packet[field] !== undefined);
+  const activeField = payloadOneOf.oneof.find(field => Object.prototype.hasOwnProperty.call(packet, field));
+
   if (!activeField) {
     throw new Error('Payload가 비어 있습니다.');
   }
 
-  console.log(activeField);
   const messageData = packet[activeField];
   if (!messageData) {
     throw new Error(`Payload에 ${activeField} 데이터가 없습니다.`);
