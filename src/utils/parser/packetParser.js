@@ -1,11 +1,6 @@
 // packetParser.js
 import { getProtoMessages } from '../../init/loadProto.js';
 
-/**
- * 패킷 데이터를 파싱하여 핸들러 ID와 페이로드를 추출합니다.
- * @param {Buffer} data - 수신된 패킷 데이터
- * @returns {Object} 핸들러 ID와 페이로드
- */
 export const packetParser = (data) => {
   const protoMessages = getProtoMessages();
 
