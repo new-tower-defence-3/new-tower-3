@@ -12,9 +12,9 @@ import { USER_QUERIES } from './user.queries.js';
 //   await dbPool.query(USER_QUERIES.UPDATE_USER_LOGIN, [deviceId]);
 // };
 
-// export const updateUserLocation = async (x, y, deviceId) => {
-//   await dbPool.query(USER_QUERIES.UPDATE_USER_LOCATION, [x, y, deviceId]);
-// };
+export const updateUserLocation = async (x, y, deviceId) => {
+  await dbPool.query(USER_QUERIES.UPDATE_USER_LOCATION, [x, y, deviceId]);
+};
 
 export const findUserId = async (id) => {
   const [rows] = await dbPool.query(USER_QUERIES.FIND_USER_BY_ID, [id]);
