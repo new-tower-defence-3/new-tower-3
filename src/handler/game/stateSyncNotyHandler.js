@@ -1,4 +1,5 @@
-﻿import {handleError} from "../../utils/error/errorHandler.js";
+﻿import { handleError } from '../../utils/error/errorHandler.js';
+import { createResponse } from '../../utils/response/createResponse.js';
 
 /**
  * 패킷 구조
@@ -12,16 +13,33 @@
  * }
  */
 
-const stateSyncNotyHandler = ({socket, payload}) => {
-    try {
-        const {userGold, baseHp, monsterLevel, score, towers, monsters} = payload;
-        
-        
-        
-    }
-    catch (e) {
-        handleError(socket, e);
-    }
+/**
+ * 클라이언트 수신 구조
+ * towers와 monsters는 사용되지 않는다.
+ * public void StateSyncNotification(GamePacket gamePacket)
+ * {
+ *     var response = gamePacket.StateSyncNotification;
+ *     GameManager.instance.level = response.MonsterLevel;
+ *     GameManager.instance.homeHp1 = response.BaseHp;
+ *     GameManager.instance.score = response.Score;
+ *     GameManager.instance.gold = response.UserGold;
+ * }
+ */
+
+const stateSyncNotyHandler = ({ socket, payload }) => {
+  try {
+    const { userGold, baseHp, monsterLevel, score, towers, monsters } = payload;
+    const data = { userGold, baseHp, monsterLevel, score, towers, monsters };
+
+    // 세션 유효성 검증
+
+    // 해당 세션의 유저 유효성 검증
+
+    const response = createResponse(7, data);
+    socket.write(response);
+  } catch (e) {
+    handleError(socket, e);
+  }
 };
 
-export default stateSyncNotyHandler
+export default stateSyncNotyHandler;

@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_BRANCH_BY_REPOSITORY">
+      <map>
+        <entry key="$PROJECT_DIR$" value="dev" />
+      </map>
+    </option>
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;Ayumudayo&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/new-tower-defence-3/new-tower-3.git&quot;,
+    &quot;accountId&quot;: &quot;8559be13-99b9-48f6-bfcb-3f0739a3b706&quot;
+  }
+}</component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="mock://G:/Camp/MainCamp/5 주특기 플러스/Project/Team/Server/package-lock.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://G:/Camp/MainCamp/5 주특기 플러스/Project/Team/Server/package-lock.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="mock://G:/Camp/MainCamp/5 주특기 플러스/Project/Team/Server/package-lock.json" root0="FORCE_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/package-lock.json" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MetaFilesCheckinStateConfiguration" checkMetaFiles="true" />
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 2
+}</component>
+  <component name="ProjectId" id="2oPM0eNmby3b0TFRosMhEapLQJ8" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "git-widget-placeholder": "feature-7-STATE__SYNC__NOTY-2",
+    "ignore.virus.scanning.warn.message": "true",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "ts.external.directory.path": "C:\\Users\\MARU\\AppData\\Local\\JetBrains\\Installations\\Rider233\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="" />
+      <created>1730766537331</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1730766537331</updated>
+      <workItem from="1730766539440" duration="7925000" />
+      <workItem from="1730781168711" duration="2450000" />
+      <workItem from="1730794111528" duration="899000" />
+      <workItem from="1730795062841" duration="14801000" />
+      <workItem from="1730852103808" duration="14212000" />
+    </task>
+    <task id="LOCAL-00001" summary="🙈 gitfix: .gitignore 수정">
+      <option name="closed" value="true" />
+      <created>1730794785145</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1730794785145</updated>
+    </task>
+    <task id="LOCAL-00002" summary="🩹 fix: 불필요한 주석 제거">
+      <option name="closed" value="true" />
+      <created>1730796398492</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1730796398492</updated>
+    </task>
+    <task id="LOCAL-00003" summary="✨ update: 핸들러 구조 잡기">
+      <option name="closed" value="true" />
+      <created>1730796440751</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1730796440751</updated>
+    </task>
+    <task id="LOCAL-00004" summary="🩹 fix: 패킷 필드 체크 수정">
+      <option name="closed" value="true" />
+      <created>1730810852872</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1730810852872</updated>
+    </task>
+    <task id="LOCAL-00005" summary="🩹 fix: 변경된 패킷 정의에 맞게 수정">
+      <option name="closed" value="true" />
+      <created>1730810997531</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1730810997531</updated>
+    </task>
+    <task id="LOCAL-00006" summary="🩹 fix: createResponse.js 동작 수정">
+      <option name="closed" value="true" />
+      <created>1730858380515</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1730858380515</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="UnityCheckinConfiguration" checkUnsavedScenes="true" />
+  <component name="UnityProjectConfiguration" hasMinimizedUI="false" />
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="CLEAR_INITIAL_COMMIT_MESSAGE" value="true" />
+    <MESSAGE value=" gitfix: .gitignore 수정" />
+    <MESSAGE value=" fix: 불필요한 주석 제거" />
+    <MESSAGE value="✨ update: 핸들러 구조 잡기" />
+    <MESSAGE value=" fix: 패킷 필드 체크 수정" />
+    <MESSAGE value=" fix: 변경된 패킷 정의에 맞게 수정" />
+    <MESSAGE value=" fix: createResponse.js 동작 수정" />
+    <option name="LAST_COMMIT_MESSAGE" value=" fix: createResponse.js 동작 수정" />
+  </component>
+</project>

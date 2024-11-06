@@ -1,0 +1,561 @@
+Index: .prettierrc
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>{\r\n\"singleQuote\": true,\r\n\"semi\": true,\r\n\"useTabs\": false,\r\n\"tabWidth\": 2,\r\n\"trailingComma\": \"all\",\r\n\"printWidth\": 100,\r\n\"arrowParens\": \"always\",\r\n\"orderedImports\": true,\r\n\"bracketSpacing\": true,\r\n\"jsxBracketSameLine\": false\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/.prettierrc b/.prettierrc
+--- a/.prettierrc	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/.prettierrc	(date 1730878639364)
+@@ -1,12 +1,12 @@
+ {
+-"singleQuote": true,
+-"semi": true,
+-"useTabs": false,
+-"tabWidth": 2,
+-"trailingComma": "all",
+-"printWidth": 100,
+-"arrowParens": "always",
+-"orderedImports": true,
+-"bracketSpacing": true,
+-"jsxBracketSameLine": false
++  "singleQuote": true,
++  "semi": true,
++  "useTabs": false,
++  "tabWidth": 2,
++  "trailingComma": "all",
++  "printWidth": 100,
++  "arrowParens": "always",
++  "orderedImports": true,
++  "bracketSpacing": true,
++  "jsxBracketSameLine": false
+ }
+\ No newline at end of file
+Index: src/handler/user/initial.handler.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import User from \"../../classes/models/user.class.js\";\r\nimport { HANDLER_IDS, RESPONSE_SUCCESS_CODE } from \"../../constants/handlerids.js\";\r\nimport { createUser, findUserByDeviceId, updateUserLogin } from \"../../db/user/user.db.js\";\r\nimport { getGameSession } from \"../../sessions/game.session.js\";\r\nimport { addUser } from \"../../sessions/user.session.js\";\r\nimport { createResponse } from \"../../utils/response/createResponse.js\";\r\n\r\nconst initialHandler = async ({ socket, userId, payload }) => {\r\n    try {\r\n        const { deviceId, latency, playerId } = payload;\r\n\r\n        let user = await findUserByDeviceId(deviceId)\r\n        const coords = {\r\n            x: 0,\r\n            y: 0\r\n        }\r\n\r\n        if (!user) {\r\n            await createUser(deviceId);\r\n        } else {\r\n            await updateUserLogin(deviceId);\r\n            coords.x = user.xCoord;\r\n            coords.y = user.yCoord;\r\n        }\r\n\r\n        user = new User(socket, deviceId, playerId, latency, coords)\r\n\r\n        addUser(user);\r\n        const gameSession = getGameSession();\r\n        gameSession.addUser(user)\r\n\r\n        const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_SUCCESS_CODE, {\r\n            userId: deviceId,\r\n            x: user.x,\r\n            y: user.y,\r\n        })\r\n\r\n        socket.write(initialResponse);\r\n    } catch (e) {\r\n        console.error(e)\r\n    }\r\n};\r\n\r\nexport default initialHandler
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/handler/user/initial.handler.js b/src/handler/user/initial.handler.js
+--- a/src/handler/user/initial.handler.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/handler/user/initial.handler.js	(date 1730878730698)
+@@ -1,44 +1,44 @@
+-import User from "../../classes/models/user.class.js";
+-import { HANDLER_IDS, RESPONSE_SUCCESS_CODE } from "../../constants/handlerids.js";
+-import { createUser, findUserByDeviceId, updateUserLogin } from "../../db/user/user.db.js";
+-import { getGameSession } from "../../sessions/game.session.js";
+-import { addUser } from "../../sessions/user.session.js";
+-import { createResponse } from "../../utils/response/createResponse.js";
++import User from '../../classes/models/user.class.js';
++import { HANDLER_IDS, RESPONSE_SUCCESS_CODE } from '../../constants/handlerids.js';
++import { createUser, findUserByDeviceId, updateUserLogin } from '../../db/user/user.db.js';
++import { getGameSession } from '../../sessions/game.session.js';
++import { addUser } from '../../sessions/user.session.js';
++import { createResponse } from '../../utils/response/createResponse.js';
+ 
+ const initialHandler = async ({ socket, userId, payload }) => {
+-    try {
+-        const { deviceId, latency, playerId } = payload;
++  try {
++    const { deviceId, latency, playerId } = payload;
+ 
+-        let user = await findUserByDeviceId(deviceId)
+-        const coords = {
+-            x: 0,
+-            y: 0
+-        }
++    let user = await findUserByDeviceId(deviceId);
++    const coords = {
++      x: 0,
++      y: 0,
++    };
+ 
+-        if (!user) {
+-            await createUser(deviceId);
+-        } else {
+-            await updateUserLogin(deviceId);
+-            coords.x = user.xCoord;
+-            coords.y = user.yCoord;
+-        }
++    if (!user) {
++      await createUser(deviceId);
++    } else {
++      await updateUserLogin(deviceId);
++      coords.x = user.xCoord;
++      coords.y = user.yCoord;
++    }
+ 
+-        user = new User(socket, deviceId, playerId, latency, coords)
++    user = new User(socket, deviceId, playerId, latency, coords);
+ 
+-        addUser(user);
+-        const gameSession = getGameSession();
+-        gameSession.addUser(user)
++    addUser(user);
++    const gameSession = getGameSession();
++    gameSession.addUser(user);
+ 
+-        const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_SUCCESS_CODE, {
+-            userId: deviceId,
+-            x: user.x,
+-            y: user.y,
+-        })
++    const initialResponse = createResponse(HANDLER_IDS.INITIAL, RESPONSE_SUCCESS_CODE, {
++      userId: deviceId,
++      x: user.x,
++      y: user.y,
++    });
+ 
+-        socket.write(initialResponse);
+-    } catch (e) {
+-        console.error(e)
+-    }
++    socket.write(initialResponse);
++  } catch (e) {
++    console.error(e);
++  }
+ };
+ 
+-export default initialHandler
+\ No newline at end of file
++export default initialHandler;
+\ No newline at end of file
+Index: src/events/onConnection.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { onData } from \"./onData.js\"\r\nimport { onEnd } from \"./onEnd.js\"\r\nimport { onError } from \"./onError.js\"\r\n\r\nexport const onConnection = (socket) => {\r\n    console.log(`Client connected from: ${socket.remoteAddress}:${socket.remotePort}`)\r\n\r\n    socket.buffer = Buffer.alloc(0);\r\n\r\n    socket.on('data', onData(socket));\r\n    socket.on('end', onEnd(socket));\r\n    socket.on('error', onError(socket));\r\n};\r\n\r\n\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/events/onConnection.js b/src/events/onConnection.js
+--- a/src/events/onConnection.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/events/onConnection.js	(date 1730878722575)
+@@ -1,15 +1,15 @@
+-import { onData } from "./onData.js"
+-import { onEnd } from "./onEnd.js"
+-import { onError } from "./onError.js"
++import { onData } from './onData.js';
++import { onEnd } from './onEnd.js';
++import { onError } from './onError.js';
+ 
+ export const onConnection = (socket) => {
+-    console.log(`Client connected from: ${socket.remoteAddress}:${socket.remotePort}`)
++  console.log(`Client connected from: ${socket.remoteAddress}:${socket.remotePort}`);
+ 
+-    socket.buffer = Buffer.alloc(0);
++  socket.buffer = Buffer.alloc(0);
+ 
+-    socket.on('data', onData(socket));
+-    socket.on('end', onEnd(socket));
+-    socket.on('error', onError(socket));
++  socket.on('data', onData(socket));
++  socket.on('end', onEnd(socket));
++  socket.on('error', onError(socket));
+ };
+ 
+ 
+Index: src/handler/game/stateSyncNotyHandler.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import {handleError} from \"../../utils/error/errorHandler.js\";\r\n\r\n/**\r\n * 패킷 구조\r\n * message S2CStateSyncNotification {\r\n *     int32 userGold = 1;\r\n *     int32 baseHp = 2;\r\n *     int32 monsterLevel = 3;\r\n *     int32 score = 4;\r\n *     repeated TowerData towers = 5;\r\n *     repeated MonsterData monsters = 6;\r\n * }\r\n */\r\n\r\nconst stateSyncNotyHandler = ({socket, payload}) => {\r\n    try {\r\n        const {userGold, baseHp, monsterLevel, score, towers, monsters} = payload;\r\n        \r\n        \r\n        \r\n    }\r\n    catch (e) {\r\n        handleError(socket, e);\r\n    }\r\n};\r\n\r\nexport default stateSyncNotyHandler
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/handler/game/stateSyncNotyHandler.js b/src/handler/game/stateSyncNotyHandler.js
+--- a/src/handler/game/stateSyncNotyHandler.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/handler/game/stateSyncNotyHandler.js	(date 1730878680291)
+@@ -1,4 +1,5 @@
+-import {handleError} from "../../utils/error/errorHandler.js";
++import { handleError } from '../../utils/error/errorHandler.js';
++import { createResponse } from '../../utils/response/createResponse.js';
+ 
+ /**
+  * 패킷 구조
+@@ -12,16 +13,33 @@
+  * }
+  */
+ 
+-const stateSyncNotyHandler = ({socket, payload}) => {
+-    try {
+-        const {userGold, baseHp, monsterLevel, score, towers, monsters} = payload;
+-        
+-        
+-        
+-    }
+-    catch (e) {
+-        handleError(socket, e);
+-    }
++/**
++ * 클라이언트 수신 구조
++ * towers와 monsters는 사용되지 않는다.
++ * public void StateSyncNotification(GamePacket gamePacket)
++ * {
++ *     var response = gamePacket.StateSyncNotification;
++ *     GameManager.instance.level = response.MonsterLevel;
++ *     GameManager.instance.homeHp1 = response.BaseHp;
++ *     GameManager.instance.score = response.Score;
++ *     GameManager.instance.gold = response.UserGold;
++ * }
++ */
++
++const stateSyncNotyHandler = ({ socket, payload }) => {
++  try {
++    const { userGold, baseHp, monsterLevel, score, towers, monsters } = payload;
++    const data = { userGold, baseHp, monsterLevel, score, towers, monsters };
++
++    // 세션 유효성 검증
++
++    // 해당 세션의 유저 유효성 검증
++
++    const response = createResponse(7, data);
++    socket.write(response);
++  } catch (e) {
++    handleError(socket, e);
++  }
+ };
+ 
+-export default stateSyncNotyHandler
+\ No newline at end of file
++export default stateSyncNotyHandler;
+\ No newline at end of file
+Index: src/db/sql/user_db.sql
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>CREATE TABLE IF NOT EXISTS users\r\n(\r\n    id INT PRIMARY KEY AUTO_INCREMENT,\r\n    userName VARCHAR(50),\r\n    email VARCHAR(255) NOT NULL,\r\n    password VARCHAR(255) NOT NULL,\r\n    highScore INT DEFAULT(0),\r\n    createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,\r\n    updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP\r\n);
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/db/sql/user_db.sql b/src/db/sql/user_db.sql
+--- a/src/db/sql/user_db.sql	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/db/sql/user_db.sql	(date 1730878699604)
+@@ -1,10 +1,27 @@
+ CREATE TABLE IF NOT EXISTS users
+ (
+-    id INT PRIMARY KEY AUTO_INCREMENT,
+-    userName VARCHAR(50),
+-    email VARCHAR(255) NOT NULL,
+-    password VARCHAR(255) NOT NULL,
+-    highScore INT DEFAULT(0),
++    id
++    INT
++    PRIMARY
++    KEY
++    AUTO_INCREMENT,
++    userName
++    VARCHAR
++(
++    50
++),
++    email VARCHAR
++(
++    255
++) NOT NULL,
++    password VARCHAR
++(
++    255
++) NOT NULL,
++    highScore INT DEFAULT
++(
++    0
++),
+     createAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+     updateAt TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+-);
+\ No newline at end of file
++    );
+\ No newline at end of file
+Index: src/sessions/game.session.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import Game from \"../classes/models/game.class.js\"\r\nimport { gameSessions } from \"./sessions.js\";\r\n\r\nexport const addGameSession = (id) => {\r\n    const session = new Game(id);\r\n    gameSessions.push(session);\r\n    return session;\r\n}\r\n\r\nexport const removeGameSession = () => {\r\n    delete gameSessions[0];\r\n}\r\n\r\nexport const getGameSession = () => {\r\n    return gameSessions[0];\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sessions/game.session.js b/src/sessions/game.session.js
+--- a/src/sessions/game.session.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/sessions/game.session.js	(date 1730878686028)
+@@ -1,16 +1,16 @@
+-import Game from "../classes/models/game.class.js"
+-import { gameSessions } from "./sessions.js";
++import Game from '../classes/models/game.class.js';
++import { gameSessions } from './sessions.js';
+ 
+ export const addGameSession = (id) => {
+-    const session = new Game(id);
+-    gameSessions.push(session);
+-    return session;
+-}
++  const session = new Game(id);
++  gameSessions.push(session);
++  return session;
++};
+ 
+ export const removeGameSession = () => {
+-    delete gameSessions[0];
+-}
++  delete gameSessions[0];
++};
+ 
+ export const getGameSession = () => {
+-    return gameSessions[0];
+-}
+\ No newline at end of file
++  return gameSessions[0];
++};
+\ No newline at end of file
+Index: src/sessions/sessions.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>export const gameSessions = [];\r\n\r\nexport const userSessions = []
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sessions/sessions.js b/src/sessions/sessions.js
+--- a/src/sessions/sessions.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/sessions/sessions.js	(date 1730878705647)
+@@ -1,3 +1,3 @@
+ export const gameSessions = [];
+ 
+-export const userSessions = []
+\ No newline at end of file
++export const userSessions = [];
+\ No newline at end of file
+Index: src/init/index.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import { addGameSession } from \"../sessions/game.session.js\";\r\nimport { loadProtos } from \"./loadProto.js\";\r\nimport { v4 as uuidv4 } from 'uuid';\r\nimport testConnection from \"../utils/db/testConnection.js\";\r\n\r\nconst initServer = async () => {\r\n    try {\r\n        await loadProtos();\r\n        const gameId = uuidv4();\r\n        const gameSessions = addGameSession(gameId);\r\n        await testConnection();\r\n    } catch (e) {\r\n        console.error(e);\r\n        process.exit(1);\r\n    }\r\n\r\n}\r\n\r\nexport default initServer;
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/init/index.js b/src/init/index.js
+--- a/src/init/index.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/init/index.js	(date 1730878732567)
+@@ -1,19 +1,19 @@
+-import { addGameSession } from "../sessions/game.session.js";
+-import { loadProtos } from "./loadProto.js";
++import { addGameSession } from '../sessions/game.session.js';
++import { loadProtos } from './loadProto.js';
+ import { v4 as uuidv4 } from 'uuid';
+-import testConnection from "../utils/db/testConnection.js";
++import testConnection from '../utils/db/testConnection.js';
+ 
+ const initServer = async () => {
+-    try {
+-        await loadProtos();
+-        const gameId = uuidv4();
+-        const gameSessions = addGameSession(gameId);
+-        await testConnection();
+-    } catch (e) {
+-        console.error(e);
+-        process.exit(1);
+-    }
++  try {
++    await loadProtos();
++    const gameId = uuidv4();
++    const gameSessions = addGameSession(gameId);
++    await testConnection();
++  } catch (e) {
++    console.error(e);
++    process.exit(1);
++  }
+ 
+-}
++};
+ 
+ export default initServer;
+\ No newline at end of file
+Index: src/sessions/user.session.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import User from '../classes/models/user.class.js';\r\nimport { updateUserLocation } from '../db/user/user.db.js';\r\nimport { userSessions } from './sessions.js';\r\n\r\nexport const addUser = async (user) => {\r\n  userSessions.push(user);\r\n  return user;\r\n};\r\n\r\nexport const removeUser = async (socket) => {\r\n  const index = userSessions.findIndex((user) => user.socket === socket);\r\n  if (index != -1) {\r\n    return userSessions.splice(index, 1)[0];\r\n  }\r\n};\r\n\r\nexport const getAllUser = async () => {\r\n  return userSessions;\r\n};\r\n\r\nexport const findUser = async (username) => {\r\n  const findSession = userSessions.find((a) => a.username === username);\r\n  return findSession;\r\n};\r\n\r\nexport const findMatchingUser = async () => {\r\n  const findSession = userSessions.filter((user) => user.isMatching === true);\r\n  return findSession;\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/sessions/user.session.js b/src/sessions/user.session.js
+--- a/src/sessions/user.session.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/sessions/user.session.js	(date 1730878673549)
+@@ -1,5 +1,3 @@
+-import User from '../classes/models/user.class.js';
+-import { updateUserLocation } from '../db/user/user.db.js';
+ import { userSessions } from './sessions.js';
+ 
+ export const addUser = async (user) => {
+Index: src/utils/dateFomatter.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>export function formatDate(date) {\r\n    const year = date.getFullYear();\r\n    const month = String(date.getMonth() + 1).padStart(2, '0');\r\n    const day = String(date.getDate()).padStart(2, '0');\r\n    const hours = String(date.getHours()).padStart(2, '0');\r\n    const minutes = String(date.getMinutes()).padStart(2, '0');\r\n    const seconds = String(date.getSeconds()).padStart(2, '0');\r\n\r\n    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;\r\n}
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/utils/dateFomatter.js b/src/utils/dateFomatter.js
+--- a/src/utils/dateFomatter.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/utils/dateFomatter.js	(date 1730878678357)
+@@ -1,10 +1,10 @@
+ export function formatDate(date) {
+-    const year = date.getFullYear();
+-    const month = String(date.getMonth() + 1).padStart(2, '0');
+-    const day = String(date.getDate()).padStart(2, '0');
+-    const hours = String(date.getHours()).padStart(2, '0');
+-    const minutes = String(date.getMinutes()).padStart(2, '0');
+-    const seconds = String(date.getSeconds()).padStart(2, '0');
++  const year = date.getFullYear();
++  const month = String(date.getMonth() + 1).padStart(2, '0');
++  const day = String(date.getDate()).padStart(2, '0');
++  const hours = String(date.getHours()).padStart(2, '0');
++  const minutes = String(date.getMinutes()).padStart(2, '0');
++  const seconds = String(date.getSeconds()).padStart(2, '0');
+ 
+-    return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
++  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+ }
+\ No newline at end of file
+Index: src/constants/header.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// constants/header.js\r\n\r\nexport const PACKET_TYPE_LENGTH = 2;\r\nexport const VERSION_LENGTH = 1;\r\nexport const SEQUENCE_LENGTH = 4;\r\nexport const PAYLOAD_LENGTH = 4;\r\n\r\nexport const TOTAL_LENGTH = PACKET_TYPE_LENGTH + VERSION_LENGTH + SEQUENCE_LENGTH + PAYLOAD_LENGTH;\r\n\r\nexport const VERSION = \"1.0.0\";\r\n\r\nexport const GlobalFailCode = {\r\n  NONE: 0,\r\n  UNKNOWN_ERROR: 1,\r\n  INVALID_REQUEST: 2,\r\n  AUTHENTICATION_FAILED: 3,\r\n}\r\n\r\nexport const PacketType = {\r\n  // 회원가입 및 로그인\r\n  REGISTER_REQUEST: 1,\r\n  REGISTER_RESPONSE: 2,\r\n  LOGIN_REQUEST: 3,\r\n  LOGIN_RESPONSE: 4,\r\n\r\n  // 매칭\r\n  MATCH_REQUEST: 5,\r\n  MATCH_START_NOTIFICATION: 6,\r\n\r\n  // 상태 동기화\r\n  STATE_SYNC_NOTIFICATION: 7,\r\n\r\n  // 타워 구입 및 배치\r\n  TOWER_PURCHASE_REQUEST: 8,\r\n  TOWER_PURCHASE_RESPONSE: 9,\r\n  ADD_ENEMY_TOWER_NOTIFICATION: 10,\r\n\r\n  // 몬스터 생성\r\n  SPAWN_MONSTER_REQUEST: 11,\r\n  SPAWN_MONSTER_RESPONSE: 12,\r\n  SPAWN_ENEMY_MONSTER_NOTIFICATION: 13,\r\n\r\n  // 전투 액션\r\n  TOWER_ATTACK_REQUEST: 14,\r\n  ENEMY_TOWER_ATTACK_NOTIFICATION: 15,\r\n  MONSTER_ATTACK_BASE_REQUEST: 16,\r\n\r\n  // 기지 HP 업데이트 및 게임 오버\r\n  UPDATE_BASE_HP_NOTIFICATION: 17,\r\n  GAME_OVER_NOTIFICATION: 18,\r\n\r\n  // 게임 종료\r\n  GAME_END_REQUEST: 19,\r\n\r\n  // 몬스터 사망 통지\r\n  MONSTER_DEATH_NOTIFICATION: 20,\r\n  ENEMY_MONSTER_DEATH_NOTIFICATION: 21,\r\n};
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/constants/header.js b/src/constants/header.js
+--- a/src/constants/header.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/constants/header.js	(date 1730878737462)
+@@ -7,14 +7,14 @@
+ 
+ export const TOTAL_LENGTH = PACKET_TYPE_LENGTH + VERSION_LENGTH + SEQUENCE_LENGTH + PAYLOAD_LENGTH;
+ 
+-export const VERSION = "1.0.0";
++export const VERSION = '1.0.0';
+ 
+ export const GlobalFailCode = {
+   NONE: 0,
+   UNKNOWN_ERROR: 1,
+   INVALID_REQUEST: 2,
+   AUTHENTICATION_FAILED: 3,
+-}
++};
+ 
+ export const PacketType = {
+   // 회원가입 및 로그인
+Index: src/utils/parser/packetParser.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// packetParser.js\r\nimport { getProtoMessages } from '../../init/loadProto.js';\r\nimport {VERSION} from \"../../constants/header.js\";\r\n\r\nexport const packetParser = (version, sequence, data, socket) => {\r\n  \r\n  if(version !== VERSION) {\r\n    console.error('Version mismatch');\r\n  }\r\n  \r\n  // 여기에 시퀀스 체크\r\n  // 소켓으로 유저 찾아서 비교\r\n  \r\n  const protoMessages = getProtoMessages();\r\n\r\n  const gamePacket = protoMessages.GamePacket;\r\n\r\n  if (!gamePacket) {\r\n    throw new Error('GamePacket 메시지를 찾을 수 없습니다.');\r\n  }\r\n\r\n  let packet;\r\n  try {\r\n    packet = gamePacket.decode(data);\r\n    console.log('Decoded GamePacket:', packet);\r\n  } catch (e) {\r\n    console.error('GamePacket 디코딩 오류:', e);\r\n    throw e;\r\n  }\r\n\r\n  // 'payload' oneof 필드 객체 가져오기\r\n  const payloadOneOf = packet.$type.oneofs.payload;\r\n  if (!payloadOneOf) {\r\n    throw new Error('payload oneof 필드를 찾을 수 없습니다.');\r\n  }\r\n\r\n  const activeField = payloadOneOf.oneof.find(field => Object.prototype.hasOwnProperty.call(packet, field));\r\n\r\n  if (!activeField) {\r\n    throw new Error('Payload가 비어 있습니다.');\r\n  }\r\n\r\n  const messageData = packet[activeField];\r\n  if (!messageData) {\r\n    throw new Error(`Payload에 ${activeField} 데이터가 없습니다.`);\r\n  }\r\n\r\n  return messageData;\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/utils/parser/packetParser.js b/src/utils/parser/packetParser.js
+--- a/src/utils/parser/packetParser.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/utils/parser/packetParser.js	(date 1730878710695)
+@@ -1,16 +1,16 @@
+ // packetParser.js
+ import { getProtoMessages } from '../../init/loadProto.js';
+-import {VERSION} from "../../constants/header.js";
++import { VERSION } from '../../constants/header.js';
+ 
+ export const packetParser = (version, sequence, data, socket) => {
+-  
+-  if(version !== VERSION) {
++
++  if (version !== VERSION) {
+     console.error('Version mismatch');
+   }
+-  
++
+   // 여기에 시퀀스 체크
+   // 소켓으로 유저 찾아서 비교
+-  
++
+   const protoMessages = getProtoMessages();
+ 
+   const gamePacket = protoMessages.GamePacket;
+Index: src/utils/response/createResponse.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// createResponse.js\r\nimport {\r\n  PACKET_TYPE_LENGTH,\r\n  VERSION_LENGTH,\r\n  VERSION,\r\n  SEQUENCE_LENGTH,\r\n  PAYLOAD_LENGTH,\r\n} from '../../constants/header.js';\r\nimport { getProtoMessages } from '../../init/loadProto.js';\r\nimport { getProtoTypeNameByPacketType } from '../../handler/index.js';\r\n\r\n// 임시 시퀀스\r\nlet sequenceNumber = 0;\r\n\r\nexport const createResponse = (packetType, data = null) => {\r\n  // 패킷 타입 길이 2바이트\r\n  const packetTypeBuffer = Buffer.alloc(PACKET_TYPE_LENGTH);\r\n  packetTypeBuffer.writeUIntBE(packetType, 0, PACKET_TYPE_LENGTH);\r\n\r\n  // 버전 길이 1바이트\r\n  const versionLength = Buffer.alloc(VERSION_LENGTH);\r\n  const versionBuffer = Buffer.from(VERSION);\r\n  versionLength.writeUIntBE(versionBuffer.length, 0, VERSION_LENGTH);\r\n\r\n  // 시퀀스 4바이트\r\n  const sequenceBuffer = Buffer.alloc(SEQUENCE_LENGTH);\r\n  sequenceBuffer.writeUInt32BE(sequenceNumber++, 0);\r\n\r\n  // 페이로드 생성\r\n  const protoMessages = getProtoMessages();\r\n  const protoTypeName = getProtoTypeNameByPacketType(packetType);\r\n\r\n  if (!protoTypeName) {\r\n    throw new Error(`Unsupported packet type: ${packetType}`);\r\n  }\r\n\r\n  const GamePacket = protoMessages['GamePacket'];\r\n\r\n  // 데이터 구조 확인\r\n  const messageObject = {\r\n    [protoTypeName]: data,\r\n  };\r\n  console.log('Encoding message:', messageObject);\r\n\r\n  let actualPayload;\r\n  try {\r\n    actualPayload = GamePacket.encode(messageObject).finish();\r\n    console.log('Encoded payload:', actualPayload);\r\n  } catch (error) {\r\n    console.error('Encoding failed:', error);\r\n    throw error;\r\n  }\r\n\r\n  // 실제 데이터 길이 구함\r\n  const payloadLength = Buffer.alloc(PAYLOAD_LENGTH);\r\n  payloadLength.writeUInt32BE(actualPayload.length, 0);\r\n\r\n  // 총 헤더 길이\r\n  const headers = Buffer.concat([\r\n    packetTypeBuffer,\r\n    versionLength,\r\n    versionBuffer,\r\n    sequenceBuffer,\r\n    payloadLength,\r\n  ]);\r\n\r\n  // 헤더와 페이로드 결합\r\n  const temp = Buffer.concat([headers, actualPayload]);\r\n  console.log('Final packet buffer:', temp);\r\n  return temp;\r\n};\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/utils/response/createResponse.js b/src/utils/response/createResponse.js
+--- a/src/utils/response/createResponse.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/utils/response/createResponse.js	(date 1730878676129)
+@@ -1,10 +1,10 @@
+ // createResponse.js
+ import {
+   PACKET_TYPE_LENGTH,
+-  VERSION_LENGTH,
+-  VERSION,
+-  SEQUENCE_LENGTH,
+   PAYLOAD_LENGTH,
++  SEQUENCE_LENGTH,
++  VERSION,
++  VERSION_LENGTH,
+ } from '../../constants/header.js';
+ import { getProtoMessages } from '../../init/loadProto.js';
+ import { getProtoTypeNameByPacketType } from '../../handler/index.js';
+Index: src/classes/managers/latency.manager.js
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>class LatencyManager {\r\n    constructor() {\r\n        this.intervals = new Map();\r\n    }\r\n\r\n    addUser(userId, callback, timestamp) {\r\n        if (this.intervals.has(userId)) {\r\n            console.error(\"중복된 인터벌이 확인됩니다\")\r\n        }\r\n        this.intervals.set(userId, setInterval(callback, timestamp));\r\n    }\r\n\r\n    removeUser(userId) {\r\n        if (!this.intervals.has(userId)) {\r\n            return;\r\n        }\r\n        clearInterval(this.intervals.get(userId));\r\n    }\r\n\r\n    clearAll() {\r\n        this.intervals.forEach((interval) => {\r\n            clearInterval(interval);\r\n        });\r\n\r\n        this.intervals.clear();\r\n    }\r\n}\r\n\r\nexport default LatencyManager
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+diff --git a/src/classes/managers/latency.manager.js b/src/classes/managers/latency.manager.js
+--- a/src/classes/managers/latency.manager.js	(revision d8c3fc706939b161be966e8b940599ac89e3aa04)
++++ b/src/classes/managers/latency.manager.js	(date 1730878728556)
+@@ -1,29 +1,29 @@
+ class LatencyManager {
+-    constructor() {
+-        this.intervals = new Map();
+-    }
++  constructor() {
++    this.intervals = new Map();
++  }
+ 
+-    addUser(userId, callback, timestamp) {
+-        if (this.intervals.has(userId)) {
+-            console.error("중복된 인터벌이 확인됩니다")
+-        }
+-        this.intervals.set(userId, setInterval(callback, timestamp));
+-    }
++  addUser(userId, callback, timestamp) {
++    if (this.intervals.has(userId)) {
++      console.error('중복된 인터벌이 확인됩니다');
++    }
++    this.intervals.set(userId, setInterval(callback, timestamp));
++  }
+ 
+-    removeUser(userId) {
+-        if (!this.intervals.has(userId)) {
+-            return;
+-        }
+-        clearInterval(this.intervals.get(userId));
+-    }
++  removeUser(userId) {
++    if (!this.intervals.has(userId)) {
++      return;
++    }
++    clearInterval(this.intervals.get(userId));
++  }
+ 
+-    clearAll() {
+-        this.intervals.forEach((interval) => {
+-            clearInterval(interval);
+-        });
++  clearAll() {
++    this.intervals.forEach((interval) => {
++      clearInterval(interval);
++    });
+ 
+-        this.intervals.clear();
+-    }
++    this.intervals.clear();
++  }
+ }
+ 
+-export default LatencyManager
+\ No newline at end of file
++export default LatencyManager;
+\ No newline at end of file
