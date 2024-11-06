@@ -1,21 +1,43 @@
-﻿import {createResponse} from "../../utils/response/createResponse.js";
-import { PACKET_TYPE_LENGTH, GlobalFailCode } from "../../constants/header.js";
+﻿import { createUser, findUserId } from '../../db/user/user.db.js';
+import CustomError from '../../utils/error/customError.js';
+import JoiUtils from '../../utils/joi.util.js';
+import bcrypt from 'bcrypt';
+import { createResponse } from '../../utils/response/createResponse.js';
+import { PacketType } from '../../constants/header.js';
 
 const registerRequestHandler = async ({ socket, payload, sequence }) => {
-  console.log('registerRequestHandler Called');
+  try {
+    const { id, email, password } = await JoiUtils.validateSignUp(payload);
 
-  const responsePacket = createResponse(
-      2, // payloadType을 문자열로 전달
-      {
-        // S2CRegisterResponse 데이터 구조에 맞게 데이터 전달
-        success: true,
-        message: "등록 성공",
-        failCode: GlobalFailCode.NONE,
-      }
-  );
+    const checkExistId = await findUserId(id);
+    if (checkExistId) {
+      const responsePayload = {
+        success: false,
+        message: '이미 존재하는 ID',
+        failCode: 2,
+      };
 
-  // 패킷 전송
-  socket.write(responsePacket);
+      const registerResponse = createResponse(PacketType.REGISTER_RESPONSE, responsePayload);
+      socket.write(registerResponse);
+
+      throw new CustomError(ErrorCodes.USER_NOT_FOUND, '이미 존재하는 ID');
+    }
+
+    const hashedPassword = await bcrypt.hash(password, 10);
+
+    const createUserId = await createUser(id, email, hashedPassword);
+
+    const responsePayload = {
+      success: true,
+      message: 'Register Success',
+      failCode: 0,
+    };
+
+    const registerResponse = createResponse(PacketType.REGISTER_RESPONSE, responsePayload);
+    socket.write(registerResponse);
+  } catch (e) {
+    console.error(e);
+  }
 };
 
 export default registerRequestHandler;

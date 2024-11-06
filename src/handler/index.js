@@ -2,6 +2,7 @@ import { PacketType } from '../constants/header.js';
 import { ErrorCodes } from '../utils/error/errorCodes.js';
 import CustomError from '../utils/error/customError.js';
 import registerRequestHandler from './user/registerRequest.handler.js';
+import loginRequestHandler from './user/loginRequest.handler.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -14,7 +15,7 @@ const handlers = {
     protoType: 'S2CRegisterResponse',
   },
   [PacketType.LOGIN_REQUEST]: {
-    handler: undefined,
+    handler: loginRequestHandler,
     protoType: 'C2SLoginRequest',
   },
   [PacketType.LOGIN_RESPONSE]: {
@@ -128,7 +129,7 @@ export const getHandlerByPacketType = (packetType) => {
 // };
 
 export const getProtoTypeNameByPacketType = (packetType) => {
-  switch(packetType) {
+  switch (packetType) {
     case PacketType.REGISTER_REQUEST:
       return 'registerRequest';
     case PacketType.REGISTER_RESPONSE:
