@@ -1,12 +1,16 @@
 // packetParser.js
 import { getProtoMessages } from '../../init/loadProto.js';
+import {VERSION} from "../../constants/header.js";
 
-/**
- * 패킷 데이터를 파싱하여 핸들러 ID와 페이로드를 추출합니다.
- * @param {Buffer} data - 수신된 패킷 데이터
- * @returns {Object} 핸들러 ID와 페이로드
- */
-export const packetParser = (data) => {
+export const packetParser = (version, sequence, data, socket) => {
+  
+  if(version !== VERSION) {
+    console.error('Version mismatch');
+  }
+  
+  // 여기에 시퀀스 체크
+  // 소켓으로 유저 찾아서 비교
+  
   const protoMessages = getProtoMessages();
 
   const gamePacket = protoMessages.GamePacket;
@@ -30,13 +34,12 @@ export const packetParser = (data) => {
     throw new Error('payload oneof 필드를 찾을 수 없습니다.');
   }
 
-  // 'oneof' 배열 내에서 활성화된 필드 찾기
-  const activeField = payloadOneOf.oneof.find(field => packet[field] !== undefined);
+  const activeField = payloadOneOf.oneof.find(field => Object.prototype.hasOwnProperty.call(packet, field));
+
   if (!activeField) {
     throw new Error('Payload가 비어 있습니다.');
   }
 
-  console.log(activeField);
   const messageData = packet[activeField];
   if (!messageData) {
     throw new Error(`Payload에 ${activeField} 데이터가 없습니다.`);
