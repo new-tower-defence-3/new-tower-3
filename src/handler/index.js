@@ -2,6 +2,8 @@ import { PacketType } from '../constants/header.js';
 import { ErrorCodes } from '../utils/error/errorCodes.js';
 import CustomError from '../utils/error/customError.js';
 import registerRequestHandler from './user/registerRequest.handler.js';
+import towerPurchaseHandler from './tower/towerPurchase.handler.js';
+import towerPurchaseResponseHandler from './tower/towerPurchaseResponse.handler.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -40,7 +42,7 @@ const handlers = {
 
   // 타워 구입 및 배치
   [PacketType.TOWER_PURCHASE_REQUEST]: {
-    handler: undefined,
+    handler: towerPurchaseHandler,
     protoType: 'C2STowerPurchaseRequest',
   },
   [PacketType.TOWER_PURCHASE_RESPONSE]: {
