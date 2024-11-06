@@ -6,14 +6,13 @@ import testConnection from '../utils/db/testConnection.js';
 const initServer = async () => {
   try {
     await loadProtos();
-    const gameId = uuidv4();
-    const gameSessions = addGameSession(gameId);
+    //const gameId = uuidv4();
+    //const gameSessions = addGameSession(gameId);
     await testConnection();
   } catch (e) {
     console.error(e);
     process.exit(1);
   }
-
 };
 
 export default initServer;

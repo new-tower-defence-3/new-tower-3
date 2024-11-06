@@ -2,6 +2,7 @@
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 import { getProtoMessages } from '../../init/loadProto.js'; // Protobuf 메시지 로드 함수
+import { findMatchingUser, getUserBySocket } from '../../sessions/user.session.js';
 
 export const matchRequestHandler = async ({ socket }) => {
   console.log('matchRequestHandler Called');
