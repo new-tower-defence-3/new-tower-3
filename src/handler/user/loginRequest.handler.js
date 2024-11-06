@@ -16,33 +16,13 @@ const loginRequestHandler = async ({ socket, payload, sequence }) => {
     const checkExistId = await findUserId(id);
 
     if (!checkExistId) {
-      //로그인 실패도 리스폰스 필요
-      const responsePayload = {
-        success: false,
-        message: 'Login fail: 아이디 또는 비밀번호가 잘못되었습니다.',
-        token: '',
-        failCode: 1,
-      };
-      const loginResponse = createResponse(PacketType.LOGIN_RESPONSE, responsePayload);
-      socket.write(loginResponse);
-
-      throw new CustomError(ErrorCodes.USER_NOT_FOUND, '아이디 또는 비밀번호가 잘못되었습니다.');
+      checkFail(socket);
     }
 
     const checkPassword = await bcrypt.compare(password, checkExistId.password);
 
     if (!checkPassword) {
-      //로그인 실패도 리스폰스 필요
-      const responsePayload = {
-        success: true,
-        message: 'Login fail: 아이디 또는 비밀번호가 잘못되었습니다.',
-        token: '',
-        failCode: 1,
-      };
-      const loginResponse = createResponse(PacketType.LOGIN_RESPONSE, responsePayload);
-      socket.write(loginResponse);
-
-      throw new CustomError(ErrorCodes.USER_NOT_FOUND, '아이디 또는 비밀번호가 잘못되었습니다.');
+      checkFail(socket);
     }
 
     // 토큰 생성
@@ -68,6 +48,19 @@ const loginRequestHandler = async ({ socket, payload, sequence }) => {
   } catch (e) {
     console.error(e);
   }
+};
+
+const checkFail = (socket) => {
+  const responsePayload = {
+    success: false,
+    message: 'Login fail: 아이디 또는 비밀번호가 잘못되었습니다.',
+    token: '',
+    failCode: 2,
+  };
+  const loginResponse = createResponse(PacketType.LOGIN_RESPONSE, responsePayload);
+  socket.write(loginResponse);
+
+  throw new CustomError(ErrorCodes.USER_NOT_FOUND, '아이디 또는 비밀번호가 잘못되었습니다.');
 };
 
 export default loginRequestHandler;
