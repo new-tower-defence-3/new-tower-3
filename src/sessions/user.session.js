@@ -36,6 +36,6 @@ export const findUser = async (username) => {
 };
 
 export const findMatchingUser = async () => {
-  const findSession = userSessions.filter((user) => user.matching === true);
+  const findSession = userSessions.filter((user) => user.isMatching === true);
   return findSession;
 };
