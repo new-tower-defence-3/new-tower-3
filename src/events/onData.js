@@ -53,6 +53,7 @@ export const onData = (socket) => (data) => {
         // 아직 전체 패킷이 도착하지 않음
         break;
       }
+      
 
       const packetData = socket.buffer.subarray(0, totalPacketLength);
       socket.buffer = socket.buffer.subarray(totalPacketLength);
@@ -60,7 +61,7 @@ export const onData = (socket) => (data) => {
       try {
         // 페이로드 추출 및 파싱
         const payloadData = packetData.subarray(offset);
-        const payloadInstance = packetParser(payloadData);
+        const payloadInstance = packetParser(version, 0, payloadData);
         const payload = JSON.parse(JSON.stringify(payloadInstance));
 
         const handler = getHandlerByPacketType(packetType);
