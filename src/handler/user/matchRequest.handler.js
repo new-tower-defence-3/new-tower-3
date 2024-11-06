@@ -1,110 +1,48 @@
-// matchRequestHandler.js
-import { getUserBySocket } from '../../sessions/user.session.js';
-import { createResponse } from '../../utils/response/createResponse.js';
+import { findMatchingUser, getUserBySocket, findUser } from '../../sessions/user.session.js';
+import { MAX_PLAYERS } from '../../constants/header.js';
+import { v4 as uuidv4 } from 'uuid';
+import {
+  addGameSession,
+  getGameSession,
+  getGameSessionById,
+  inviteGameSession,
+} from '../../sessions/game.session.js';
 import { getProtoMessages } from '../../init/loadProto.js'; // Protobuf 메시지 로드 함수
-import { findMatchingUser, getUserBySocket } from '../../sessions/user.session.js';
+import matchStartNotification from '../../utils/notification/matchStart.notification.js';
 
 export const matchRequestHandler = async ({ socket }) => {
   console.log('matchRequestHandler Called');
+  const user = await getUserBySocket(socket);
+  //user.matchingOn();
 
-  const user = getUserBySocket(socket);
-  console.log('Matched User:', user);
+  // 현재 존재하는 게임 섹션 가져오기
+  const gameSessions = getGameSession();
+  // 생성된 게임 섹션이 없으면 생성
+  if (gameSessions.length === 0) {
+    const gameId = uuidv4();
+    const gameSession = addGameSession(gameId, user);
+  } else {
+    let isNotFull = false;
+    // 생성된 게임 섹션 중 빈 곳이 있는지 탐색
+    for (let i = 0; i < gameSessions.length; i++) {
+      if (gameSessions[i].users.length < MAX_PLAYERS) {
+        const gameSessionUsers = inviteGameSession(gameSessions[i].id, user);
+        matchStartNotification(gameSessionUsers);
+        isNotFull = true;
+        break;
+      }
+    }
 
-  // 게임 초기 설정
-  const initialGameState = {
-    baseHp: 100, // 기지 초기 체력
-    towerCost: 500, // 타워 구매 비용
-    initialGold: 1000, // 초기 골드
-    monsterSpawnInterval: 1, // 몬스터 스폰 간격 (초 단위)
-  };
-
-  // 플레이어의 게임 상태
-  const playerData = {
-    gold: initialGameState.initialGold,
-    base: {
-      hp: initialGameState.baseHp,
-      maxHp: initialGameState.baseHp,
-    },
-    highScore: 0,
-    towers: [
-      { towerId: 1, x: 600.0, y: 350.0 },
-      { towerId: 2, x: 800.0, y: 350.0 },
-      { towerId: 3, x: 1000.0, y: 350.0 },
-    ], // 초기 타워 없음
-    monsters: [],
-    monsterLevel: 1,
-    score: 0,
-    monsterPath: [
-      { x: 600.0, y: 300.0 },
-      { x: 650.0, y: 300.0 },
-      { x: 700.0, y: 300.0 },
-      { x: 750.0, y: 300.0 },
-      { x: 800.0, y: 300.0 },
-      { x: 850.0, y: 300.0 },
-      { x: 900.0, y: 300.0 },
-      { x: 950.0, y: 300.0 },
-      { x: 1000.0, y: 300.0 },
-      { x: 1050.0, y: 300.0 },
-    ],
-    basePosition: { x: 1380.0, y: 350.0 },
-  };
-
-  // 상대방의 게임 상태 (예시로 동일한 초기 설정 사용)
-  const opponentData = {
-    gold: initialGameState.initialGold,
-    base: {
-      hp: initialGameState.baseHp,
-      maxHp: initialGameState.baseHp,
-    },
-    highScore: 0,
-    towers: [
-      { towerId: 11, x: 600.0, y: 350.0 },
-      { towerId: 21, x: 800.0, y: 350.0 },
-      { towerId: 31, x: 1000.0, y: 350.0 },
-    ],
-    monsters: [],
-    monsterLevel: 1,
-    score: 0,
-    monsterPath: [
-      { x: 600.0, y: 300.0 },
-      { x: 650.0, y: 300.0 },
-      { x: 700.0, y: 300.0 },
-      { x: 750.0, y: 300.0 },
-      { x: 800.0, y: 300.0 },
-      { x: 850.0, y: 300.0 },
-      { x: 900.0, y: 300.0 },
-      { x: 950.0, y: 300.0 },
-      { x: 1000.0, y: 300.0 },
-      { x: 1050.0, y: 300.0 },
-    ],
-    basePosition: { x: 1380.0, y: 350.0 },
-  };
+    // 빈 곳이 없다면 새로운 게임 섹션 생성
+    if (!isNotFull) {
+      const gameId = uuidv4();
+      const gameSession = addGameSession(gameId, user);
+    }
+  }
 
   // Protobuf 메시지 로드
   const protoMessages = getProtoMessages();
   const S2CMatchStartNotification = protoMessages['S2CMatchStartNotification'];
-
-  // `S2CMatchStartNotification` 메시지 생성
-  const matchStartNotification = {
-    initialGameState: initialGameState,
-    playerData: playerData,
-    opponentData: opponentData,
-  };
-
-  // `GamePacket`에 래핑
-  const gamePacket = {
-    matchStartNotification: matchStartNotification,
-  };
-
-  // 응답 생성 및 전송
-  try {
-    const payload = createResponse(6, gamePacket.matchStartNotification);
-    socket.write(payload);
-    console.log('MatchStartNotification sent successfully.');
-  } catch (error) {
-    console.error('Failed to send MatchStartNotification:', error);
-    // 필요 시 에러 처리 로직 추가
-  }
 };
 
 export default matchRequestHandler;

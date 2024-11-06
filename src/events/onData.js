@@ -9,11 +9,9 @@ export const onData = (socket) => (data) => {
   while (socket.buffer.length > TOTAL_LENGTH) {
     let offset = 0;
 
-
     if (socket.buffer.length >= TOTAL_LENGTH) {
       const packetType = socket.buffer.readUInt16BE(offset);
       offset += 2;
-
 
       // versionLength (1 byte)
       const versionLength = socket.buffer.readUInt8(offset);
@@ -46,14 +44,12 @@ export const onData = (socket) => (data) => {
       const payloadLength = socket.buffer.readUInt32BE(offset);
       offset += 4;
 
-
       const totalPacketLength = offset + payloadLength;
       // 전체 패킷이 도착했는지 확인
       if (socket.buffer.length < totalPacketLength) {
         // 아직 전체 패킷이 도착하지 않음
         break;
       }
-      
 
       const packetData = socket.buffer.subarray(0, totalPacketLength);
       socket.buffer = socket.buffer.subarray(totalPacketLength);
@@ -66,7 +62,6 @@ export const onData = (socket) => (data) => {
 
         const handler = getHandlerByPacketType(packetType);
         handler({ socket, payload, sequence });
-
       } catch (e) {
         handleError(socket, e);
       }
