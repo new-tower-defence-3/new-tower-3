@@ -1,28 +1,20 @@
 // import { createPingPacket } from "../../utils/notification/game.notification.js";
 
 class User {
-  constructor(socket, id, playerId, latency, coords) {
-    this.id = id;
+  constructor(socket, username, latency, highScore) {
     this.socket = socket;
-    this.playerId = playerId;
+    this.username = username;
     this.latency = latency;
-    this.x = coords.x;
-    this.y = coords.y;
-    this.lastX = 0;
-    this.lastY = 0;
+    this.sequence = 0;
     this.lastUpdateTime = Date.now();
-    this.speed = 3;
+    this.highScore = highScore;
+    this.isMatching = false;
   }
 
-  updatePosition(x, y) {
-    this.laxtX = this.x;
-    this.lastY = this.y;
-    this.x = x;
-    this.y = y;
+  updateTime(x, y) {
     this.lastUpdateTime = Date.now();
   }
 
-  
   ping() {
     const now = Date.now();
     // this.socket.write(createPingPacket(now))
@@ -33,25 +25,12 @@ class User {
     this.latency = (now - data.timestamp) / 2;
   }
 
-  calculatePosition(latency) {
-    if (this.x === this.lastX && this.y === this.lastY) {
-      return {
-        x: this.x,
-        y: this.y,
-      };
-    }
+  matchingOn() {
+    this.isMatching = true;
+  }
 
-    const timeDiff = (Date.now() - this.lastUpdateTime + latency) / 1000;
-
-    const distance = this.speed * timeDiff;
-
-    const directionX = this.x !== this.lastX ? Math.sign(this.x - this.lastX) : 0;
-    const directionY = this.y !== this.lastY ? Math.sign(this.y - this.lastY) : 0;
-
-    return {
-      x: this.x + directionX * distance,
-      y: this.y + directionY * distance,
-    };
+  matchingOff() {
+    this.isMatching = false;
   }
 }
 
