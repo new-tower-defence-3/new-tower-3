@@ -17,13 +17,6 @@ export const removeUser = async (socket) => {
     return userSessions.splice(index, 1)[0];
   }
 };
-  const index = userSessions.findIndex((user) => user.socket === socket);
-  if (index != -1) {
-    const user = userSessions[index];
-    await updateUserLocation(user.x, user.y, user.id);
-    return userSessions.splice(index, 1)[0];
-  }
-};
 
 export const getUserBySocket = (socket) => {
   const user = userSessions.find((user) => user.socket === socket);
