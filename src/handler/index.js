@@ -117,12 +117,61 @@ export const getHandlerByPacketType = (packetType) => {
   return handlers[packetType].handler;
 };
 
+// export const getProtoTypeNameByPacketType = (packetType) => {
+//   if (!handlers[packetType]) {
+//     throw new CustomError(
+//       ErrorCodes.UNKNOWN_HANDLER_ID,
+//       `프로토타입를 찾을 수 없습니다: ID ${packetType}`,
+//     );
+//   }
+//   return handlers[packetType].protoType;
+// };
+
 export const getProtoTypeNameByPacketType = (packetType) => {
-  if (!handlers[packetType]) {
-    throw new CustomError(
-      ErrorCodes.UNKNOWN_HANDLER_ID,
-      `프로토타입를 찾을 수 없습니다: ID ${packetType}`,
-    );
+  switch (packetType) {
+    case PacketType.REGISTER_REQUEST:
+      return 'registerRequest';
+    case PacketType.REGISTER_RESPONSE:
+      return 'registerResponse';
+    case PacketType.LOGIN_REQUEST:
+      return 'loginRequest';
+    case PacketType.LOGIN_RESPONSE:
+      return 'loginResponse';
+    case PacketType.MATCH_REQUEST:
+      return 'matchRequest';
+    case PacketType.MATCH_START_NOTIFICATION:
+      return 'matchStartNotification';
+    case PacketType.STATE_SYNC_NOTIFICATION:
+      return 'stateSyncNotification';
+    case PacketType.TOWER_PURCHASE_REQUEST:
+      return 'towerPurchaseRequest';
+    case PacketType.TOWER_PURCHASE_RESPONSE:
+      return 'towerPurchaseResponse';
+    case PacketType.ADD_ENEMY_TOWER_NOTIFICATION:
+      return 'addEnemyTowerNotification';
+    case PacketType.SPAWN_MONSTER_REQUEST:
+      return 'spawnMonsterRequest';
+    case PacketType.SPAWN_MONSTER_RESPONSE:
+      return 'spawnMonsterResponse';
+    case PacketType.SPAWN_ENEMY_MONSTER_NOTIFICATION:
+      return 'spawnEnemyMonsterNotification';
+    case PacketType.TOWER_ATTACK_REQUEST:
+      return 'towerAttackRequest';
+    case PacketType.ENEMY_TOWER_ATTACK_NOTIFICATION:
+      return 'enemyTowerAttackNotification';
+    case PacketType.MONSTER_ATTACK_BASE_REQUEST:
+      return 'monsterAttackBaseRequest';
+    case PacketType.UPDATE_BASE_HP_NOTIFICATION:
+      return 'updateBaseHpNotification';
+    case PacketType.GAME_OVER_NOTIFICATION:
+      return 'gameOverNotification';
+    case PacketType.GAME_END_REQUEST:
+      return 'gameEndRequest';
+    case PacketType.MONSTER_DEATH_NOTIFICATION:
+      return 'monsterDeathNotification';
+    case PacketType.ENEMY_MONSTER_DEATH_NOTIFICATION:
+      return 'enemyMonsterDeathNotification';
+    default:
+      return null;
   }
-  return handlers[packetType].protoType;
 };
