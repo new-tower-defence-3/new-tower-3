@@ -42,7 +42,7 @@ const loginRequestHandler = async ({ socket, payload, sequence }) => {
     // 토큰 생성
     const accessToken = jwt.sign(
       {
-        userName: checkExistId.userName,
+        username: checkExistId.username,
       },
       ACCESS_TOKEN_SECRET_KEY,
       { expiresIn: '1h' },
