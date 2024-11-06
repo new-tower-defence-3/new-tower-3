@@ -3,7 +3,7 @@ import { ErrorCodes } from '../utils/error/errorCodes.js';
 import CustomError from '../utils/error/customError.js';
 import registerRequestHandler from './user/registerRequest.handler.js';
 import loginRequestHandler from './user/loginRequest.handler.js';
-
+import matchRequestHandler from './user/matchRequest.handler.js';
 const handlers = {
   // 회원가입 및 로그인
   [PacketType.REGISTER_REQUEST]: {
@@ -25,7 +25,7 @@ const handlers = {
 
   // 매칭
   [PacketType.MATCH_REQUEST]: {
-    handler: undefined,
+    handler: matchRequestHandler,
     protoType: 'C2SMatchRequest',
   },
   [PacketType.MATCH_START_NOTIFICATION]: {

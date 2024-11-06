@@ -7,11 +7,27 @@ export const addUser = async (user) => {
   return user;
 };
 
+export const getUserByUserId = (userId) => {
+  return userSessions.find((user) => user.userId === userId);
+};
+
 export const removeUser = async (socket) => {
   const index = userSessions.findIndex((user) => user.socket === socket);
   if (index != -1) {
     return userSessions.splice(index, 1)[0];
   }
+};
+
+export const getUserBySocket = async (socket) => {
+  console.log('usersocket');
+  console.log(userSessions);
+  console.log('socket');
+  console.log(socket);
+  const user = userSessions.find((user) => user.socket === socket);
+  if (!user) {
+    console.error('User not found');
+  }
+  return user;
 };
 
 export const getAllUser = async () => {
