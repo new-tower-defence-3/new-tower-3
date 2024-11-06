@@ -2,6 +2,8 @@ import { PacketType } from '../constants/header.js';
 import { ErrorCodes } from '../utils/error/errorCodes.js';
 import CustomError from '../utils/error/customError.js';
 import registerRequestHandler from './user/registerRequest.handler.js';
+import handleBaseAttackRequest from './game/baseAttack.handler.js';
+import gameEndRequestHandler from './game/gameEnd.handler.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -76,7 +78,7 @@ const handlers = {
     protoType: 'S2CEnemyTowerAttackNotification',
   },
   [PacketType.MONSTER_ATTACK_BASE_REQUEST]: {
-    handler: undefined,
+    handler: handleBaseAttackRequest,
     protoType: 'C2SMonsterAttackBaseRequest',
   },
 
@@ -92,7 +94,7 @@ const handlers = {
 
   // 게임 종료
   [PacketType.GAME_END_REQUEST]: {
-    handler: undefined,
+    handler: gameEndRequestHandler,
     protoType: 'C2SGameEndRequest',
   },
 

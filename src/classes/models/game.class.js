@@ -36,6 +36,12 @@ class Game {
     return maxLatency;
   }
 
+  // 상대방을 반환하는 메서드
+  getOpponent(user) {
+    return this.users.find((opponent) => opponent !== user)
+  }
+
+
   // getAllLocation(userId) {
   //     const maxLatency = this.getMaxLatency();
   //

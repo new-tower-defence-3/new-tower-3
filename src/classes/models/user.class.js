@@ -12,6 +12,7 @@ class User {
     this.lastY = 0;
     this.lastUpdateTime = Date.now();
     this.speed = 3;
+    this.baseHp = 100;
   }
 
   updatePosition(x, y) {
@@ -22,7 +23,7 @@ class User {
     this.lastUpdateTime = Date.now();
   }
 
-  
+
   ping() {
     const now = Date.now();
     // this.socket.write(createPingPacket(now))
@@ -52,6 +53,11 @@ class User {
       x: this.x + directionX * distance,
       y: this.y + directionY * distance,
     };
+  }
+
+  // 기지 HP 업데이트 메서드
+  updateBaseHp(damage) {
+    this.baseHp -= damage;
   }
 }
 
