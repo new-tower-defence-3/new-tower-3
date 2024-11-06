@@ -1,10 +1,10 @@
 // createResponse.js
 import {
   PACKET_TYPE_LENGTH,
-  VERSION_LENGTH,
-  VERSION,
-  SEQUENCE_LENGTH,
   PAYLOAD_LENGTH,
+  SEQUENCE_LENGTH,
+  VERSION,
+  VERSION_LENGTH,
 } from '../../constants/header.js';
 import { getProtoMessages } from '../../init/loadProto.js';
 import { getProtoTypeNameByPacketType } from '../../handler/index.js';

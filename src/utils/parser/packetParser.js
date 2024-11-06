@@ -1,16 +1,16 @@
 // packetParser.js
 import { getProtoMessages } from '../../init/loadProto.js';
-import {VERSION} from "../../constants/header.js";
+import { VERSION } from '../../constants/header.js';
 
 export const packetParser = (version, sequence, data, socket) => {
-  
-  if(version !== VERSION) {
+
+  if (version !== VERSION) {
     console.error('Version mismatch');
   }
-  
+
   // 여기에 시퀀스 체크
   // 소켓으로 유저 찾아서 비교
-  
+
   const protoMessages = getProtoMessages();
 
   const gamePacket = protoMessages.GamePacket;

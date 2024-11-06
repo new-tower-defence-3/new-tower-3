@@ -1,5 +1,3 @@
-import User from '../classes/models/user.class.js';
-import { updateUserLocation } from '../db/user/user.db.js';
 import { userSessions } from './sessions.js';
 
 export const addUser = async (user) => {
