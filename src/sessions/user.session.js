@@ -1,21 +1,33 @@
-import User from "../classes/models/user.class.js"
-import { updateUserLocation } from "../db/user/user.db.js";
-import { userSessions } from "./sessions.js";
+import User from '../classes/models/user.class.js';
+import { updateUserLocation } from '../db/user/user.db.js';
+import { userSessions } from './sessions.js';
 
 export const addUser = (user) => {
-    userSessions.push(user);
-    return user;
-}
+  userSessions.push(user);
+  return user;
+};
+
+export const getUserByUserId = (userId) => {
+  return userSessions.find((user) => user.userId === userId);
+};
 
 export const removeUser = async (socket) => {
-    const index = userSessions.findIndex((user) => user.socket === socket);
-    if (index != -1) {
-        const user = userSessions[index]
-        await updateUserLocation(user.x, user.y, user.id);
-        return userSessions.splice(index, 1)[0];
-    }
-}
+  const index = userSessions.findIndex((user) => user.socket === socket);
+  if (index != -1) {
+    const user = userSessions[index];
+    await updateUserLocation(user.x, user.y, user.id);
+    return userSessions.splice(index, 1)[0];
+  }
+};
+
+export const getUserBySocket = (socket) => {
+  const user = userSessions.find((user) => user.socket === socket);
+  if (!user) {
+    console.error('User not found');
+  }
+  return user;
+};
 
 export const getAllUser = () => {
-    return userSessions;
-}
+  return userSessions;
+};

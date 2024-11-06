@@ -2,7 +2,7 @@ export const PACKET_TYPE = 2;
 export const VERSION_LENGTH = 1;
 export const SEQUENCE = 4;
 export const PAYLOAD_LENGTH = 4;
-
+export const MAX_PLAYERS = 2;
 export const TOTAL_LENGTH = PACKET_TYPE + VERSION_LENGTH + SEQUENCE + PAYLOAD_LENGTH;
 
 export const PacketType = {

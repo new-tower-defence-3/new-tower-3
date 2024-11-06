@@ -1,16 +1,17 @@
-import Game from "../classes/models/game.class.js"
-import { gameSessions } from "./sessions.js";
+import Game from '../classes/models/game.class.js';
+import { gameSessions } from './sessions.js';
+import { MAX_PLAYERS } from '../constants/header.js';
 
 export const addGameSession = (id) => {
-    const session = new Game(id);
-    gameSessions.push(session);
-    return session;
-}
+  const session = new Game(id);
+  gameSessions.push(session);
+  return session;
+};
 
 export const removeGameSession = () => {
-    delete gameSessions[0];
-}
+  delete gameSessions[0];
+};
 
 export const getGameSession = () => {
-    return gameSessions[0];
-}
+  return gameSessions[0];
+};
