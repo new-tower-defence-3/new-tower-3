@@ -41,7 +41,7 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
   }
 
 
-// Send spawn monster response to player
+  // Send spawn monster response to player
   const spawnMonsterResponse = {
     monsterId: monsterId,
     monsterNumber: monsterNumber,
@@ -59,13 +59,13 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
     console.error('Failed to send SpawnMonsterResponse:', error);
   }
 
-// Notify opponent about the new enemy monster
+  // Notify opponent about the new enemy monster
   const opponentUser = gameSession.users.find(u => u !== user);
   if (!opponentUser) {
     console.error('Opponent user not found in game session');
     return;
   }
 
-// Send S2CSpawnEnemyMonsterNotification
+  // Send S2CSpawnEnemyMonsterNotification
   await sendSpawnEnemyMonsterNotification(opponentUser, monsterId, monsterNumber);
 };

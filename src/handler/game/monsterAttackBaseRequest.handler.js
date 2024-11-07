@@ -3,9 +3,8 @@
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendUpdateBaseHpNotification } from '../notification/updateBaseHp.notification.js';
-import { sendGameOverNotification } from '../notification/gameOver.notification.js';
 
-export const monsterAttackBaseRequestHandler = async ({ socket, data }) => {
+export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   console.log('monsterAttackBaseRequestHandler Called');
 
   const user = await getUserBySocket(socket);
@@ -16,28 +15,19 @@ export const monsterAttackBaseRequestHandler = async ({ socket, data }) => {
     return;
   }
 
-  const { damage } = data;
+  const { damage } = payload;
   const isPlayer = gameSession.id === user.username;
 
-  if (isPlayer) {
+  if (!isPlayer) {
     gameSession.opponentBaseHp -= damage;
   } else {
     gameSession.playerBaseHp -= damage;
   }
 
-  // Send base HP update to both users
-  for (const sessionUser of gameSession.users) {
-    const isOpponentNotification = sessionUser !== user;
-    const baseHp = isOpponentNotification ? gameSession.playerBaseHp : gameSession.opponentBaseHp;
-    await sendUpdateBaseHpNotification(sessionUser, isOpponentNotification, baseHp);
-  }
-
-  // Check for game over
-  if (gameSession.playerBaseHp <= 0 || gameSession.opponentBaseHp <= 0) {
-    for (const sessionUser of gameSession.users) {
-      const isWin = (gameSession.playerBaseHp <= 0 && sessionUser !== user) || (gameSession.opponentBaseHp <= 0 && sessionUser === user);
-      await sendGameOverNotification(sessionUser, isWin);
-    }
+  if (isPlayer) {
+    await sendUpdateBaseHpNotification(user, !isPlayer, gameSession.playerBaseHp);
+  } else {
+    await sendUpdateBaseHpNotification(user, isPlayer, gameSession.playerBaseHp);
   }
 };
 

@@ -5,6 +5,9 @@ import registerRequestHandler from './user/registerRequest.handler.js';
 import loginRequestHandler from './user/loginRequest.handler.js';
 import matchRequestHandler from './user/matchRequest.handler.js';
 import { spawnMonsterRequestHandler } from './game/spawnMonsterRequest.handler.js';
+import { towerAttackRequestHandler } from './game/towerAttackRequest.handler.js';
+import monsterAttackBaseRequestHandler from './game/monsterAttackBaseRequest.handler.js';
+import monsterDeathNotification from './notification/monsterDeath.notification.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -71,7 +74,7 @@ const handlers = {
 
   // 전투 액션
   [PacketType.TOWER_ATTACK_REQUEST]: {
-    handler: undefined,
+    handler: towerAttackRequestHandler,
     protoType: 'towerAttackRequest',
   },
   [PacketType.ENEMY_TOWER_ATTACK_NOTIFICATION]: {
@@ -79,7 +82,7 @@ const handlers = {
     protoType: 'enemyTowerAttackNotification',
   },
   [PacketType.MONSTER_ATTACK_BASE_REQUEST]: {
-    handler: undefined,
+    handler: monsterAttackBaseRequestHandler,
     protoType: 'monsterAttackBaseRequest',
   },
 
@@ -101,7 +104,7 @@ const handlers = {
 
   // 몬스터 사망 통지
   [PacketType.MONSTER_DEATH_NOTIFICATION]: {
-    handler: undefined,
+    handler: monsterDeathNotification,
     protoType: 'monsterDeathNotification',
   },
   [PacketType.ENEMY_MONSTER_DEATH_NOTIFICATION]: {

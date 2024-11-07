@@ -7,7 +7,7 @@ export const matchRequestHandler = async ({ socket }) => {
   console.log('matchRequestHandler Called');
   const user = await getUserBySocket(socket);
   //user.matchingOn();
-
+  
   // 현재 존재하는 게임 섹션 가져오기
   const gameSessions = getGameSession();
   // 생성된 게임 섹션이 없으면 생성

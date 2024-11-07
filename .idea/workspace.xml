@@ -5,20 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정">
-      <change afterPath="$PROJECT_DIR$/src/handler/notification/enemyTowerAttack.notification.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/handler/notification/gameOver.notification.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/handler/notification/spawnEnemyMonster.notification.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/handler/notification/enemyMonsterDeath.notification.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/handler/notification/monsterDeath.notification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/models/game.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/models/game.class.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/classes/models/user.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/models/user.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/game/monsterAttackBaseRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/monsterAttackBaseRequest.handler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/game/spawnMonsterRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/spawnMonsterRequest.handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/game/towerAttackRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/towerAttackRequest.handler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handler/notification/matchStart.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/matchStart.notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/notification/spawnEnemyMonster.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/spawnEnemyMonster.notification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/user/matchRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/user/matchRequest.handler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/sessions/game.session.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sessions/game.session.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/parser/packetParser.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/parser/packetParser.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/utils/response/createResponse.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/response/createResponse.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -60,22 +55,22 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "structure",
-    "ignore.virus.scanning.warn.message": "true",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "rider.code.cleanup.on.save": "true",
-    "settings.editor.selected.configurable": "actions.on.save",
-    "ts.external.directory.path": "C:\\Users\\MARU\\AppData\\Local\\JetBrains\\Installations\\Rider233\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;structure&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;rider.code.cleanup.on.save&quot;: &quot;true&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;actions.on.save&quot;,
+    &quot;ts.external.directory.path&quot;: &quot;C:\\Users\\MARU\\AppData\\Local\\JetBrains\\Installations\\Rider233\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
