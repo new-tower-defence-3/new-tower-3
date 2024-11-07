@@ -4,17 +4,16 @@ export const PACKET_TYPE_LENGTH = 2;
 export const VERSION_LENGTH = 1;
 export const SEQUENCE_LENGTH = 4;
 export const PAYLOAD_LENGTH = 4;
-
 export const TOTAL_LENGTH = PACKET_TYPE_LENGTH + VERSION_LENGTH + SEQUENCE_LENGTH + PAYLOAD_LENGTH;
-
-export const VERSION = "1.0.0";
+export const MAX_PLAYERS = 2;
+export const VERSION = '1.0.0';
 
 export const GlobalFailCode = {
   NONE: 0,
   UNKNOWN_ERROR: 1,
   INVALID_REQUEST: 2,
   AUTHENTICATION_FAILED: 3,
-}
+};
 
 export const PacketType = {
   // 회원가입 및 로그인
