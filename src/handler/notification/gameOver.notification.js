@@ -1,4 +1,4 @@
-﻿// File: handlers/notifications/gameOver.notification.js
+﻿// handlers/notifications/gameOver.notification.js
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';

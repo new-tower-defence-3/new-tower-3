@@ -1,19 +1,25 @@
+// src/sessions/game.session.js
+
 import Game from '../classes/models/game.class.js';
 import { gameSessions } from './sessions.js';
 
-export const addGameSession = (id, user) => {
+export const addGameSession = (id) => {
   const session = new Game(id);
-  session.addUser(user);
   gameSessions.push(session);
   return session;
 };
+
 export const inviteGameSession = (id, user) => {
   const session = getGameSessionById(id);
   session.addUser(user);
-  return session.users;
+  return session;
 };
-export const removeGameSession = () => {
-  delete gameSessions[0];
+
+export const removeGameSession = (id) => {
+  const index = gameSessions.findIndex((session) => session.id === id);
+  if (index !== -1) {
+    gameSessions.splice(index, 1);
+  }
 };
 
 export const getGameSession = () => {

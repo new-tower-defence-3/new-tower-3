@@ -1,4 +1,5 @@
-// packetParser.js
+// src/utils/parser/packetParser.js
+
 import { getProtoMessages } from '../../init/loadProto.js';
 import { VERSION } from '../../constants/header.js';
 

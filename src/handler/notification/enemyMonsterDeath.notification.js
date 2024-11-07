@@ -1,4 +1,4 @@
-﻿// File: handlers/notifications/enemyMonsterDeath.notification.js
+﻿// handlers/notifications/enemyMonsterDeath.notification.js
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';

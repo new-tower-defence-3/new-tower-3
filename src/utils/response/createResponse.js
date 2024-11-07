@@ -1,4 +1,5 @@
-// createResponse.js
+// src/utils/response/createResponse.js
+
 import {
   PACKET_TYPE_LENGTH,
   PAYLOAD_LENGTH,

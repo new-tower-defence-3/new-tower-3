@@ -1,4 +1,6 @@
-﻿import { handleError } from '../../utils/error/errorHandler.js';
+﻿// src/handler/game/stateSyncNotyHandler.js
+
+import { handleError } from '../../utils/error/errorHandler.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 
 /**

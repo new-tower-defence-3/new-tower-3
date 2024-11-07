@@ -1,33 +1,60 @@
+// src/handler/notification/matchStart.notification.js
+
 import { createResponse } from '../../utils/response/createResponse.js';
+import { PacketType } from '../../constants/header.js';
 
-const matchStartNotification = (users) => {
+const matchStartNotification = (gameSession) => {
+  gameSession.users.forEach((user) => {
+    const userState = gameSession.getUserState(user.id);
+    const opponentState = gameSession.getOpponentState(user.id);
 
-  const { initialGameState, playerData, opponentData } = getInitialData();
+    const initialGameState = {
+      baseHp: 100,
+      towerCost: 500,
+      initialGold: userState.gold,
+      monsterSpawnInterval: 1,
+    };
 
-  // `S2CMatchStartNotification` 메시지 생성
-  const matchStartNotification = {
-    initialGameState: initialGameState,
-    playerData: playerData,
-    opponentData: opponentData,
-  };
+    const playerData = {
+      gold: userState.gold,
+      base: {
+        hp: userState.baseHp,
+        maxHp: 100,
+      },
+      highScore: user.highScore || 0,
+      towers: userState.towers,
+      monsters: userState.monsters,
+      monsterLevel: 1,
+      score: 0,
+      monsterPath: generateSinePath(), // 기존 경로 생성 함수 사용
+      basePosition: { x: 1380.0, y: 350.0 },
+    };
 
-  // `GamePacket`에 래핑
-  const gamePacket = {
-    matchStartNotification: matchStartNotification,
-  };
+    const opponentData = {
+      gold: opponentState.gold,
+      base: {
+        hp: opponentState.baseHp,
+        maxHp: 100,
+      },
+      highScore: 0,
+      towers: opponentState.towers,
+      monsters: opponentState.monsters,
+      monsterLevel: 1,
+      score: 0,
+      monsterPath: generateSinePath(),
+      basePosition: { x: 1380.0, y: 350.0 },
+    };
 
-  // 응답 생성 및 전송
-  try {
-    const payload = createResponse(6, gamePacket.matchStartNotification);
-    users.forEach((user) => {
-      const socket = user.socket;
-      socket.write(payload);
-    });
-    console.log('MatchStartNotification sent successfully.');
-  } catch (error) {
-    console.error('Failed to send MatchStartNotification:', error);
-    // 필요 시 에러 처리 로직 추가
-  }
+    const matchStartNotification = {
+      initialGameState,
+      playerData,
+      opponentData,
+    };
+
+    const payload = createResponse(PacketType.MATCH_START_NOTIFICATION, matchStartNotification);
+    user.socket.write(payload);
+    console.log(`MatchStartNotification sent to ${user.username}`);
+  });
 };
 
 /**

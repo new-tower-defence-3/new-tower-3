@@ -5,15 +5,17 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정">
-      <change afterPath="$PROJECT_DIR$/src/handler/notification/enemyMonsterDeath.notification.js" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/handler/notification/monsterDeath.notification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/models/game.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/models/game.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/models/user.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/models/user.class.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/game/monsterAttackBaseRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/monsterAttackBaseRequest.handler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/game/spawnMonsterRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/spawnMonsterRequest.handler.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/game/towerAttackRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/game/towerAttackRequest.handler.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handler/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/handler/notification/spawnEnemyMonster.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/spawnEnemyMonster.notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/notification/matchStart.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/matchStart.notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/notification/monsterDeath.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/monsterDeath.notification.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/notification/updateBaseHp.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/notification/updateBaseHp.notification.js" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/handler/user/matchRequest.handler.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/user/matchRequest.handler.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/sessions/game.session.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/sessions/game.session.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

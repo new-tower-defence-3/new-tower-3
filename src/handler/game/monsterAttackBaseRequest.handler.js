@@ -1,4 +1,4 @@
-﻿// File: handlers/requests/monsterAttackBaseRequest.handler.js
+﻿// handlers/requests/monsterAttackBaseRequest.handler.js
 
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
@@ -16,18 +16,27 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   }
 
   const { damage } = payload;
-  const isPlayer = gameSession.id === user.username;
 
-  if (!isPlayer) {
-    gameSession.opponentBaseHp -= damage;
-  } else {
-    gameSession.playerBaseHp -= damage;
+  // Find the opponent user
+  const opponentUser = gameSession.users.find((u) => u.id !== user.id);
+
+  if (!opponentUser) {
+    console.error('Opponent not found for user:', user.username);
+    return;
   }
 
-  if (isPlayer) {
-    await sendUpdateBaseHpNotification(user, !isPlayer, gameSession.playerBaseHp);
-  } else {
-    await sendUpdateBaseHpNotification(user, isPlayer, gameSession.playerBaseHp);
+  // Reduce the opponent's base HP
+  const newBaseHp = gameSession.reduceBaseHp(opponentUser.id, damage);
+
+  // Send base HP update to both users
+  for (const sessionUser of gameSession.users) {
+    const isOpponentNotification = sessionUser.id === opponentUser.id;
+    const baseHp = gameSession.getUserState(opponentUser.id).baseHp;
+    await sendUpdateBaseHpNotification(
+      sessionUser,
+      isOpponentNotification,
+      baseHp,
+    );
   }
 };
 

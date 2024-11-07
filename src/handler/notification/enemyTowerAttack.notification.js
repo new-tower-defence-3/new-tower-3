@@ -1,4 +1,4 @@
-﻿// File: handlers/notifications/enemyTowerAttack.notification.js
+﻿// handlers/notifications/enemyTowerAttack.notification.js
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
