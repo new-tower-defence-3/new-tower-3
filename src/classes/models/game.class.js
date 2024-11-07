@@ -2,10 +2,17 @@ import LatencyManager from '../managers/latency.manager.js';
 import { MAX_PLAYERS } from '../../constants/header.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
+
 class Game {
   constructor(id) {
     this.id = id;
     this.users = [];
+
+    this.playerTowers = [];
+    this.playerMonsters = [];
+
+    this.opponentTowers = [];
+    this.opponentMonsters = [];
     //this.latencyManaager = new LatencyManager();
   }
 
@@ -55,6 +62,28 @@ class Game {
   //
   //     return createLocationPacket(locationData)
   // };
+
+  addPlayerTower(towerData) {
+    // towerData의 구조는 다음과 같아야 한다.
+    // { towerId: 11, x: 600.0, y: 350.0 }
+
+    this.playerTowers.push(towerData);
+  }
+
+  addPlayerMonster(monsterData) {
+    // monsterData의 구조는 다음과 같아야 한다.
+    // { monsterId: 11, monsterNumber: 1, level: 1 }
+
+    this.playerMonsters.push(monsterData);
+  }
+
+  removePlayerTower(towerId) {
+    this.playerTowers = this.playerTowers.filter(val =>  val !== towerId);
+  }  
+  
+  removePlayerMonster(monsterId) {
+    this.playerTowers = this.playerTowers.filter(val =>  val !== monsterId);
+  }
 }
 
 export default Game;

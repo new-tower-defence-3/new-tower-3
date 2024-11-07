@@ -4,7 +4,12 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정" />
+    <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정">
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/classes/models/game.class.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/classes/models/game.class.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/handler/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/handler/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/utils/notification/matchStart.notification.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/utils/notification/matchStart.notification.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,14 +53,15 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "feature-7-STATE__SYNC__NOTY-2",
+    "git-widget-placeholder": "feature-5-matchRequest",
     "ignore.virus.scanning.warn.message": "true",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
     "node.js.selected.package.eslint": "(autodetect)",
     "node.js.selected.package.tslint": "(autodetect)",
     "nodejs_package_manager_path": "npm",
-    "settings.editor.selected.configurable": "org.jetbrains.plugins.github.ui.GithubSettingsConfigurable",
+    "rider.code.cleanup.on.save": "true",
+    "settings.editor.selected.configurable": "actions.on.save",
     "ts.external.directory.path": "C:\\Users\\MARU\\AppData\\Local\\JetBrains\\Installations\\Rider233\\plugins\\javascript-plugin\\jsLanguageServicesImpl\\external",
     "vue.rearranger.settings.migration": "true"
   }

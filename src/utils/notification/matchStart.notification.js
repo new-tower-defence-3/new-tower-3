@@ -7,10 +7,12 @@ const matchStartNotification = (users) => {
     playerData: playerData,
     opponentData: opponentData,
   };
+  
   // `GamePacket`에 래핑
   const gamePacket = {
     matchStartNotification: matchStartNotification,
   };
+
   // 응답 생성 및 전송
   try {
     const payload = createResponse(6, gamePacket.matchStartNotification);
@@ -24,6 +26,8 @@ const matchStartNotification = (users) => {
     // 필요 시 에러 처리 로직 추가
   }
 };
+
+const generatedPath = generateSinePath();
 
 // 게임 초기 설정
 const initialGameState = {
@@ -49,18 +53,7 @@ const playerData = {
   monsters: [],
   monsterLevel: 1,
   score: 0,
-  monsterPath: [
-    { x: 600.0, y: 300.0 },
-    { x: 650.0, y: 300.0 },
-    { x: 700.0, y: 300.0 },
-    { x: 750.0, y: 300.0 },
-    { x: 800.0, y: 300.0 },
-    { x: 850.0, y: 300.0 },
-    { x: 900.0, y: 300.0 },
-    { x: 950.0, y: 300.0 },
-    { x: 1000.0, y: 300.0 },
-    { x: 1050.0, y: 300.0 },
-  ],
+  monsterPath: generatedPath,
   basePosition: { x: 1380.0, y: 350.0 },
 };
 
@@ -80,19 +73,37 @@ const opponentData = {
   monsters: [],
   monsterLevel: 1,
   score: 0,
-  monsterPath: [
-    { x: 600.0, y: 300.0 },
-    { x: 650.0, y: 300.0 },
-    { x: 700.0, y: 300.0 },
-    { x: 750.0, y: 300.0 },
-    { x: 800.0, y: 300.0 },
-    { x: 850.0, y: 300.0 },
-    { x: 900.0, y: 300.0 },
-    { x: 950.0, y: 300.0 },
-    { x: 1000.0, y: 300.0 },
-    { x: 1050.0, y: 300.0 },
-  ],
+  monsterPath: generatedPath,
   basePosition: { x: 1380.0, y: 350.0 },
 };
+
+function generateSinePath() {
+  const monsterPath = [];
+
+  // 설정 범위
+  const xStart = 65;
+  const xEnd = 1320;
+  const yMin = 220;
+  const yMax = 370;
+
+  // 사인 함수 파라미터
+  const amplitude = (yMax - yMin) / 1.5; // 진폭
+  const yMid = yMin + amplitude;       // 중간 y값
+  const frequency = 2 * Math.PI / (xEnd - xStart); // 주파수 조정
+
+  // 포인트 생성 간격
+  const step = 50; // x가 50씩 증가하도록 설정 (필요에 따라 조정 가능)
+
+  for (let x = xStart; x <= xEnd; x += step) {
+    // 사인 함수 계산
+    const y = yMid + amplitude * Math.sin(frequency * (x - xStart));
+    monsterPath.push({ x: parseFloat(x.toFixed(1)), y: parseFloat(y.toFixed(1)) });
+  }
+
+  // 마지막 포인트 추가
+  monsterPath.push({ x: 1380.0, y: 350.0 });
+
+  return monsterPath;
+}
 
 export default matchStartNotification;

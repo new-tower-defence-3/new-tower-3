@@ -10,103 +10,103 @@ const handlers = {
   // 회원가입 및 로그인
   [PacketType.REGISTER_REQUEST]: {
     handler: registerRequestHandler,
-    protoType: 'C2SRegisterRequest',
+    protoType: 'registerRequest',
   },
   [PacketType.REGISTER_RESPONSE]: {
     handler: undefined,
-    protoType: 'S2CRegisterResponse',
+    protoType: 'registerResponse',
   },
   [PacketType.LOGIN_REQUEST]: {
     handler: loginRequestHandler,
-    protoType: 'C2SLoginRequest',
+    protoType: 'loginRequest',
   },
   [PacketType.LOGIN_RESPONSE]: {
     handler: undefined,
-    protoType: 'S2CLoginResponse',
+    protoType: 'loginResponse',
   },
 
   // 매칭
   [PacketType.MATCH_REQUEST]: {
     handler: matchRequestHandler,
-    protoType: 'C2SMatchRequest',
+    protoType: 'matchRequest',
   },
   [PacketType.MATCH_START_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CMatchStartNotification',
+    protoType: 'matchStartNotification',
   },
 
   // 상태 동기화
   [PacketType.STATE_SYNC_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CStateSyncNotification',
+    protoType: 'stateSyncNotification',
   },
 
   // 타워 구입 및 배치
   [PacketType.TOWER_PURCHASE_REQUEST]: {
     handler: undefined,
-    protoType: 'C2STowerPurchaseRequest',
+    protoType: 'towerPurchaseRequest',
   },
   [PacketType.TOWER_PURCHASE_RESPONSE]: {
     handler: undefined,
-    protoType: 'S2CTowerPurchaseResponse',
+    protoType: 'towerPurchaseResponse',
   },
   [PacketType.ADD_ENEMY_TOWER_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CAddEnemyTowerNotification',
+    protoType: 'addEnemyTowerNotification',
   },
 
   // 몬스터 생성
   [PacketType.SPAWN_MONSTER_REQUEST]: {
     handler: SpawnMonsterRequestHandler,
-    protoType: 'C2SSpawnMonsterRequest',
+    protoType: 'spawnMonsterRequest',
   },
   [PacketType.SPAWN_MONSTER_RESPONSE]: {
     handler: undefined,
-    protoType: 'S2CSpawnMonsterResponse',
+    protoType: 'spawnMonsterResponse',
   },
   [PacketType.SPAWN_ENEMY_MONSTER_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CSpawnEnemyMonsterNotification',
+    protoType: 'spawnEnemyMonsterNotification',
   },
 
   // 전투 액션
   [PacketType.TOWER_ATTACK_REQUEST]: {
     handler: undefined,
-    protoType: 'C2STowerAttackRequest',
+    protoType: 'towerAttackRequest',
   },
   [PacketType.ENEMY_TOWER_ATTACK_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CEnemyTowerAttackNotification',
+    protoType: 'enemyTowerAttackNotification',
   },
   [PacketType.MONSTER_ATTACK_BASE_REQUEST]: {
     handler: undefined,
-    protoType: 'C2SMonsterAttackBaseRequest',
+    protoType: 'monsterAttackBaseRequest',
   },
 
   // 기지 HP 업데이트 및 게임 오버
   [PacketType.UPDATE_BASE_HP_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CUpdateBaseHPNotification',
+    protoType: 'updateBaseHpNotification',
   },
   [PacketType.GAME_OVER_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CGameOverNotification',
+    protoType: 'gameOverNotification',
   },
 
   // 게임 종료
   [PacketType.GAME_END_REQUEST]: {
     handler: undefined,
-    protoType: 'C2SGameEndRequest',
+    protoType: 'gameEndRequest',
   },
 
   // 몬스터 사망 통지
   [PacketType.MONSTER_DEATH_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'C2SMonsterDeathNotification',
+    protoType: 'monsterDeathNotification',
   },
   [PacketType.ENEMY_MONSTER_DEATH_NOTIFICATION]: {
     handler: undefined,
-    protoType: 'S2CEnemyMonsterDeathNotification',
+    protoType: 'enemyMonsterDeathNotification',
   },
 };
 
@@ -120,61 +120,12 @@ export const getHandlerByPacketType = (packetType) => {
   return handlers[packetType].handler;
 };
 
-// export const getProtoTypeNameByPacketType = (packetType) => {
-//   if (!handlers[packetType]) {
-//     throw new CustomError(
-//       ErrorCodes.UNKNOWN_HANDLER_ID,
-//       `프로토타입를 찾을 수 없습니다: ID ${packetType}`,
-//     );
-//   }
-//   return handlers[packetType].protoType;
-// };
-
 export const getProtoTypeNameByPacketType = (packetType) => {
-  switch (packetType) {
-    case PacketType.REGISTER_REQUEST:
-      return 'registerRequest';
-    case PacketType.REGISTER_RESPONSE:
-      return 'registerResponse';
-    case PacketType.LOGIN_REQUEST:
-      return 'loginRequest';
-    case PacketType.LOGIN_RESPONSE:
-      return 'loginResponse';
-    case PacketType.MATCH_REQUEST:
-      return 'matchRequest';
-    case PacketType.MATCH_START_NOTIFICATION:
-      return 'matchStartNotification';
-    case PacketType.STATE_SYNC_NOTIFICATION:
-      return 'stateSyncNotification';
-    case PacketType.TOWER_PURCHASE_REQUEST:
-      return 'towerPurchaseRequest';
-    case PacketType.TOWER_PURCHASE_RESPONSE:
-      return 'towerPurchaseResponse';
-    case PacketType.ADD_ENEMY_TOWER_NOTIFICATION:
-      return 'addEnemyTowerNotification';
-    case PacketType.SPAWN_MONSTER_REQUEST:
-      return 'spawnMonsterRequest';
-    case PacketType.SPAWN_MONSTER_RESPONSE:
-      return 'spawnMonsterResponse';
-    case PacketType.SPAWN_ENEMY_MONSTER_NOTIFICATION:
-      return 'spawnEnemyMonsterNotification';
-    case PacketType.TOWER_ATTACK_REQUEST:
-      return 'towerAttackRequest';
-    case PacketType.ENEMY_TOWER_ATTACK_NOTIFICATION:
-      return 'enemyTowerAttackNotification';
-    case PacketType.MONSTER_ATTACK_BASE_REQUEST:
-      return 'monsterAttackBaseRequest';
-    case PacketType.UPDATE_BASE_HP_NOTIFICATION:
-      return 'updateBaseHpNotification';
-    case PacketType.GAME_OVER_NOTIFICATION:
-      return 'gameOverNotification';
-    case PacketType.GAME_END_REQUEST:
-      return 'gameEndRequest';
-    case PacketType.MONSTER_DEATH_NOTIFICATION:
-      return 'monsterDeathNotification';
-    case PacketType.ENEMY_MONSTER_DEATH_NOTIFICATION:
-      return 'enemyMonsterDeathNotification';
-    default:
-      return null;
+  if (!handlers[packetType]) {
+    throw new CustomError(
+      ErrorCodes.UNKNOWN_HANDLER_ID,
+      `프로토타입를 찾을 수 없습니다: ID ${packetType}`,
+    );
   }
+  return handlers[packetType].protoType;
 };
