@@ -4,7 +4,7 @@ import CustomError from '../utils/error/customError.js';
 import registerRequestHandler from './user/registerRequest.handler.js';
 import loginRequestHandler from './user/loginRequest.handler.js';
 import matchRequestHandler from './user/matchRequest.handler.js';
-import SpawnMonsterRequestHandler from './game/spawnMonsterRequest.handler.js';
+import { spawnMonsterRequestHandler } from './game/spawnMonsterRequest.handler.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -57,7 +57,7 @@ const handlers = {
 
   // 몬스터 생성
   [PacketType.SPAWN_MONSTER_REQUEST]: {
-    handler: SpawnMonsterRequestHandler,
+    handler: spawnMonsterRequestHandler,
     protoType: 'spawnMonsterRequest',
   },
   [PacketType.SPAWN_MONSTER_RESPONSE]: {

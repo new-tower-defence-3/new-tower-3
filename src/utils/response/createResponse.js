@@ -40,12 +40,10 @@ export const createResponse = (packetType, data = null) => {
   const messageObject = {
     [protoTypeName]: data,
   };
-  console.log('Encoding message:', messageObject);
 
   let actualPayload;
   try {
     actualPayload = GamePacket.encode(messageObject).finish();
-    console.log('Encoded payload:', actualPayload);
   } catch (error) {
     console.error('Encoding failed:', error);
     throw error;
@@ -65,7 +63,5 @@ export const createResponse = (packetType, data = null) => {
   ]);
 
   // 헤더와 페이로드 결합
-  const temp = Buffer.concat([headers, actualPayload]);
-  console.log('Final packet buffer:', temp);
-  return temp;
+  return Buffer.concat([headers, actualPayload]);
 };

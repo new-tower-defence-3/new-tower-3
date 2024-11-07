@@ -14,12 +14,14 @@ export const matchRequestHandler = async ({ socket }) => {
   if (gameSessions.length === 0) {
     const gameId = user.username;
     const gameSession = addGameSession(gameId, user);
+    user.currentSessionId = gameId;
   } else {
     let isNotFull = false;
     // 생성된 게임 섹션 중 빈 곳이 있는지 탐색
     for (let i = 0; i < gameSessions.length; i++) {
       if (gameSessions[i].users.length < MAX_PLAYERS) {
         const gameSessionUsers = inviteGameSession(gameSessions[i].id, user);
+        user.currentSessionId = gameSessions[i].id;
         matchStartNotification(gameSessionUsers);
         isNotFull = true;
         break;

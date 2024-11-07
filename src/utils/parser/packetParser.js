@@ -47,3 +47,4 @@ export const packetParser = (version, sequence, data, socket) => {
 
   return messageData;
 };
+

@@ -8,16 +8,26 @@ class Game {
     this.users = [];
 
     // 방장이 플레이어
-    this.playerTowers = [];
+    this.playerTowers = [
+      { towerId: 1, x: 600.0, y: 350.0 },
+      { towerId: 2, x: 800.0, y: 350.0 },
+      { towerId: 3, x: 1000.0, y: 350.0 },
+    ];
     this.playerMonsters = [];
 
     // 방장이 아닌 쪽도 스스로는 플레이어지만
     // 서버에선 opponent로 간주
     // player는 무조건 방장!
-    this.opponentTowers = [];
+    this.opponentTowers = [
+      { towerId: 11, x: 600.0, y: 350.0 },
+      { towerId: 21, x: 800.0, y: 350.0 },
+      { towerId: 31, x: 1000.0, y: 350.0 },
+    ];
     this.opponentMonsters = [];
 
-    // 
+    this.playerBaseHp = 100;
+    this.opponentBaseHp = 100;
+
     //this.latencyManaager = new LatencyManager();
   }
 

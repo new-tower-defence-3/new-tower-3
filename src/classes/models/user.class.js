@@ -9,6 +9,8 @@ class User {
     this.lastUpdateTime = Date.now();
     this.highScore = highScore;
     this.isMatching = false;
+    
+    this.currentSessionId = '';
   }
 
   updateTime(x, y) {
