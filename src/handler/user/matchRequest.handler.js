@@ -1,12 +1,7 @@
-import { findMatchingUser, getUserBySocket, findUser } from '../../sessions/user.session.js';
+import { getUserBySocket } from '../../sessions/user.session.js';
 import { MAX_PLAYERS } from '../../constants/header.js';
-import {
-  addGameSession,
-  getGameSession,
-  getGameSessionById,
-  inviteGameSession,
-} from '../../sessions/game.session.js';
-import matchStartNotification from '../../utils/notification/matchStart.notification.js';
+import { addGameSession, getGameSession, inviteGameSession } from '../../sessions/game.session.js';
+import matchStartNotification from '../../handler/notification/matchStart.notification.js';
 
 export const matchRequestHandler = async ({ socket }) => {
   console.log('matchRequestHandler Called');

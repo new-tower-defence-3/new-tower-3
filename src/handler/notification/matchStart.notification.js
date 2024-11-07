@@ -1,4 +1,4 @@
-import { createResponse } from '../response/createResponse.js';
+import { createResponse } from '../../utils/response/createResponse.js';
 
 const matchStartNotification = (users) => {
   // `S2CMatchStartNotification` 메시지 생성
@@ -26,6 +26,12 @@ const matchStartNotification = (users) => {
     // 필요 시 에러 처리 로직 추가
   }
 };
+
+/**
+ * 여기서부터 깡통 데이터!
+ * 이걸 그대로 쓰는 게 아니라,
+ * 이런 구조로 데이터를 넘겨주면 된다는 것을 참고해야 하는 것!
+ */
 
 const generatedPath = generateSinePath();
 
@@ -57,7 +63,7 @@ const playerData = {
   basePosition: { x: 1380.0, y: 350.0 },
 };
 
-// 상대방의 게임 상태 (예시로 동일한 초기 설정 사용)
+// 상대방의 게임 상태
 const opponentData = {
   gold: initialGameState.initialGold,
   base: {
@@ -81,6 +87,7 @@ function generateSinePath() {
   const monsterPath = [];
 
   // 설정 범위
+  // 유니티에서 측정한 맵을 안벗어나는 적정 범위
   const xStart = 65;
   const xEnd = 1320;
   const yMin = 220;
@@ -100,6 +107,7 @@ function generateSinePath() {
     monsterPath.push({ x: parseFloat(x.toFixed(1)), y: parseFloat(y.toFixed(1)) });
   }
 
+  // 도착점은 베이스 좌표와 같게 설정
   // 마지막 포인트 추가
   monsterPath.push({ x: 1380.0, y: 350.0 });
 
