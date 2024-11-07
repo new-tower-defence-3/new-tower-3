@@ -1,13 +1,11 @@
 import { findMatchingUser, getUserBySocket, findUser } from '../../sessions/user.session.js';
 import { MAX_PLAYERS } from '../../constants/header.js';
-import { v4 as uuidv4 } from 'uuid';
 import {
   addGameSession,
   getGameSession,
   getGameSessionById,
   inviteGameSession,
 } from '../../sessions/game.session.js';
-import { getProtoMessages } from '../../init/loadProto.js'; // Protobuf 메시지 로드 함수
 import matchStartNotification from '../../utils/notification/matchStart.notification.js';
 
 export const matchRequestHandler = async ({ socket }) => {
@@ -19,7 +17,7 @@ export const matchRequestHandler = async ({ socket }) => {
   const gameSessions = getGameSession();
   // 생성된 게임 섹션이 없으면 생성
   if (gameSessions.length === 0) {
-    const gameId = uuidv4();
+    const gameId = user.username;
     const gameSession = addGameSession(gameId, user);
   } else {
     let isNotFull = false;
@@ -35,14 +33,10 @@ export const matchRequestHandler = async ({ socket }) => {
 
     // 빈 곳이 없다면 새로운 게임 섹션 생성
     if (!isNotFull) {
-      const gameId = uuidv4();
+      const gameId = user.username;
       const gameSession = addGameSession(gameId, user);
     }
   }
-
-  // Protobuf 메시지 로드
-  const protoMessages = getProtoMessages();
-  const S2CMatchStartNotification = protoMessages['S2CMatchStartNotification'];
 };
 
 export default matchRequestHandler;
