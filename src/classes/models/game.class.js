@@ -1,4 +1,3 @@
-import LatencyManager from '../managers/latency.manager.js';
 import { MAX_PLAYERS } from '../../constants/header.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
@@ -8,11 +7,17 @@ class Game {
     this.id = id;
     this.users = [];
 
+    // 방장이 플레이어
     this.playerTowers = [];
     this.playerMonsters = [];
 
+    // 방장이 아닌 쪽도 스스로는 플레이어지만
+    // 서버에선 opponent로 간주
+    // player는 무조건 방장!
     this.opponentTowers = [];
     this.opponentMonsters = [];
+
+    // 
     //this.latencyManaager = new LatencyManager();
   }
 
@@ -63,26 +68,43 @@ class Game {
   //     return createLocationPacket(locationData)
   // };
 
-  addPlayerTower(towerData) {
+  addTower(towerData, isPlayer) {
     // towerData의 구조는 다음과 같아야 한다.
     // { towerId: 11, x: 600.0, y: 350.0 }
 
-    this.playerTowers.push(towerData);
+    if (isPlayer) {
+      this.playerTowers.push(towerData);
+    } else {
+      this.opponentTowers.push(towerData);
+    }
   }
 
-  addPlayerMonster(monsterData) {
+  addMonster(monsterData, isPlayer) {
     // monsterData의 구조는 다음과 같아야 한다.
     // { monsterId: 11, monsterNumber: 1, level: 1 }
 
-    this.playerMonsters.push(monsterData);
+    if (isPlayer) {
+      this.playerMonsters.push(monsterData);
+    } else {
+      this.opponentMonsters.push(monsterData);
+    }
   }
 
-  removePlayerTower(towerId) {
-    this.playerTowers = this.playerTowers.filter(val =>  val !== towerId);
-  }  
-  
-  removePlayerMonster(monsterId) {
-    this.playerTowers = this.playerTowers.filter(val =>  val !== monsterId);
+  // 타워 제거가 실제로 쓰이진 않지만 일단 작성
+  removeTower(towerId, isPlayer) {
+    if (isPlayer) {
+      this.playerTowers = this.playerTowers.filter(val => val !== towerId);
+    } else {
+      this.opponentTowers = this.opponentTowers.filter(val => val !== towerId);
+    }
+  }
+
+  removeMonster(towerId, isPlayer) {
+    if (isPlayer) {
+      this.playerMonsters = this.playerMonsters.filter(val => val !== towerId);
+    } else {
+      this.opponentMonsters = this.opponentMonsters.filter(val => val !== towerId);
+    }
   }
 }
 
