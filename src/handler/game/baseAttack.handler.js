@@ -1,6 +1,6 @@
 import { getGameSession } from "../../sessions/game.session.js";
-import updateBaseHpNotification from "../../utils/notification/updateBaseHpNotification.js"; // 알림 전송 핸들러 불러오기
-import gameOverNotification from "../../utils/notification/gameOverNotification.js";
+import updateBaseHpNotification from "../../utils/notification/updateBaseHp.notification.js"; // 알림 전송 핸들러 불러오기
+import gameOverNotification from "../../utils/notification/gameOver.notification.js";
 
 const handleBaseAttackRequest = ({ socket, payload, sequence }) => {
     try {
