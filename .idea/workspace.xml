@@ -4,9 +4,7 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="🩹 fix: createResponse.js 동작 수정">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-    </list>
+    <list default="true" id="6259cfc3-7d2e-4e15-bddb-98b070861ccc" name="Changes" comment="불필요 파일 업로드 방지" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -125,7 +123,15 @@
       <option name="project" value="LOCAL" />
       <updated>1730858380515</updated>
     </task>
-    <option name="localTasksCounter" value="7" />
+    <task id="LOCAL-00007" summary="불필요 파일 업로드 방지">
+      <option name="closed" value="true" />
+      <created>1730991270853</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1730991270853</updated>
+    </task>
+    <option name="localTasksCounter" value="8" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -152,6 +158,7 @@
     <MESSAGE value=" fix: 패킷 필드 체크 수정" />
     <MESSAGE value=" fix: 변경된 패킷 정의에 맞게 수정" />
     <MESSAGE value=" fix: createResponse.js 동작 수정" />
-    <option name="LAST_COMMIT_MESSAGE" value=" fix: createResponse.js 동작 수정" />
+    <MESSAGE value="불필요 파일 업로드 방지" />
+    <option name="LAST_COMMIT_MESSAGE" value="불필요 파일 업로드 방지" />
   </component>
 </project>
