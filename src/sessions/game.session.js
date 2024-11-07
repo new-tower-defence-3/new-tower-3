@@ -12,7 +12,6 @@ export const inviteGameSession = (id, user) => {
   const session = getGameSessionById(id);
   session.addUser(user);
   return session.users;
-  //console.log('haaaa:' + session.users[0].username);
 };
 export const removeGameSession = () => {
   delete gameSessions[0];
