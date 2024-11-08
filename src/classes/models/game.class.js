@@ -4,6 +4,7 @@ class Game {
   constructor(id) {
     this.id = id;
     this.users = [];
+    this.towers = [];
     this.latencyManaager = new LatencyManager();
   }
 
@@ -36,6 +37,15 @@ class Game {
     return maxLatency;
   }
 
+  // 어떤 유저의 타워인지는 아직 안적힘
+  addTower(tower) {
+    this.towers.push(tower);
+  }
+
+  // 상대유저를 찾기
+  getOpponent(userId) {
+    return this.users.filter((user) => user.id !== userId)[0];
+}
   // getAllLocation(userId) {
   //     const maxLatency = this.getMaxLatency();
   //

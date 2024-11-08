@@ -1,0 +1,30 @@
+{
+    "name": "tower",
+    "version": "1.0.0",
+    "data": [
+      {
+        "id": 1,
+        "type": "normalTower",
+        "attack_power": 30,
+        "range": 175,
+        "cost": 100,
+        "cooldown": 180,
+        "beamDuration": 60,
+        "upgradeCost": 50,
+        "width": 50,
+        "height": 100
+      },
+      {
+        "id": 2,
+        "type": "rareTower",
+        "attack_power": 30,
+        "range": 400,
+        "cost": 250,
+        "cooldown": 300,
+        "beamDuration": 60,
+        "upgradeCost": 50,
+        "width": 50,
+        "height": 100
+      }
+    ]
+  }
