@@ -3,19 +3,16 @@
 class User {
   constructor(socket, username, latency, highScore) {
     this.socket = socket;
-    this.username = username;
+    this.id = username;
     this.latency = latency;
     this.sequence = 0;
-    this.lastUpdateTime = Date.now();
     this.highScore = highScore;
     this.isMatching = false;
     this.currentSessionId = '';
-
-    // 사용자 ID 추가 (예: username을 ID로 사용)
-    this.id = username; // 또는 고유한 ID 생성 로직 추가
+    this.lastUpdateTime = Date.now();
   }
 
-  updateTime(x, y) {
+  updateTime() {
     this.lastUpdateTime = Date.now();
   }
 
@@ -27,14 +24,6 @@ class User {
   handlerPong(data) {
     const now = Date.now();
     this.latency = (now - data.timestamp) / 2;
-  }
-
-  matchingOn() {
-    this.isMatching = true;
-  }
-
-  matchingOff() {
-    this.isMatching = false;
   }
 }
 

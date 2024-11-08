@@ -49,7 +49,7 @@ class Game {
 
   removeUser(socket) {
     const index = this.users.findIndex((user) => user.socket === socket);
-    if (index != -1) {
+    if (index !== -1) {
       const removedUser = this.users.splice(index, 1)[0];
       delete this.gameStates[removedUser.id];
       return removedUser;
@@ -70,19 +70,12 @@ class Game {
       monsterId,
       monsterNumber,
       level,
-      hp: this.calculateMonsterHp(monsterNumber, level),
       // 추가 정보 필요 시 추가
     };
 
     const userState = this.getUserState(userId);
     userState.monsters.push(monsterData);
     return monsterData;
-  }
-
-  calculateMonsterHp(monsterNumber, level) {
-    const baseHp = 100;
-    const hpPerLevel = 20;
-    return baseHp + hpPerLevel * (level - 1);
   }
 
   findMonster(userId, monsterId) {

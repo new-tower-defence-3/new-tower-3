@@ -9,12 +9,6 @@ export const addGameSession = (id) => {
   return session;
 };
 
-export const inviteGameSession = (id, user) => {
-  const session = getGameSessionById(id);
-  session.addUser(user);
-  return session;
-};
-
 export const removeGameSession = (id) => {
   const index = gameSessions.findIndex((session) => session.id === id);
   if (index !== -1) {
