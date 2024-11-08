@@ -70,7 +70,7 @@ const getInitialData = () => {
   const initialGameState = {
     baseHp: 100, // 기지 초기 체력
     towerCost: 500, // 타워 구매 비용
-    initialGold: 1000, // 초기 골드
+    initialGold: 50000, // 초기 골드
     monsterSpawnInterval: 1, // 몬스터 스폰 간격 (초 단위)
   };
 

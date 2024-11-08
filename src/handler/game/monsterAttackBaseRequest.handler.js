@@ -26,7 +26,7 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   }
 
   // Reduce the opponent's base HP
-  const newBaseHp = gameSession.reduceBaseHp(opponentUser.id, damage);
+  const newBaseHp = gameSession.reduceBaseHp(user.id, damage);
 
   // Send base HP update to both users
   for (const sessionUser of gameSession.users) {
@@ -35,7 +35,7 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
     await sendUpdateBaseHpNotification(
       sessionUser,
       isOpponentNotification,
-      baseHp,
+      newBaseHp,
     );
   }
 };

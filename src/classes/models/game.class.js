@@ -3,6 +3,8 @@
 import { MAX_PLAYERS } from '../../constants/header.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
+import IntervalManager from '../managers/intervalManager.js';
+import sendStateSyncNotification from '../../handler/notification/stateSync.notification.js';
 
 class Game {
   constructor(id) {
@@ -13,6 +15,8 @@ class Game {
     this.gameStates = {}; // { userId: { towers: [], monsters: [], baseHp: 100, gold: 1000, ... } }
     this.monsterIdCounter = 1000;
     this.towerIdCounter = 1;
+
+    this.intervalManager = new IntervalManager();
   }
 
   addUser(user) {
@@ -29,7 +33,7 @@ class Game {
         ],
         monsters: [],
         baseHp: 100,
-        gold: 1000,
+        gold: 50000,
       };
     }
   }
@@ -52,6 +56,8 @@ class Game {
     if (index !== -1) {
       const removedUser = this.users.splice(index, 1)[0];
       delete this.gameStates[removedUser.id];
+
+      this.intervalManager.removeUser(removedUser.id);
       return removedUser;
     }
   }
@@ -95,6 +101,10 @@ class Game {
     const userState = this.getUserState(userId);
     userState.baseHp -= damage;
     return userState.baseHp;
+  }
+
+  commenceSync() {
+    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 1000);
   }
 
   // 필요에 따라 추가 메서드 작성

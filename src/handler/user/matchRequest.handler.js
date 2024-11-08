@@ -2,7 +2,7 @@
 
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { MAX_PLAYERS } from '../../constants/header.js';
-import { addGameSession, getGameSession } from '../../sessions/game.session.js';
+import { addGameSession, getGameSession, getGameSessionById } from '../../sessions/game.session.js';
 import matchStartNotification from '../../handler/notification/matchStart.notification.js';
 
 export const matchRequestHandler = async ({ socket }) => {
@@ -32,6 +32,8 @@ export const matchRequestHandler = async ({ socket }) => {
 
   if (joinedSession.users.length === MAX_PLAYERS) {
     matchStartNotification(joinedSession);
+    const currenGameSession = getGameSessionById(joinedSession.id);
+    currenGameSession.commenceSync();
   }
 };
 

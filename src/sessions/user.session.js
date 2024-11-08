@@ -29,6 +29,6 @@ export const getAllUser = async () => {
 };
 
 export const findUser = async (username) => {
-  const findSession = userSessions.find((a) => a.id === username);
-  return findSession;
+  const foundUser = userSessions.find((a) => a.id === username);
+  return foundUser;
 };

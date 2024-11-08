@@ -1,6 +1,7 @@
 // src/classes/models/user.class.js
 
 class User {
+
   constructor(socket, username, latency, highScore) {
     this.socket = socket;
     this.id = username;

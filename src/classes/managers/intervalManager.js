@@ -1,4 +1,6 @@
-class LatencyManager {
+// src/classes/managers/intervalManager.js
+
+class IntervalManager {
   constructor() {
     this.intervals = new Map();
   }
@@ -26,4 +28,4 @@ class LatencyManager {
   }
 }
 
-export default LatencyManager;
+export default IntervalManager;
