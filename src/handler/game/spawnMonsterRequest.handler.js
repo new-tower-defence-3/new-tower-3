@@ -5,11 +5,12 @@ import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendSpawnEnemyMonsterNotification } from '../notification/spawnEnemyMonster.notification.js';
 import { PacketType } from '../../constants/header.js';
 import { createResponse } from '../../utils/response/createResponse.js';
+import { getUserBySocketRedis } from '../../sessions/user.redis.js';
 
 export const spawnMonsterRequestHandler = async ({ socket }) => {
   console.log('spawnMonsterRequestHandler Called');
 
-  const user = await getUserBySocket(socket);
+  const user = await getUserBySocketRedis(socket.id);
   const gameSession = getGameSessionById(user.currentSessionId);
 
   if (!gameSession) {
@@ -18,7 +19,7 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
   }
 
   const userState = gameSession.getUserState(user.id);
-  const opponentUser = gameSession.users.find(u => u.id !== user.id);
+  const opponentUser = gameSession.users.find((u) => u.id !== user.id);
   const opponentState = gameSession.getUserState(opponentUser.id);
 
   const monsterLevel = 1;
@@ -37,7 +38,11 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
   console.log('SpawnMonsterResponse sent to player:', user.id);
 
   // 상대방에게 SpawnEnemyMonsterNotification 전송
-  await sendSpawnEnemyMonsterNotification(opponentUser, newMonster.monsterId, newMonster.monsterNumber);
+  await sendSpawnEnemyMonsterNotification(
+    opponentUser,
+    newMonster.monsterId,
+    newMonster.monsterNumber,
+  );
 };
 
 export default spawnMonsterRequestHandler;

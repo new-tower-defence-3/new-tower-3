@@ -2,59 +2,87 @@
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
+import { deleteMatchingUserRedis, startMatchGameRedis } from '../../sessions/matching.redis.js';
+import { addGameSessionRedis } from '../../sessions/game.redis.js';
+import { v4 as uuidv4 } from 'uuid';
+import { saveSocket } from '../../events/onConnection.js';
 
-const matchStartNotification = (gameSession) => {
-  gameSession.users.forEach((user) => {
-    const userState = gameSession.getUserState(user.id);
-    const opponentState = gameSession.getOpponentState(user.id);
+const matchStartNotification = async (gameSession) => {
+  // gameSession.users.forEach((user) => {
+  //   const userState = gameSession.getUserState(user.id);
+  //   const opponentState = gameSession.getOpponentState(user.id);
 
-    const initialGameState = {
-      baseHp: 100,
-      towerCost: 500,
-      initialGold: userState.gold,
-      monsterSpawnInterval: 1,
-    };
+  //   const payload = createResponse(PacketType.MATCH_START_NOTIFICATION, matchStartNotification);
+  //   user.socket.write(payload);
+  //   console.log(`MatchStartNotification sent to ${user.id}`);
+  // });
 
-    const playerData = {
-      gold: userState.gold,
-      base: {
-        hp: userState.baseHp,
-        maxHp: 100,
-      },
-      highScore: user.highScore || 0,
-      towers: userState.towers,
-      monsters: userState.monsters,
-      monsterLevel: 1,
-      score: 0,
-      monsterPath: generateSinePath(), // 기존 경로 생성 함수 사용
-      basePosition: { x: 1380.0, y: 350.0 },
-    };
+  // const initialGameState = {
+  //   baseHp: 100,
+  //   towerCost: 500,
+  //   initialGold: userState.gold,
+  //   monsterSpawnInterval: 1,
+  // };
 
-    const opponentData = {
-      gold: opponentState.gold,
-      base: {
-        hp: opponentState.baseHp,
-        maxHp: 100,
-      },
-      highScore: 0,
-      towers: opponentState.towers,
-      monsters: opponentState.monsters,
-      monsterLevel: 1,
-      score: 0,
-      monsterPath: generateSinePath(),
-      basePosition: { x: 1380.0, y: 350.0 },
-    };
+  // const playerData = {
+  //   gold: userState.gold,
+  //   base: {
+  //     hp: userState.baseHp,
+  //     maxHp: 100,
+  //   },
+  //   highScore: user.highScore || 0,
+  //   towers: userState.towers,
+  //   monsters: userState.monsters,
+  //   monsterLevel: 1,
+  //   score: 0,
+  //   monsterPath: generateSinePath(), // 기존 경로 생성 함수 사용
+  //   basePosition: { x: 1380.0, y: 350.0 },
+  // };
 
-    const matchStartNotification = {
-      initialGameState,
-      playerData,
-      opponentData,
-    };
+  // const opponentData = {
+  //   gold: opponentState.gold,
+  //   base: {
+  //     hp: opponentState.baseHp,
+  //     maxHp: 100,
+  //   },
+  //   highScore: 0,
+  //   towers: opponentState.towers,
+  //   monsters: opponentState.monsters,
+  //   monsterLevel: 1,
+  //   score: 0,
+  //   monsterPath: generateSinePath(),
+  //   basePosition: { x: 1380.0, y: 350.0 },
+  // };
 
-    const payload = createResponse(PacketType.MATCH_START_NOTIFICATION, matchStartNotification);
-    user.socket.write(payload);
-    console.log(`MatchStartNotification sent to ${user.id}`);
-  });
+  // const notification = {
+  //   initialGameState,
+  //   playerData,
+  //   opponentData,
+  // };
+
+  try {
+    // matching 리스트의 길이 확인
+    const listLength = await startMatchGameRedis();
+
+    // 대기 유저가 2명 이상일 때
+    if (listLength.length >= 2) {
+      // 게임 시작
+
+      const asdfasdf = getInitialData();
+      const registerResponse = createResponse(PacketType.MATCH_START_NOTIFICATION, asdfasdf);
+
+      await deleteMatchingUserRedis();
+
+      for (let i = 0; i < 2; i++) {
+        await addGameSessionRedis(listLength[i]);
+        saveSocket.get(listLength[i]).write(registerResponse);
+      }
+    } else {
+      console.log('대기 유저 인원 부족... ', listLength);
+    }
+  } catch (error) {
+    console.error('매칭 대기 에러', error);
+  }
 };
 
 /**
@@ -66,7 +94,7 @@ const matchStartNotification = (gameSession) => {
 const getInitialData = () => {
   const generatedPath = generateSinePath();
 
-// 게임 초기 설정
+  // 게임 초기 설정
   const initialGameState = {
     baseHp: 100, // 기지 초기 체력
     towerCost: 500, // 타워 구매 비용
@@ -74,7 +102,7 @@ const getInitialData = () => {
     monsterSpawnInterval: 1, // 몬스터 스폰 간격 (초 단위)
   };
 
-// 플레이어의 게임 상태
+  // 플레이어의 게임 상태
   const playerData = {
     gold: initialGameState.initialGold,
     base: {
@@ -94,7 +122,7 @@ const getInitialData = () => {
     basePosition: { x: 1380.0, y: 350.0 },
   };
 
-// 상대방의 게임 상태
+  // 상대방의 게임 상태
   const opponentData = {
     gold: initialGameState.initialGold,
     base: {
@@ -129,8 +157,8 @@ function generateSinePath() {
 
   // 사인 함수 파라미터
   const amplitude = (yMax - yMin) / 1.5; // 진폭
-  const yMid = yMin + amplitude;       // 중간 y값
-  const frequency = 2 * Math.PI / (xEnd - xStart); // 주파수 조정
+  const yMid = yMin + amplitude; // 중간 y값
+  const frequency = (2 * Math.PI) / (xEnd - xStart); // 주파수 조정
 
   // 포인트 생성 간격
   const step = 50; // x가 50씩 증가하도록 설정 (필요에 따라 조정 가능)

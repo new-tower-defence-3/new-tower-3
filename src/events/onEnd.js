@@ -8,6 +8,6 @@ export const onEnd = (socket) => async () => {
 
   await removeUser(socket);
 
-  const gameSession = getGameSession();
-  gameSession.removeUser(socket);
+  // const gameSession = getGameSession();
+  // gameSession.removeUser(socket);
 };
