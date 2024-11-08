@@ -37,3 +37,7 @@ export const findMatchingUser = async () => {
   const findSession = userSessions.filter((user) => user.isMatching === true);
   return findSession;
 };
+
+export const addUserRedis = async (username) => {
+  return username;
+};

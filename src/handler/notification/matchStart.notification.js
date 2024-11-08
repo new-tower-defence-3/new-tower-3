@@ -1,13 +1,38 @@
+import { PacketType } from '../../constants/header.js';
+import { saveSocket } from '../../events/onConnection.js';
+import { deleteMatchingUserRedis, startMatchGameRedis } from '../../sessions/matching.redis.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 
-const matchStartNotification = (users) => {
+const matchStartNotification = async (users) => {
+  try {
+    // matching 리스트의 길이 확인
+    const listLength = await startMatchGameRedis();
+
+    // 대기 유저가 2명 이상일 때
+    if (listLength.length >= 2) {
+      const responsePayload = {};
+      const registerResponse = createResponse(PacketType.MATCH_START_NOTIFICATION, responsePayload);
+      await deleteMatchingUserRedis();
+
+      for (let i = 0; i < 2; i++) {
+        saveSocket.get(listLength[i]).write(registerResponse);
+      }
+    } else {
+      console.log('대기 유저 인원 부족... ', listLength);
+    }
+  } catch (error) {
+    console.error('매칭 대기 에러', error);
+  }
+
+  /*
+
   // `S2CMatchStartNotification` 메시지 생성
   const matchStartNotification = {
     initialGameState: initialGameState,
     playerData: playerData,
     opponentData: opponentData,
   };
-  
+
   // `GamePacket`에 래핑
   const gamePacket = {
     matchStartNotification: matchStartNotification,
@@ -26,12 +51,15 @@ const matchStartNotification = (users) => {
     // 필요 시 에러 처리 로직 추가
   }
 };
+*/
 
-/**
- * 여기서부터 깡통 데이터!
- * 이걸 그대로 쓰는 게 아니라,
- * 이런 구조로 데이터를 넘겨주면 된다는 것을 참고해야 하는 것!
- */
+  /**
+   * 여기서부터 깡통 데이터!
+   * 이걸 그대로 쓰는 게 아니라,
+   * 이런 구조로 데이터를 넘겨주면 된다는 것을 참고해야 하는 것!
+   */
+
+  /* 
 
 const generatedPath = generateSinePath();
 
@@ -95,8 +123,8 @@ function generateSinePath() {
 
   // 사인 함수 파라미터
   const amplitude = (yMax - yMin) / 1.5; // 진폭
-  const yMid = yMin + amplitude;       // 중간 y값
-  const frequency = 2 * Math.PI / (xEnd - xStart); // 주파수 조정
+  const yMid = yMin + amplitude; // 중간 y값
+  const frequency = (2 * Math.PI) / (xEnd - xStart); // 주파수 조정
 
   // 포인트 생성 간격
   const step = 50; // x가 50씩 증가하도록 설정 (필요에 따라 조정 가능)
@@ -112,6 +140,7 @@ function generateSinePath() {
   monsterPath.push({ x: 1380.0, y: 350.0 });
 
   return monsterPath;
-}
+  */
+};
 
 export default matchStartNotification;

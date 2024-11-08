@@ -7,8 +7,8 @@ import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
 import { PacketType } from '../../constants/header.js';
 import { createResponse } from '../../utils/response/createResponse.js';
-import { addUser, findUser } from '../../sessions/user.session.js';
 import User from '../../classes/models/user.class.js';
+import { addUserRedis, checkUserRedis } from '../../sessions/user.redis.js';
 
 const loginRequestHandler = async ({ socket, payload, sequence }) => {
   try {
@@ -28,16 +28,22 @@ const loginRequestHandler = async ({ socket, payload, sequence }) => {
     }
 
     // 중복 로그인 방지를 위한
-    const findSession = await findUser(id);
+    const findSession = await checkUserRedis(id);
 
-    if (findSession) {
+    if (findSession === true) {
       makeResponse(socket, false, '이미 접속중인 아이디', '', 2);
     }
 
     // 유저 클래스 생성
     const loginUser = new User(socket, id, 50, checkExistId.highScore);
-    await addUser(loginUser);
+    const userData = {
+      username: id,
+      connectionKey: socket.server._connectionKey,
+      highScore: checkExistId.highScore,
+    };
+    await addUserRedis(socket.id, userData);
     await updateUserLogin(id);
+    // await findUserRedis();
 
     // 토큰 생성
     const accessToken = jwt.sign(

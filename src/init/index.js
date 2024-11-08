@@ -2,6 +2,7 @@ import { addGameSession } from '../sessions/game.session.js';
 import { loadProtos } from './loadProto.js';
 import { v4 as uuidv4 } from 'uuid';
 import testConnection from '../utils/db/testConnection.js';
+import matchStartNotification from '../handler/notification/matchStart.notification.js';
 
 const initServer = async () => {
   try {
