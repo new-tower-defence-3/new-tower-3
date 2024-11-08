@@ -53,7 +53,7 @@ const matchStartNotification = (gameSession) => {
 
     const payload = createResponse(PacketType.MATCH_START_NOTIFICATION, matchStartNotification);
     user.socket.write(payload);
-    console.log(`MatchStartNotification sent to ${user.username}`);
+    console.log(`MatchStartNotification sent to ${user.id}`);
   });
 };
 

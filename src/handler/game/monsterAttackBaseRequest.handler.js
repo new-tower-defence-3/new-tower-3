@@ -11,7 +11,7 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   const gameSession = getGameSessionById(user.currentSessionId);
 
   if (!gameSession) {
-    console.error('Game session not found for user:', user.username);
+    console.error('Game session not found for user:', user.id);
     return;
   }
 
@@ -21,7 +21,7 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   const opponentUser = gameSession.users.find((u) => u.id !== user.id);
 
   if (!opponentUser) {
-    console.error('Opponent not found for user:', user.username);
+    console.error('Opponent not found for user:', user.id);
     return;
   }
 

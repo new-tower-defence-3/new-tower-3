@@ -12,7 +12,7 @@ export const sendEnemyMonsterDeathNotification = async (user, monsterId) => {
 
   try {
     user.socket.write(payload);
-    console.log('EnemyMonsterDeathNotification sent to user:', user.username);
+    console.log('EnemyMonsterDeathNotification sent to user:', user.id);
   } catch (error) {
     console.error('Failed to send EnemyMonsterDeathNotification:', error);
   }

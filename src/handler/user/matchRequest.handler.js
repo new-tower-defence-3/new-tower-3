@@ -22,7 +22,8 @@ export const matchRequestHandler = async ({ socket }) => {
   }
 
   if (!joinedSession) {
-    const gameId = user.username;
+    const gameId = user.id;
+    console.log(user.id);
     const gameSession = addGameSession(gameId);
     gameSession.addUser(user);
     user.currentSessionId = gameId;

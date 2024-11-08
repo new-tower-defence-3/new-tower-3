@@ -14,7 +14,7 @@ export const sendUpdateBaseHpNotification = async (user, isOpponent, baseHp) => 
 
   try {
     user.socket.write(payload);
-    console.log('UpdateBaseHpNotification sent to user:', user.username);
+    console.log('UpdateBaseHpNotification sent to user:', user.id);
   } catch (error) {
     console.error('Failed to send UpdateBaseHpNotification:', error);
   }

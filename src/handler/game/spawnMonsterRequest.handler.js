@@ -13,7 +13,7 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
   const gameSession = getGameSessionById(user.currentSessionId);
 
   if (!gameSession) {
-    console.error('Game session not found for user:', user.username);
+    console.error('Game session not found for user:', user.id);
     return;
   }
 
@@ -34,7 +34,7 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
 
   const payload = createResponse(PacketType.SPAWN_MONSTER_RESPONSE, spawnMonsterResponse);
   user.socket.write(payload);
-  console.log('SpawnMonsterResponse sent to player:', user.username);
+  console.log('SpawnMonsterResponse sent to player:', user.id);
 
   // 상대방에게 SpawnEnemyMonsterNotification 전송
   await sendSpawnEnemyMonsterNotification(opponentUser, newMonster.monsterId, newMonster.monsterNumber);

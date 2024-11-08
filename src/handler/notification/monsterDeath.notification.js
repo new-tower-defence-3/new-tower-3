@@ -11,7 +11,7 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
   const gameSession = getGameSessionById(user.currentSessionId);
 
   if (!gameSession) {
-    console.error('Game session not found for user:', user.username);
+    console.error('Game session not found for user:', user.id);
     return;
   }
 
@@ -24,7 +24,7 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
   const opponentUser = gameSession.users.find(u => u.id !== user.id);
   if (opponentUser) {
     await sendEnemyMonsterDeathNotification(opponentUser, monsterId);
-    console.log(`EnemyMonsterDeathNotification sent to ${opponentUser.username}`);
+    console.log(`EnemyMonsterDeathNotification sent to ${opponentUser.id}`);
   } else {
     console.error('Opponent user not found in game session');
   }
