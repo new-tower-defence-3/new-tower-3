@@ -9,7 +9,6 @@ class User {
     this.lastUpdateTime = Date.now();
     this.highScore = highScore;
     this.isMatching = false;
-    this.baseHp = 100;
   }
 
   updateTime(x, y) {
@@ -32,11 +31,6 @@ class User {
 
   matchingOff() {
     this.isMatching = false;
-  }
-
-  // 기지 HP 업데이트 메서드
-  updateBaseHp(damage) {
-    this.baseHp -= damage;
   }
 }
 

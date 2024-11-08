@@ -1,6 +1,6 @@
 import { getGameSession } from "../../sessions/game.session.js";
-import updateBaseHpNotification from "../../utils/notification/updateBaseHp.notification.js"; // 알림 전송 핸들러 불러오기
-import gameOverNotification from "../../utils/notification/gameOver.notification.js";
+import updateBaseHpNotification from "../notification/updateBaseHp.notification.js"; // 알림 전송 핸들러 불러오기
+import gameOverNotification from "../notification/gameOver.notification.js";
 
 const handleBaseAttackRequest = ({ socket, payload, sequence }) => {
     try {
@@ -26,8 +26,8 @@ const handleBaseAttackRequest = ({ socket, payload, sequence }) => {
             console.error("Opponent not found");
         }
 
-        // 해당 유저의 기지 HP 업데이트
-        user.updateBaseHp(damage);
+        // 게임 세션에서 baseHp 업데이트
+        gameSession.updateBaseHp(damage);
 
         // 기지 HP 업데이트 알림을 전달하는 핸들러 호출
         updateBaseHpNotification(user, opponent);

@@ -17,6 +17,8 @@ class Game {
     this.opponentTowers = [];
     this.opponentMonsters = [];
 
+    this.playerBaseHp = 100;
+    this.opponentBaseHp = 100;
     // 
     //this.latencyManaager = new LatencyManager();
   }
@@ -110,6 +112,14 @@ class Game {
       this.playerMonsters = this.playerMonsters.filter(val => val !== towerId);
     } else {
       this.opponentMonsters = this.opponentMonsters.filter(val => val !== towerId);
+    }
+  }
+
+  // 기지 체력 업데이트 메서드
+  updateUserBaseHp(userId, damage) {
+    const user = this.getUser(userId);
+    if (user) {
+      user.baseHp -= damage; // baseHp에서 damage만큼 감소
     }
   }
 }

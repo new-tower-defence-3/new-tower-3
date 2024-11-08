@@ -1,5 +1,5 @@
-import { createResponse } from "../response/createResponse.js";
-import { PacketType, RESPONSE_SUCCESS_CODE } from "../../constants/handlerids.js";
+import { PacketType } from "../../constants/header.js";
+import { createResponse } from "../../utils/response/createResponse.js";
 
 const updateBaseHpNotification = (user, opponent) => {
     // 현재 사용자에게 기지 HP 업데이트 패킷 전송
