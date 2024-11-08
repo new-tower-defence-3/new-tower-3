@@ -68,13 +68,13 @@ const matchStartNotification = async (gameSession) => {
     if (listLength.length >= 2) {
       // 게임 시작
 
-      const asdfasdf = getInitialData();
-      const registerResponse = createResponse(PacketType.MATCH_START_NOTIFICATION, asdfasdf);
+      const initialData = getInitialData();
+      const registerResponse = createResponse(PacketType.MATCH_START_NOTIFICATION, initialData);
 
       await deleteMatchingUserRedis();
 
       for (let i = 0; i < 2; i++) {
-        await addGameSessionRedis(listLength[i]);
+        await addGameSessionRedis(listLength[i], listLength[1 - i]);
         saveSocket.get(listLength[i]).write(registerResponse);
       }
     } else {

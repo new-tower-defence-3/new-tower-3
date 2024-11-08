@@ -28,16 +28,19 @@ export const getUserBySocketRedis = async (socketId) => {
   const result = []; // 결과를 담을 배열
 
   // scanIterator를 사용하여 패턴에 맞는 키를 찾음
-  for await (const key of redisClient.scanIterator({ MATCH: '*' + socketId })) {
+  for await (const key of redisClient.scanIterator({ MATCH: KEY_PREFIX + '*' + socketId })) {
     // 해당 키의 모든 해시 값 가져오기
     const hashValues = await redisClient.hGetAll(key);
-    V;
     // 해시 값이 존재하면 배열에 추가
     if (Object.keys(hashValues).length > 0) {
-      result.push({ key, hashalues });
+      result.push({ key, hashValues });
     }
   }
 
   // 찾은 해시 값들 배열 반환
   return result;
+};
+
+export const testRedisReset = async () => {
+  const reset = await redisClient.flushAll();
 };
