@@ -3,17 +3,17 @@ import { getUserBySocket } from '../../sessions/user.session.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
 
-const towerPurchaseHandler = ({ socket, payload }) => {
+const towerPurchaseHandler = async ({ socket, payload }) => {
     const { x, y } = payload;
 
     // 유저 정보 갖고 오기, 검증
-    const user = getUserBySocket(socket);
+    const user = await getUserBySocket(socket);
     if (!user) {
         return;
     }
 
     // 유저의 게임 세션 불러오기
-    const gameSession = getGameSessionById(user.id);
+    const gameSession = getGameSessionById(user.currentSessionId);
     if (!gameSession) {
         return;
     }
