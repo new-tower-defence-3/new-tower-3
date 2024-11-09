@@ -6,6 +6,8 @@ import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
 import { sendAddEnemyTowerNotification } from '../notification/addEnemyTower.notification.js';
 
+const TOWER_COST = 3000;
+
 export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
   console.log('towerPurchaseRequestHandler Called');
 
@@ -23,21 +25,18 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
 
   const userState = gameSession.getUserState(user.id);
 
-  const towerCost = 3000;
-
   // 유저의 골드가 충분한지 확인
-  if (userState.gold < towerCost) {
+  if (userState.gold < TOWER_COST) {
     console.error('Not enough gold to purchase tower');
     return;
   }
 
-  userState.gold -= towerCost;
+  userState.gold -= TOWER_COST;
 
   const { x, y } = payload;
   const newTower = gameSession.addTower(user.id, { x, y });
   console.log("New Tower Data:", newTower);
-
-
+  
   // 클라이언트에게 타워 구매 응답 전송
   const towerPurchaseResponse = {
     towerId: newTower.towerId
