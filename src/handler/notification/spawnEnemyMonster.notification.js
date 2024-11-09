@@ -18,6 +18,6 @@ export const sendSpawnEnemyMonsterNotification = async (opponentUser, monsterId,
     opponentUser.socket.write(notificationPayload);
   } catch (error) {
     console.error('S2CSpawnEnemyMonsterNotification 전송 중 오류 발생:', error);
-    throw error; // 호출자에게 에러를 전달
+    throw error;
   }
 };

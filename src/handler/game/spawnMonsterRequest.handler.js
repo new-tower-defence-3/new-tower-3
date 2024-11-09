@@ -7,7 +7,6 @@ import { PacketType } from '../../constants/header.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 
 export const spawnMonsterRequestHandler = async ({ socket }) => {
-  console.log('spawnMonsterRequestHandler Called');
 
   const user = await getUserBySocket(socket);
   const gameSession = getGameSessionById(user.currentSessionId);
@@ -34,7 +33,6 @@ export const spawnMonsterRequestHandler = async ({ socket }) => {
 
   const payload = createResponse(PacketType.SPAWN_MONSTER_RESPONSE, spawnMonsterResponse);
   user.socket.write(payload);
-  console.log('SpawnMonsterResponse sent to player:', user.id);
 
   // 상대방에게 SpawnEnemyMonsterNotification 전송
   await sendSpawnEnemyMonsterNotification(opponentUser, newMonster.monsterId, newMonster.monsterNumber);

@@ -12,7 +12,6 @@ export const sendGameOverNotification = async (user, isWin) => {
 
   try {
     user.socket.write(payload);
-    console.log('GameOverNotification sent to user:', user.id);
   } catch (error) {
     console.error('Failed to send GameOverNotification:', error);
   }

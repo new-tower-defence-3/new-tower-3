@@ -60,7 +60,6 @@ export const sendStateSyncNotification = async (userId) => {
 
   try {
     user.socket.write(payload);
-    console.log(`StateSyncNotification sent to ${user.id}`);
   } catch (error) {
     handleError(user.socket, error);
   }

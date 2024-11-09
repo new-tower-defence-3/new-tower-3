@@ -5,7 +5,6 @@ import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendEnemyTowerAttackNotification } from '../notification/enemyTowerAttack.notification.js';
 
 export const towerAttackRequestHandler = async ({ socket, payload }) => {
-  console.log('towerAttackRequestHandler Called');
 
   const user = await getUserBySocket(socket);
   const gameSession = getGameSessionById(user.currentSessionId);
@@ -21,7 +20,6 @@ export const towerAttackRequestHandler = async ({ socket, payload }) => {
   const opponentUser = gameSession.users.find(u => u.id !== user.id);
   if (opponentUser) {
     await sendEnemyTowerAttackNotification(opponentUser, towerId, monsterId);
-    console.log(`EnemyTowerAttackNotification sent to ${opponentUser.id}`);
   } else {
     console.error('Opponent user not found in game session');
   }

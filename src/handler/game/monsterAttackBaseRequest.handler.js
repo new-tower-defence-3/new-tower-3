@@ -5,7 +5,6 @@ import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendUpdateBaseHpNotification } from '../notification/updateBaseHp.notification.js';
 
 export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
-  console.log('monsterAttackBaseRequestHandler Called');
 
   const user = await getUserBySocket(socket);
   const gameSession = getGameSessionById(user.currentSessionId);
