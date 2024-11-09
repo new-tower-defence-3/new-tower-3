@@ -8,6 +8,7 @@ import { spawnMonsterRequestHandler } from './game/spawnMonsterRequest.handler.j
 import { towerAttackRequestHandler } from './game/towerAttackRequest.handler.js';
 import monsterAttackBaseRequestHandler from './game/monsterAttackBaseRequest.handler.js';
 import monsterDeathNotification from './notification/monsterDeath.notification.js';
+import towerPurchaseHandler from './tower/towerPurchase.handler.js';
 
 const handlers = {
   // 회원가입 및 로그인
@@ -46,7 +47,7 @@ const handlers = {
 
   // 타워 구입 및 배치
   [PacketType.TOWER_PURCHASE_REQUEST]: {
-    handler: undefined,
+    handler: towerPurchaseHandler,
     protoType: 'towerPurchaseRequest',
   },
   [PacketType.TOWER_PURCHASE_RESPONSE]: {

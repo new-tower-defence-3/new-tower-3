@@ -14,7 +14,7 @@ class Game {
     // 각 플레이어별 상태 관리
     this.gameStates = {}; // { userId: { towers: [], monsters: [], baseHp: 100, gold: 1000, ... } }
     this.monsterIdCounter = 1000;
-    this.towerIdCounter = 1;
+    this.towerIdCounter = 4;
 
     this.intervalManager = new IntervalManager();
   }
