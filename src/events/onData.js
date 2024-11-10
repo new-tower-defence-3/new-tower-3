@@ -1,3 +1,5 @@
+// src/events/onData.js
+
 import { TOTAL_LENGTH } from '../constants/header.js';
 import { getHandlerByPacketType } from '../handler/index.js';
 import { packetParser } from '../utils/parser/packetParser.js';
