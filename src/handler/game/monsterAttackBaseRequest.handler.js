@@ -3,6 +3,8 @@
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendUpdateBaseHpNotification } from '../notification/updateBaseHp.notification.js';
+import { sendGameOverNotification } from '../notification/gameOver.notification.js';
+import gameEndRHandler from './gameEnd.handler.js';
 
 export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
   console.log('monsterAttackBaseRequestHandler Called');
@@ -37,7 +39,15 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
       isOpponentNotification,
       newBaseHp,
     );
+
+    if (newBaseHp <= 0) {
+      sendGameOverNotification(opponentUser, user)
+      await gameEndRHandler(socket);
+      return;
+    }
   }
+
+
 };
 
 export default monsterAttackBaseRequestHandler;
