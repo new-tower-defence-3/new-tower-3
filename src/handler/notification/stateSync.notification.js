@@ -55,11 +55,25 @@ export const sendStateSyncNotification = async (userId) => {
     monsters: userState.monsters,
   };
 
+  const opponentUser = gameSession.users.find(u => u.id !== user.id);
+  const opponentState = gameSession.getOpponentState(user.id);
+
+  const opponentStateSyncNotification = {
+    userGold: opponentState.gold,
+    baseHp: opponentState.baseHp,
+    monsterLevel: opponentState.monsterLevel || 1,
+    score: opponentState.score || 0,
+    towers: opponentState.towers,
+    monsters: opponentState.monsters,
+  };
+
 
   const payload = createResponse(PacketType.STATE_SYNC_NOTIFICATION, stateSyncNotification);
+  const opponentPayload = createResponse(PacketType.STATE_SYNC_NOTIFICATION, opponentStateSyncNotification);
 
   try {
     user.socket.write(payload);
+    opponentUser.socket.write(opponentPayload);
   } catch (error) {
     handleError(user.socket, error);
   }
