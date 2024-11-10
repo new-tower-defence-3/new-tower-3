@@ -13,7 +13,7 @@ export const sendAddEnemyTowerNotification = async (user, towerId, x, y) => {
   const payload = createResponse(PacketType.ADD_ENEMY_TOWER_NOTIFICATION, addEnemyTowerNotification);
 
   try {
-    console.log("TOWER NOTY SEND");
+    console.log('TOWER NOTY SEND');
     user.socket.write(payload);
     console.log(`AddEnemyTowerNotification sent to ${user.id}`);
   } catch (error) {

@@ -65,7 +65,7 @@ function generateSinePath() {
   const xEnd = 1320;
   const yMin = 220;
   const yMax = 370;
-  
+
   // 사인 함수 파라미터
   const amplitude = (yMax - yMin) / 1.5; // 진폭
   const yMid = yMin + amplitude;       // 중간 y값

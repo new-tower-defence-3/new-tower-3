@@ -16,7 +16,7 @@ export const towerAttackRequestHandler = async ({ socket, payload }) => {
 
   const { towerId, monsterId } = payload;
 
-  // 서버에서 데미지 처리를 하지 않고, 받은 ID를 그대로 상대방에게 전달합니다.
+  // 서버에서 데미지 처리를 하지 않고, 받은 ID를 그대로 상대방에게 전달
   const opponentUser = gameSession.users.find(u => u.id !== user.id);
   if (opponentUser) {
     await sendEnemyTowerAttackNotification(opponentUser, towerId, monsterId);

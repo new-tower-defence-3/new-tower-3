@@ -1,3 +1,5 @@
+// src/sessions/user.session.js
+
 import { userSessions } from './sessions.js';
 
 export const addUser = async (user) => {

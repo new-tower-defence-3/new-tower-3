@@ -13,11 +13,11 @@ export const sendGameOverNotification = async (opponent, user) => {
   };
 
   const opponentPayload = createResponse(PacketType.GAME_OVER_NOTIFICATION, opponentNotification);
-  const userPayload = createResponse(PacketType.GAME_OVER_NOTIFICATION, userNotification)
+  const userPayload = createResponse(PacketType.GAME_OVER_NOTIFICATION, userNotification);
 
   try {
     opponent.socket.write(opponentPayload);
-    user.socket.write(userPayload)
+    user.socket.write(userPayload);
     console.log('GameOverNotification sent to user:', opponent.id);
   } catch (error) {
     console.error('Failed to send GameOverNotification:', error);

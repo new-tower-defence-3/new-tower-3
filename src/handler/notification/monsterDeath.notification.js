@@ -18,7 +18,7 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
 
   // 현재 플레이어의 몬스터 목록에서 몬스터 제거
   gameSession.removeMonster(user.id, monsterId);
-  
+
   const state = gameSession.getUserState(user.id);
   state.score += 300;
   state.gold += 100;
@@ -29,7 +29,7 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
     state.monsterLevel = newLevel;
     console.log(`Monster level increased to ${state.monsterLevel} for user ${user.id}`);
   }
-  
+
   // 상대방에게 EnemyMonsterDeathNotification 전송
   const opponentUser = gameSession.users.find(u => u.id !== user.id);
   if (opponentUser) {

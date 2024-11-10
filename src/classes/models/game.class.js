@@ -23,7 +23,7 @@ class Game {
       opponent: {
         towerId: 210000,
         monsterId: 20000,
-      }
+      },
     };
 
     this.intervalManager = new IntervalManager();

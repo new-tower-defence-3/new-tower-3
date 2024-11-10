@@ -1,12 +1,8 @@
-﻿import { createClient } from 'redis';
+﻿// src/init/redis.js
+
+import { createClient } from 'redis';
 import dotenv from 'dotenv';
-import {
-  REDIS_HOST,
-  REDIS_PASSWORD,
-  REDIS_PORT,
-  REDIS_USERNAME,
-  REDIS_USERPASS,
-} from '../constants/env.js';
+import { REDIS_HOST, REDIS_PASSWORD, REDIS_PORT } from '../constants/env.js';
 
 dotenv.config();
 

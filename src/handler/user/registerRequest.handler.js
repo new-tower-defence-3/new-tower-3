@@ -1,4 +1,6 @@
-﻿import { createUser, findUserId } from '../../db/user/user.db.js';
+﻿// src/handler/user/registerRequest.handler.js
+
+import { createUser, findUserId } from '../../db/user/user.db.js';
 import CustomError from '../../utils/error/customError.js';
 import JoiUtils from '../../utils/joi.util.js';
 import bcrypt from 'bcrypt';

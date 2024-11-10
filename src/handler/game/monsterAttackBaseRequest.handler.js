@@ -40,13 +40,11 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
     );
 
     if (newBaseHp <= 0) {
-      sendGameOverNotification(opponentUser, user)
+      sendGameOverNotification(opponentUser, user);
       await gameEndRHandler(socket);
       return;
     }
   }
-
-
 };
 
 export default monsterAttackBaseRequestHandler;

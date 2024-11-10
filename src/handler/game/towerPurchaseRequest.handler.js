@@ -30,16 +30,15 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
     console.error('Not enough gold to purchase tower');
     return;
   }
-  
+
   userState.gold -= TOWER_COST;
 
   const { x, y } = payload;
   const newTower = gameSession.addTower(user.id, { x, y });
-  console.log("New Tower Data:", newTower);
-  
+
   // 클라이언트에게 타워 구매 응답 전송
   const towerPurchaseResponse = {
-    towerId: newTower.towerId
+    towerId: newTower.towerId,
   };
 
   const responsePayload = createResponse(PacketType.TOWER_PURCHASE_RESPONSE, towerPurchaseResponse);

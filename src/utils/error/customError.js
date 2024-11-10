@@ -1,3 +1,5 @@
+// src/utils/error/customError.js
+
 import { ErrorNames } from './errorCodes.js';
 
 class CustomError extends Error {

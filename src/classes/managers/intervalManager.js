@@ -14,7 +14,6 @@ class IntervalManager {
 
   removeUser(userId) {
     if (!this.intervals.has(userId)) {
-      console.log('Not Found Interval')
       return;
     }
     console.log(`Removing interval for user ${userId}`);
