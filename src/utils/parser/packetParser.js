@@ -1,5 +1,4 @@
-// src/utils/parser/packetParser.js
-
+// packetParser.js
 import { getProtoMessages } from '../../init/loadProto.js';
 import { VERSION } from '../../constants/header.js';
 
@@ -48,4 +47,3 @@ export const packetParser = (version, sequence, data, socket) => {
 
   return messageData;
 };
-

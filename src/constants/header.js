@@ -1,4 +1,4 @@
-// src/constants/header.js
+// constants/header.js
 
 export const PACKET_TYPE_LENGTH = 2;
 export const VERSION_LENGTH = 1;

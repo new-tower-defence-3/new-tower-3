@@ -11,7 +11,7 @@ export const getUserByUserId = (userId) => {
 
 export const removeUser = async (socket) => {
   const index = userSessions.findIndex((user) => user.socket === socket);
-  if (index !== -1) {
+  if (index != -1) {
     return userSessions.splice(index, 1)[0];
   }
 };
@@ -29,6 +29,11 @@ export const getAllUser = async () => {
 };
 
 export const findUser = async (username) => {
-  const foundUser = userSessions.find((a) => a.id === username);
-  return foundUser;
+  const findSession = userSessions.find((a) => a.username === username);
+  return findSession;
+};
+
+export const findMatchingUser = async () => {
+  const findSession = userSessions.filter((user) => user.isMatching === true);
+  return findSession;
 };

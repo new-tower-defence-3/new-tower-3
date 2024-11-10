@@ -1,6 +1,4 @@
-// src/classes/managers/intervalManager.js
-
-class IntervalManager {
+class LatencyManager {
   constructor() {
     this.intervals = new Map();
   }
@@ -14,14 +12,10 @@ class IntervalManager {
 
   removeUser(userId) {
     if (!this.intervals.has(userId)) {
-      console.log('Not Found Interval')
       return;
     }
-    console.log(`Removing interval for user ${userId}`);
     clearInterval(this.intervals.get(userId));
-    this.intervals.delete(userId);  // intervals에서 제거
   }
-
 
   clearAll() {
     this.intervals.forEach((interval) => {
@@ -32,4 +26,4 @@ class IntervalManager {
   }
 }
 
-export default IntervalManager;
+export default LatencyManager;

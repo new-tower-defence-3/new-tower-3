@@ -1,43 +1,30 @@
-﻿// src/handler/game/spawnMonsterRequest.handler.js
-
-import { getUserBySocket } from '../../sessions/user.session.js';
-import { getGameSessionById } from '../../sessions/game.session.js';
-import { sendSpawnEnemyMonsterNotification } from '../notification/spawnEnemyMonster.notification.js';
-import { PacketType } from '../../constants/header.js';
+﻿// matchRequestHandler.js
 import { createResponse } from '../../utils/response/createResponse.js';
 
-export const spawnMonsterRequestHandler = async ({ socket }) => {
-  console.log('spawnMonsterRequestHandler Called');
+let id = 1;
 
-  const user = await getUserBySocket(socket);
-  const gameSession = getGameSessionById(user.currentSessionId);
+export const matchRequestHandler = async ({ socket }) => {
+  console.log('spawnMonsterRequest Called');
 
-  if (!gameSession) {
-    console.error('Game session not found for user:', user.id);
-    return;
-  }
-
-  const userState = gameSession.getUserState(user.id);
-  const opponentUser = gameSession.users.find(u => u.id !== user.id);
-  const opponentState = gameSession.getUserState(opponentUser.id);
-
-  const monsterLevel = 1;
-  const monsterNumber = Math.floor(Math.random() * 5) + 1;
-
-  const newMonster = gameSession.addMonster(user.id, monsterNumber, monsterLevel);
-
-  // 플레이어에게 SpawnMonsterResponse 전송
-  const spawnMonsterResponse = {
-    monsterId: newMonster.monsterId,
-    monsterNumber: newMonster.monsterNumber,
+  const monster = {
+    monsterId: id++,
+    monsterNumber: Math.floor(Math.random() * 5) + 1,
   };
 
-  const payload = createResponse(PacketType.SPAWN_MONSTER_RESPONSE, spawnMonsterResponse);
-  user.socket.write(payload);
-  console.log('SpawnMonsterResponse sent to player:', user.id);
+  const gamePacket = {
+    monster: monster,
+  };
 
-  // 상대방에게 SpawnEnemyMonsterNotification 전송
-  await sendSpawnEnemyMonsterNotification(opponentUser, newMonster.monsterId, newMonster.monsterNumber);
+  // 응답 생성 및 전송
+  try {
+    const payload = createResponse(12, gamePacket.monster);
+    console.log(payload);
+    socket.write(payload);
+    console.log('spawnMonsterRequest sent successfully.');
+  } catch (error) {
+    console.error('Failed to send spawnMonsterRequest:', error);
+    // 필요 시 에러 처리 로직 추가
+  }
 };
 
-export default spawnMonsterRequestHandler;
+export default matchRequestHandler;

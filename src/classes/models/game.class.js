@@ -1,40 +1,33 @@
-// src/classes/models/game.class.js
-
 import { MAX_PLAYERS } from '../../constants/header.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
-import IntervalManager from '../managers/intervalManager.js';
-import sendStateSyncNotification from '../../handler/notification/stateSync.notification.js';
 
 class Game {
   constructor(id) {
     this.id = id;
     this.users = [];
 
-    // 각 플레이어별 상태 관리
-    this.gameStates = {}; // { userId: { towers: [], monsters: [], baseHp: 100, gold: 1000, ... } }
-    this.monsterIdCounter = 1000;
-    this.towerIdCounter = 1;
+    // 방장이 플레이어
+    this.playerTowers = [];
+    this.playerMonsters = [];
 
-    this.intervalManager = new IntervalManager();
+    // 방장이 아닌 쪽도 스스로는 플레이어지만
+    // 서버에선 opponent로 간주
+    // player는 무조건 방장!
+    this.opponentTowers = [];
+    this.opponentMonsters = [];
+
+    // 
+    //this.latencyManaager = new LatencyManager();
   }
 
   addUser(user) {
+    // 한 게임섹션에 이미 유저가 2명 이상이면 에러 발생
     if (this.users.length >= MAX_PLAYERS) {
       throw new CustomError(ErrorCodes.GAME_FULL_USERS, `방이 찼습니다.`);
     } else {
       this.users.push(user);
-      // 사용자별 초기 상태 설정
-      this.gameStates[user.id] = {
-        towers: [
-          { towerId: this.towerIdCounter++, x: 600.0, y: 350.0 },
-          { towerId: this.towerIdCounter++, x: 800.0, y: 350.0 },
-          { towerId: this.towerIdCounter++, x: 1000.0, y: 350.0 },
-        ],
-        monsters: [],
-        baseHp: 100,
-        gold: 50000,
-      };
+      //this.latencyManaager.addUser(user.id, user.ping.bind(user), 1000);
     }
   }
 
@@ -42,75 +35,77 @@ class Game {
     return this.users.find((user) => user.id === userId);
   }
 
-  getUserState(userId) {
-    return this.gameStates[userId];
-  }
-
-  getOpponentState(userId) {
-    const opponentUser = this.users.find((user) => user.id !== userId);
-    return opponentUser ? this.gameStates[opponentUser.id] : null;
-  }
-
   removeUser(socket) {
     const index = this.users.findIndex((user) => user.socket === socket);
-    if (index !== -1) {
-      const removedUser = this.users.splice(index, 1)[0];
-      delete this.gameStates[removedUser.id];
-
-      return removedUser;
+    if (index != -1) {
+      if (this.users.length === 1) {
+        //this.latencyManaager.clearAll();
+      }
+      //this.latencyManaager.removeUser(this.user[index].id);
+      return this.users.splice(index, 1)[0];
     }
   }
 
-  removeInterval(session) {
-    this.intervalManager.removeUser(session.id);
+  getMaxLatency() {
+    let maxLatency = 0;
+    this.users.forEach((user) => {
+      maxLatency = Math.max(maxLatency, user.latency);
+    });
+
+    return maxLatency;
   }
 
-  addTower(userId, towerData) {
-    const userState = this.getUserState(userId);
-    const towerId = this.towerIdCounter++;
-    const newTower = { towerId, ...towerData };
-    userState.towers.push(newTower);
-    return newTower;
-  }
+  // getAllLocation(userId) {
+  //     const maxLatency = this.getMaxLatency();
+  //
+  //     const locationData = this.users
+  //         .filter((user) => user.id !== userId)
+  //         .map((user) => {
+  //             const { x, y } = user.calculatePosition(maxLatency);
+  //             return { id: user.id, playerId: user.playerId, x, y }
+  //         })
+  //
+  //     return createLocationPacket(locationData)
+  // };
 
-  addMonster(userId, monsterNumber, level) {
-    const monsterId = this.monsterIdCounter++;
-    const monsterData = {
-      monsterId,
-      monsterNumber,
-      level,
-      // 추가 정보 필요 시 추가
-    };
+  addTower(towerData, isPlayer) {
+    // towerData의 구조는 다음과 같아야 한다.
+    // { towerId: 11, x: 600.0, y: 350.0 }
 
-    const userState = this.getUserState(userId);
-    userState.monsters.push(monsterData);
-    return monsterData;
-  }
-
-  findMonster(userId, monsterId) {
-    const userState = this.getUserState(userId);
-    return userState.monsters.find((monster) => monster.monsterId === monsterId);
-  }
-
-  removeMonster(userId, monsterId) {
-    const userState = this.getUserState(userId);
-    const index = userState.monsters.findIndex((monster) => monster.monsterId === monsterId);
-    if (index !== -1) {
-      userState.monsters.splice(index, 1);
+    if (isPlayer) {
+      this.playerTowers.push(towerData);
+    } else {
+      this.opponentTowers.push(towerData);
     }
   }
 
-  reduceBaseHp(userId, damage) {
-    const userState = this.getUserState(userId);
-    userState.baseHp -= damage;
-    return userState.baseHp;
+  addMonster(monsterData, isPlayer) {
+    // monsterData의 구조는 다음과 같아야 한다.
+    // { monsterId: 11, monsterNumber: 1, level: 1 }
+
+    if (isPlayer) {
+      this.playerMonsters.push(monsterData);
+    } else {
+      this.opponentMonsters.push(monsterData);
+    }
   }
 
-  commenceSync() {
-    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 1000);
+  // 타워 제거가 실제로 쓰이진 않지만 일단 작성
+  removeTower(towerId, isPlayer) {
+    if (isPlayer) {
+      this.playerTowers = this.playerTowers.filter(val => val !== towerId);
+    } else {
+      this.opponentTowers = this.opponentTowers.filter(val => val !== towerId);
+    }
   }
 
-  // 필요에 따라 추가 메서드 작성
+  removeMonster(towerId, isPlayer) {
+    if (isPlayer) {
+      this.playerMonsters = this.playerMonsters.filter(val => val !== towerId);
+    } else {
+      this.opponentMonsters = this.opponentMonsters.filter(val => val !== towerId);
+    }
+  }
 }
 
 export default Game;

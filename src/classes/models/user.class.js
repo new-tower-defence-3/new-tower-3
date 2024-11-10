@@ -1,19 +1,17 @@
-// src/classes/models/user.class.js
+// import { createPingPacket } from "../../utils/notification/game.notification.js";
 
 class User {
-
   constructor(socket, username, latency, highScore) {
     this.socket = socket;
-    this.id = username;
+    this.username = username;
     this.latency = latency;
     this.sequence = 0;
+    this.lastUpdateTime = Date.now();
     this.highScore = highScore;
     this.isMatching = false;
-    this.currentSessionId = '';
-    this.lastUpdateTime = Date.now();
   }
 
-  updateTime() {
+  updateTime(x, y) {
     this.lastUpdateTime = Date.now();
   }
 
@@ -25,6 +23,14 @@ class User {
   handlerPong(data) {
     const now = Date.now();
     this.latency = (now - data.timestamp) / 2;
+  }
+
+  matchingOn() {
+    this.isMatching = true;
+  }
+
+  matchingOff() {
+    this.isMatching = false;
   }
 }
 
