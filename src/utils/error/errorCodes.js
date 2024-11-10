@@ -1,3 +1,5 @@
+// src/utils/error/errorCodes.js
+
 export const ErrorCodes = {
   SOCKET_ERROR: 10000,
   CLIENT_VERSION_MISMATCH: 10001,
@@ -13,6 +15,7 @@ export const ErrorCodes = {
   GAME_FULL_USERS: 10011,
   INVALID_ROLE: 10012,
   MAX_TOWERS: 10013,
+  FAIL_TO_SEND_NOTY: 10014,
   // 추가적인 에러 코드들
 };
 
