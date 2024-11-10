@@ -13,7 +13,6 @@ export const sendEnemyTowerAttackNotification = async (user, towerId, monsterId)
 
   try {
     user.socket.write(payload);
-    console.log('EnemyTowerAttackNotification sent to user:', user.id);
   } catch (error) {
     console.error('Failed to send EnemyTowerAttackNotification:', error);
   }

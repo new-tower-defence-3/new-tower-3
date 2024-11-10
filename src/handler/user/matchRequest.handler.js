@@ -6,7 +6,6 @@ import { addGameSession, getGameSession, getGameSessionById } from '../../sessio
 import matchStartNotification from '../../handler/notification/matchStart.notification.js';
 
 export const matchRequestHandler = async ({ socket }) => {
-  console.log('matchRequestHandler Called');
   const user = await getUserBySocket(socket);
 
   const gameSessions = getGameSession();
@@ -23,7 +22,6 @@ export const matchRequestHandler = async ({ socket }) => {
 
   if (!joinedSession) {
     const gameId = user.id;
-    console.log(user.id);
     const gameSession = addGameSession(gameId);
     gameSession.addUser(user);
     user.currentSessionId = gameId;

@@ -23,7 +23,7 @@ export const packetParser = (version, sequence, data, socket) => {
   let packet;
   try {
     packet = gamePacket.decode(data);
-    console.log('Decoded GamePacket:', packet);
+    // console.log('Decoded GamePacket:', packet);
   } catch (e) {
     console.error('GamePacket 디코딩 오류:', e);
     throw e;

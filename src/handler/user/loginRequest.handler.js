@@ -12,7 +12,6 @@ import User from '../../classes/models/user.class.js';
 
 const loginRequestHandler = async ({ socket, payload, sequence }) => {
   try {
-    console.log('loginRequestHandler Called', payload);
     const { id, password } = await JoiUtils.validateSignIn(payload);
 
     const checkExistId = await findUserId(id);

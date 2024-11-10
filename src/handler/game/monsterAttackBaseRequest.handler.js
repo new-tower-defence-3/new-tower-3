@@ -7,7 +7,6 @@ import { sendGameOverNotification } from '../notification/gameOver.notification.
 import gameEndRHandler from './gameEnd.handler.js';
 
 export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
-  console.log('monsterAttackBaseRequestHandler Called');
 
   const user = await getUserBySocket(socket);
   const gameSession = getGameSessionById(user.currentSessionId);
