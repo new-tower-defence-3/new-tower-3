@@ -57,9 +57,12 @@ class Game {
       const removedUser = this.users.splice(index, 1)[0];
       delete this.gameStates[removedUser.id];
 
-      this.intervalManager.removeUser(removedUser.id);
       return removedUser;
     }
+  }
+
+  removeInterval(session) {
+    this.intervalManager.removeUser(session.id);
   }
 
   addTower(userId, towerData) {

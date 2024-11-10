@@ -14,10 +14,14 @@ class IntervalManager {
 
   removeUser(userId) {
     if (!this.intervals.has(userId)) {
+      console.log('Not Found Interval')
       return;
     }
+    console.log(`Removing interval for user ${userId}`);
     clearInterval(this.intervals.get(userId));
+    this.intervals.delete(userId);  // intervals에서 제거
   }
+
 
   clearAll() {
     this.intervals.forEach((interval) => {
