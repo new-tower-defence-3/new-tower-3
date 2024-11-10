@@ -6,7 +6,7 @@ import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
 import { sendAddEnemyTowerNotification } from '../notification/addEnemyTower.notification.js';
 
-const TOWER_COST = 3000;
+const TOWER_COST = 1000;
 
 export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
   console.log('towerPurchaseRequestHandler Called');
@@ -30,7 +30,7 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
     console.error('Not enough gold to purchase tower');
     return;
   }
-
+  
   userState.gold -= TOWER_COST;
 
   const { x, y } = payload;
