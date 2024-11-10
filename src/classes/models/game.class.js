@@ -13,29 +13,55 @@ class Game {
 
     // 각 플레이어별 상태 관리
     this.gameStates = {}; // { userId: { towers: [], monsters: [], baseHp: 100, gold: 1000, ... } }
-    this.monsterIdCounter = 1000;
-    this.towerIdCounter = 4;
+
+    // 역할 별 ID 카운터
+    this.counters = {
+      player: {
+        towerId: 110000,
+        monsterId: 10000,
+      },
+      opponent: {
+        towerId: 210000,
+        monsterId: 20000,
+      }
+    };
 
     this.intervalManager = new IntervalManager();
   }
-  
+
   addUser(user) {
     if (this.users.length >= MAX_PLAYERS) {
       throw new CustomError(ErrorCodes.GAME_FULL_USERS, `방이 찼습니다.`);
     } else {
+      // 첫 번째 호스트는 'player', 상대는 'opponent'
+      let role;
+      if (this.users.length === 0) {
+        role = 'player';
+      } else if (this.users.length === 1) {
+        role = 'opponent';
+      }
+
+      user.role = role;
       this.users.push(user);
+
       // 사용자별 초기 상태 설정
-      this.gameStates[user.id] = {
-        towers: [
-          { towerId: this.towerIdCounter++, x: 600.0, y: 350.0 },
-          { towerId: this.towerIdCounter++, x: 800.0, y: 350.0 },
-          { towerId: this.towerIdCounter++, x: 1000.0, y: 350.0 },
-        ],
-        monsters: [],
-        baseHp: 100,
-        gold: 50000,
-      };
+      this.gameStates[user.id] = this.initializeUserState(user, role);
     }
+  }
+
+  initializeUserState(user, role) {
+    return {
+      towers: [
+        { towerId: this.counters[role].towerId++, x: 600.0, y: 350.0 },
+        { towerId: this.counters[role].towerId++, x: 800.0, y: 350.0 },
+        { towerId: this.counters[role].towerId++, x: 1000.0, y: 350.0 },
+      ],
+      monsters: [],
+      baseHp: 200,
+      gold: 5000,
+      score: 0,
+      monsterLevel: 1,
+    };
   }
 
   getUser(userId) {
@@ -67,22 +93,46 @@ class Game {
 
   addTower(userId, towerData) {
     const userState = this.getUserState(userId);
-    const towerId = this.towerIdCounter++;
+    const user = this.getUser(userId);
+    if (!user) {
+      throw new CustomError(ErrorCodes.USER_NOT_FOUND, `사용자를 찾을 수 없습니다.`);
+    }
+
+    const role = user.role;
+    if (!role) {
+      throw new CustomError(ErrorCodes.INVALID_ROLE, `사용자의 역할이 지정되지 않았습니다.`);
+    }
+
+    // 최대 타워 수 제한 (예: 10개)
+    if (userState.towers.length >= 10) {
+      throw new CustomError(ErrorCodes.MAX_TOWERS, `타워의 최대 개수에 도달했습니다.`);
+    }
+
+    const towerId = this.counters[role].towerId++;
     const newTower = { towerId, ...towerData };
     userState.towers.push(newTower);
     return newTower;
   }
 
   addMonster(userId, monsterNumber, level) {
-    const monsterId = this.monsterIdCounter++;
+    const userState = this.getUserState(userId);
+    const user = this.getUser(userId);
+    if (!user) {
+      throw new CustomError(ErrorCodes.USER_NOT_FOUND, `사용자를 찾을 수 없습니다.`);
+    }
+
+    const role = user.role;
+    if (!role) {
+      throw new CustomError(ErrorCodes.INVALID_ROLE, `사용자의 역할이 지정되지 않았습니다.`);
+    }
+
+    const monsterId = this.counters[role].monsterId++;
     const monsterData = {
       monsterId,
       monsterNumber,
       level,
-      // 추가 정보 필요 시 추가
     };
 
-    const userState = this.getUserState(userId);
     userState.monsters.push(monsterData);
     return monsterData;
   }
@@ -110,7 +160,6 @@ class Game {
     this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 1000);
   }
 
-  // 필요에 따라 추가 메서드 작성
 }
 
 export default Game;

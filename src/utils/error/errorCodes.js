@@ -11,6 +11,8 @@ export const ErrorCodes = {
   GAME_NOT_FOUND: 10009,
   ALREADY_INIT_USER: 10010,
   GAME_FULL_USERS: 10011,
+  INVALID_ROLE: 10012,
+  MAX_TOWERS: 10013,
   // 추가적인 에러 코드들
 };
 
