@@ -1,3 +1,5 @@
+// src/db/database.js
+
 import { dbConfig } from '../config/dbConfig.js';
 import mysql from 'mysql2/promise';
 

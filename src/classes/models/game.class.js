@@ -53,12 +53,11 @@ class Game {
     return {
       towers: [
         { towerId: this.counters[role].towerId++, x: 600.0, y: 350.0 },
-        { towerId: this.counters[role].towerId++, x: 800.0, y: 350.0 },
         { towerId: this.counters[role].towerId++, x: 1000.0, y: 350.0 },
       ],
       monsters: [],
       baseHp: 100,
-      gold: 5000,
+      gold: 1500,
       score: 0,
       monsterLevel: 1,
     };
@@ -88,7 +87,7 @@ class Game {
   }
 
   removeInterval(session) {
-    this.intervalManager.removeUser(session.id);
+    this.intervalManager.removeInterval(session.id);
   }
 
   addTower(userId, towerData) {
@@ -157,9 +156,8 @@ class Game {
   }
 
   commenceSync() {
-    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 1000);
+    this.intervalManager.addInterval(this.id, () => sendStateSyncNotification(this.id), 100);
   }
-
 }
 
 export default Game;

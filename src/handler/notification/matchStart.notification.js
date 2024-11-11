@@ -13,13 +13,11 @@ const matchStartNotification = (gameSession) => {
     const opponentState = gameSession.getOpponentState(user.id);
     const serverHighScore = await findServerHighScore();
 
-    console.log('현재 서버의 하이 스코어', serverHighScore);
-
     const initialGameState = {
       baseHp: userState.baseHp,
-      towerCost: 1000,
+      towerCost: 1500,
       initialGold: userState.gold,
-      monsterSpawnInterval: 3, // ms가 아니라 s
+      monsterSpawnInterval: 2, // ms가 아니라 s
     };
 
     const playerData = {

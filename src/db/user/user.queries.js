@@ -1,3 +1,5 @@
+// src/db/user/user.queries.js
+
 export const USER_QUERIES = {
   FIND_USER_BY_ID: 'SELECT * FROM users WHERE username = ?',
   CREATE_USER: 'INSERT INTO users (userName,email,password) VALUES (?, ?, ?)',

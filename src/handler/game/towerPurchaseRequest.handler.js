@@ -12,7 +12,6 @@ import { ErrorCodes } from '../../utils/error/errorCodes.js';
 const TOWER_COST = 1000;
 
 export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
-  console.log('towerPurchaseRequestHandler Called');
 
   const user = await getUserBySocket(socket);
   if (!user) {
@@ -46,7 +45,6 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
 
   const responsePayload = createResponse(PacketType.TOWER_PURCHASE_RESPONSE, towerPurchaseResponse);
   socket.write(responsePayload);
-  console.error(`TowerPurchaseResponse sent to ${user.id}`);
 
   const opponentUser = gameSession.users.find(u => u.id !== user.id);
   if (opponentUser) {
