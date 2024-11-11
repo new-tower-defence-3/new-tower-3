@@ -15,7 +15,7 @@ const matchStartNotification = (gameSession) => {
 
     const initialGameState = {
       baseHp: userState.baseHp,
-      towerCost: 1000,
+      towerCost: 1500,
       initialGold: userState.gold,
       monsterSpawnInterval: 2, // ms가 아니라 s
     };
