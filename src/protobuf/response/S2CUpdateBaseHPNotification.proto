@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package response;
-
-message S2CUpdateBaseHPNotification {
-    bool isOpponent = 1; // HP를 업데이트 할 기지가 상대방 기지라면 true
-    int32 baseHp = 2;
-}

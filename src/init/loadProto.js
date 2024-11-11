@@ -1,12 +1,12 @@
+// src/init/loadProto.js
+
 import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import protobuf from 'protobufjs';
-import { packetNames } from '../protobuf/packetNames.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-// 최상위 경로
 const protoDir = path.join(__dirname, '../protobuf');
 
 const getAllProtoFiles = (dir, fileList = []) => {
@@ -28,42 +28,34 @@ const getAllProtoFiles = (dir, fileList = []) => {
 const protoFiles = getAllProtoFiles(protoDir);
 
 const protoMessages = {};
-const protoEnums = {}; // 추가된 부분
 
 export const loadProtos = async () => {
   try {
     const root = new protobuf.Root();
 
+    // 모든 .proto 파일을 비동기적으로 로드
     await Promise.all(protoFiles.map((file) => root.load(file)));
 
-    for (const [packageName, types] of Object.entries(packetNames)) {
-      protoMessages[packageName] = {};
-      protoEnums[packageName] = {};
-      for (const [type, typeName] of Object.entries(types)) {
-        // 타입이 메시지인지 열거형인지 확인
-        const currentObject = root.lookup(typeName);
-        if (currentObject instanceof protobuf.Type) {
-          // 메시지 타입인 경우
-          protoMessages[packageName][type] = currentObject;
-        } else if (currentObject instanceof protobuf.Enum) {
-          // 열거형 타입인 경우
-          protoEnums[packageName][type] = currentObject;
-        } else {
-          console.warn(`알 수 없는 타입: ${typeName}`);
+    root.resolveAll();
+
+    const processNamespace = (namespace) => {
+      for (const [typeName, type] of Object.entries(namespace.nested)) {
+        if (type instanceof protobuf.Type || type instanceof protobuf.Enum) {
+          protoMessages[typeName] = type;
+        } else if (type instanceof protobuf.Namespace) {
+          processNamespace(type);
         }
       }
-    }
+    };
 
-    console.log('Protobuf 파일이 로드되었습니다.');
-  } catch (error) {
-    console.error('Protobuf 파일 로드 중 오류가 발생했습니다: ', error);
+    processNamespace(root);
+
+    console.log('Protobuf 파일이 모두 로드되었습니다.');
+  } catch (e) {
+    console.error('Protobuf 파일 로드 중 오류가 발생하였습니다.', e);
   }
 };
 
 export const getProtoMessages = () => {
   return { ...protoMessages };
-};
-
-export const getProtoEnums = () => {
-  return { ...protoEnums };
 };

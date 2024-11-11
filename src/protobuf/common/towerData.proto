@@ -1,9 +1,0 @@
-syntax = "proto3";
-
-package common;
-
-message TowerData {
-  int32 towerId = 1;
-  float x = 2;
-  float y = 3;
-}

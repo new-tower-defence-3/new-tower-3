@@ -1,7 +1,0 @@
-syntax = "proto3";
-
-package request;
-
-message C2SMonsterAttackBaseRequest {
-    int32 damage = 1;
-}

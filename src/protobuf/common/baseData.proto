@@ -1,8 +1,0 @@
-syntax = "proto3";
-
-package common;
-
-message BaseData {
-  int32 hp = 1;
-  int32 maxHp = 2;
-}
