@@ -5,6 +5,7 @@ import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
 import IntervalManager from '../managers/intervalManager.js';
 import sendStateSyncNotification from '../../handler/notification/stateSync.notification.js';
+import { BASE_HP, INITIAL_GOLD } from '../../constants/constants.js';
 
 class Game {
   constructor(id) {
@@ -56,8 +57,8 @@ class Game {
         { towerId: this.counters[role].towerId++, x: 1000.0, y: 350.0 },
       ],
       monsters: [],
-      baseHp: 100,
-      gold: 1500,
+      baseHp: BASE_HP,
+      gold: INITIAL_GOLD,
       score: 0,
       monsterLevel: 1,
     };
