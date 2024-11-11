@@ -59,8 +59,7 @@ const matchStartNotification = (gameSession) => {
 
     try {
       createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}가 게임 시작`);
-    }
-    catch (e) {
+    } catch (e) {
       throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
     }
   });

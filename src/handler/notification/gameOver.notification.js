@@ -2,7 +2,7 @@
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
-import { createActionLog, createResultLog } from '../../db/log/log.db.js';
+import { createResultLog } from '../../db/log/log.db.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
@@ -11,7 +11,7 @@ export const sendGameOverNotification = async (opponent, user) => {
   let userNotification = {
     isWin: false,
   };
-  
+
   let opponentNotification = {
     isWin: false,
   };
@@ -24,14 +24,12 @@ export const sendGameOverNotification = async (opponent, user) => {
 
   const userScore = gameSession.getUserState(user.id).score;
   const opponentScore = gameSession.getUserState(opponent.id).score;
-  
+
   if (userScore > opponentScore) {
     userNotification.isWin = true;
-  }
-  else if (userScore < opponentScore) {
+  } else if (userScore < opponentScore) {
     opponentNotification.isWin = true;
-  }
-  else {
+  } else {
     userNotification.isWin = true;
     opponentNotification.isWin = true;
   }
@@ -48,8 +46,7 @@ export const sendGameOverNotification = async (opponent, user) => {
 
   try {
     createResultLog(user.id, opponent.id, userScore, opponentScore);
-  }
-  catch (e) {
+  } catch (e) {
     throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
   }
 };

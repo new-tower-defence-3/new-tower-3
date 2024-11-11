@@ -49,11 +49,10 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
       return;
     }
   }
-  
+
   try {
     createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}의 기지가 ${damage}만큼 피격`);
-  }
-  catch (e) {
+  } catch (e) {
     throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
   }
 };

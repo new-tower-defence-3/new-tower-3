@@ -1,6 +1,5 @@
 import { dbConfig } from '../config/dbConfig.js';
 import mysql from 'mysql2/promise';
-import { formatDate } from '../utils/dateFomatter.js';
 
 const createPool = () => {
   const pool = mysql.createPool({

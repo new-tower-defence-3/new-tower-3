@@ -57,8 +57,7 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
 
   try {
     createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}가 타워 구입`);
-  }
-  catch (e) {
+  } catch (e) {
     throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
   }
 };
