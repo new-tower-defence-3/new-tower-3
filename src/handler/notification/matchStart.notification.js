@@ -3,6 +3,9 @@
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
 import { findServerHighScore } from '../../db/user/user.db.js';
+import { createActionLog } from '../../db/log/log.db.js';
+import CustomError from '../../utils/error/customError.js';
+import { ErrorCodes } from '../../utils/error/errorCodes.js';
 
 const matchStartNotification = (gameSession) => {
   gameSession.users.forEach(async (user) => {
@@ -57,6 +60,12 @@ const matchStartNotification = (gameSession) => {
 
     const payload = createResponse(PacketType.MATCH_START_NOTIFICATION, matchStartNotification);
     user.socket.write(payload);
+
+    try {
+      createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}가 게임 시작`);
+    } catch (e) {
+      throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
+    }
   });
 };
 

@@ -1,6 +1,5 @@
 import { dbConfig } from '../config/dbConfig.js';
 import mysql from 'mysql2/promise';
-import { formatDate } from '../utils/dateFomatter.js';
 
 const createPool = () => {
   const pool = mysql.createPool({
@@ -14,10 +13,6 @@ const createPool = () => {
 
   pool.query = (sql, params) => {
     const date = new Date();
-
-    console.log(
-      `[${formatDate(date)}] Excuting query: ${sql} ${params ? `, ${JSON.stringify(params)}` : ``}`,
-    );
 
     return originalQuery.call(pool, sql, params);
   };
