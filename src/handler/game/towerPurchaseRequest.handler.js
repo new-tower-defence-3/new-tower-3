@@ -5,6 +5,9 @@ import { getGameSessionById } from '../../sessions/game.session.js';
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
 import { sendAddEnemyTowerNotification } from '../notification/addEnemyTower.notification.js';
+import { createActionLog } from '../../db/log/log.db.js';
+import CustomError from '../../utils/error/customError.js';
+import { ErrorCodes } from '../../utils/error/errorCodes.js';
 
 const TOWER_COST = 1000;
 
@@ -50,6 +53,12 @@ export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
     await sendAddEnemyTowerNotification(opponentUser, newTower.towerId, newTower.x, newTower.y);
   } else {
     console.error('Opponent user not found');
+  }
+
+  try {
+    createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}가 타워 구입`);
+  } catch (e) {
+    throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
   }
 };
 

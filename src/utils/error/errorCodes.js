@@ -16,6 +16,7 @@ export const ErrorCodes = {
   INVALID_ROLE: 10012,
   MAX_TOWERS: 10013,
   FAIL_TO_SEND_NOTY: 10014,
+  DB_UPDATE_FAILED: 10015,
   // 추가적인 에러 코드들
 };
 

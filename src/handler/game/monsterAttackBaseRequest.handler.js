@@ -5,6 +5,10 @@ import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendUpdateBaseHpNotification } from '../notification/updateBaseHp.notification.js';
 import { sendGameOverNotification } from '../notification/gameOver.notification.js';
 import gameEndRHandler from './gameEnd.handler.js';
+import { createActionLog } from '../../db/log/log.db.js';
+import { PacketType } from '../../constants/header.js';
+import CustomError from '../../utils/error/customError.js';
+import { ErrorCodes } from '../../utils/error/errorCodes.js';
 
 export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
 
@@ -40,10 +44,16 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
     );
 
     if (newBaseHp <= 0) {
-      sendGameOverNotification(opponentUser, user);
-      await gameEndRHandler(socket);
+      await sendGameOverNotification(user, opponentUser);
+      setTimeout(async () => await gameEndRHandler(socket), 2000);  // 지연시간 고려해 여유있게
       return;
     }
+  }
+
+  try {
+    createActionLog(PacketType.MONSTER_ATTACK_BASE_REQUEST, `${user.id}의 기지가 ${damage}만큼 피격`);
+  } catch (e) {
+    throw new CustomError(ErrorCodes.DB_UPDATE_FAILED, e.message);
   }
 };
 
