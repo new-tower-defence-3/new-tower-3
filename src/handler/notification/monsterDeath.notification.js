@@ -27,7 +27,6 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
   const newLevel = Math.floor(state.score / 3000) + 1;
   if (newLevel > previousLevel) {
     state.monsterLevel = newLevel;
-    console.log(`Monster level increased to ${state.monsterLevel} for user ${user.id}`);
   }
 
   // 상대방에게 EnemyMonsterDeathNotification 전송

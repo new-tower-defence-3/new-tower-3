@@ -157,7 +157,7 @@ class Game {
   }
 
   commenceSync() {
-    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 1000);
+    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 100);
   }
 
 }
