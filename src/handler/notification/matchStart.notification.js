@@ -2,20 +2,24 @@
 
 import { createResponse } from '../../utils/response/createResponse.js';
 import { PacketType } from '../../constants/header.js';
+import { findServerHighScore } from '../../db/user/user.db.js';
 import { createActionLog } from '../../db/log/log.db.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
 
 const matchStartNotification = (gameSession) => {
-  gameSession.users.forEach((user) => {
+  gameSession.users.forEach(async (user) => {
     const userState = gameSession.getUserState(user.id);
     const opponentState = gameSession.getOpponentState(user.id);
+    const serverHighScore = await findServerHighScore();
+
+    console.log('현재 서버의 하이 스코어', serverHighScore);
 
     const initialGameState = {
       baseHp: userState.baseHp,
       towerCost: 1000,
       initialGold: userState.gold,
-      monsterSpawnInterval: 1.5,  // ms가 아니라 s
+      monsterSpawnInterval: 3, // ms가 아니라 s
     };
 
     const playerData = {
@@ -24,7 +28,7 @@ const matchStartNotification = (gameSession) => {
         hp: userState.baseHp,
         maxHp: 100,
       },
-      highScore: user.highScore || 0,
+      highScore: serverHighScore || 0,
       towers: userState.towers,
       monsters: userState.monsters,
       monsterLevel: 1,
@@ -39,7 +43,7 @@ const matchStartNotification = (gameSession) => {
         hp: opponentState.baseHp,
         maxHp: 100,
       },
-      highScore: 0,
+      highScore: serverHighScore || 0,
       towers: opponentState.towers,
       monsters: opponentState.monsters,
       monsterLevel: 1,
@@ -77,8 +81,8 @@ function generateSinePath() {
 
   // 사인 함수 파라미터
   const amplitude = (yMax - yMin) / 1.5; // 진폭
-  const yMid = yMin + amplitude;       // 중간 y값
-  const frequency = 2 * Math.PI / (xEnd - xStart); // 주파수 조정
+  const yMid = yMin + amplitude; // 중간 y값
+  const frequency = (2 * Math.PI) / (xEnd - xStart); // 주파수 조정
 
   // 포인트 생성 간격
   const step = 50; // x가 50씩 증가하도록 설정 (필요에 따라 조정 가능)

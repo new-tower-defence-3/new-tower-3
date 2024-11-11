@@ -22,6 +22,7 @@ export const updateUserLogin = async (id) => {
   await dbPool.query(USER_QUERIES.UPDATE_USER_LOGIN, [id]);
 };
 
-export const updateUserScore = async (score) => {
-  await dbPool.query(USER_QUERIES.UPDATE_USER_LOGIN, [score]);
+export const findServerHighScore = async () => {
+  const highScore = await dbPool.query(USER_QUERIES.FIND_HIGH_SCORE);
+  return highScore[0][0].highScore;
 };
