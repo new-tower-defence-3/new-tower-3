@@ -31,7 +31,7 @@ export const matchRequestHandler = async ({ socket }) => {
   if (joinedSession.users.length === MAX_PLAYERS) {
     matchStartNotification(joinedSession);
     const currenGameSession = getGameSessionById(joinedSession.id);
-    currenGameSession.commenceSync();
+    setTimeout(() => currenGameSession.commenceSync(), 1000);
   }
 };
 
