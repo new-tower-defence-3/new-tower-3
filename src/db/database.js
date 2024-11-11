@@ -15,10 +15,6 @@ const createPool = () => {
   pool.query = (sql, params) => {
     const date = new Date();
 
-    console.log(
-      `[${formatDate(date)}] Excuting query: ${sql} ${params ? `, ${JSON.stringify(params)}` : ``}`,
-    );
-
     return originalQuery.call(pool, sql, params);
   };
 
