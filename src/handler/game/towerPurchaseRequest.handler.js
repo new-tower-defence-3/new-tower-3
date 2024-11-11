@@ -8,8 +8,7 @@ import { sendAddEnemyTowerNotification } from '../notification/addEnemyTower.not
 import { createActionLog } from '../../db/log/log.db.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
-
-const TOWER_COST = 1000;
+import { TOWER_COST } from '../../constants/constants.js';
 
 export const towerPurchaseRequestHandler = async ({ socket, payload }) => {
 

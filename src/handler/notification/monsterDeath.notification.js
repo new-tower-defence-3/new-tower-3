@@ -3,6 +3,7 @@
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
 import { sendEnemyMonsterDeathNotification } from './enemyMonsterDeath.notification.js';
+import { GOLD_PER_MONSTER, SCORE_PER_MONSTER } from '../../constants/constants.js';
 
 export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
 
@@ -20,8 +21,8 @@ export const monsterDeathNotificationHandler = async ({ socket, payload }) => {
   gameSession.removeMonster(user.id, monsterId);
 
   const state = gameSession.getUserState(user.id);
-  state.score += 300;
-  state.gold += 100;
+  state.score += SCORE_PER_MONSTER;
+  state.gold += GOLD_PER_MONSTER;
 
   const previousLevel = state.monsterLevel || 1;
   const newLevel = Math.floor(state.score / 3000) + 1;

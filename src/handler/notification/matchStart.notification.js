@@ -6,6 +6,7 @@ import { findServerHighScore } from '../../db/user/user.db.js';
 import { createActionLog } from '../../db/log/log.db.js';
 import CustomError from '../../utils/error/customError.js';
 import { ErrorCodes } from '../../utils/error/errorCodes.js';
+import { TOWER_COST } from '../../constants/constants.js';
 
 const matchStartNotification = (gameSession) => {
   gameSession.users.forEach(async (user) => {
@@ -15,7 +16,7 @@ const matchStartNotification = (gameSession) => {
 
     const initialGameState = {
       baseHp: userState.baseHp,
-      towerCost: 1500,
+      towerCost: TOWER_COST,
       initialGold: userState.gold,
       monsterSpawnInterval: 2, // ms가 아니라 s
     };
