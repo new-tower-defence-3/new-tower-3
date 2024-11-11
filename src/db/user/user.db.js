@@ -21,3 +21,7 @@ export const createUser = async (id, email, password) => {
 export const updateUserLogin = async (id) => {
   await dbPool.query(USER_QUERIES.UPDATE_USER_LOGIN, [id]);
 };
+
+export const updateUserScore = async (score) => {
+  await dbPool.query(USER_QUERIES.UPDATE_USER_LOGIN, [score]);
+};

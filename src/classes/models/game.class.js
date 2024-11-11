@@ -57,7 +57,7 @@ class Game {
         { towerId: this.counters[role].towerId++, x: 1000.0, y: 350.0 },
       ],
       monsters: [],
-      baseHp: 200,
+      baseHp: 100,
       gold: 5000,
       score: 0,
       monsterLevel: 1,
