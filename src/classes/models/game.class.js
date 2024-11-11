@@ -53,7 +53,6 @@ class Game {
     return {
       towers: [
         { towerId: this.counters[role].towerId++, x: 600.0, y: 350.0 },
-        { towerId: this.counters[role].towerId++, x: 800.0, y: 350.0 },
         { towerId: this.counters[role].towerId++, x: 1000.0, y: 350.0 },
       ],
       monsters: [],
