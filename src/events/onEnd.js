@@ -11,21 +11,24 @@ export const onEnd = (socket) => async () => {
   console.log('클라이언트 연결이 종료되었습니다.');
 
   const user = await getUserBySocket(socket);
-  const gameSession = getGameSessionById(user.currentSessionId);
+  if (user) {
+    const gameSession = getGameSessionById(user.currentSessionId);
 
-  if (gameSession) {
-    const opponentUser = gameSession.users.find((u) => u.id !== user.id);
+    if (gameSession) {
+      const opponentUser = gameSession.users.find((u) => u.id !== user.id);
 
-    try {
-      sendGameOverNotification(user, opponentUser);
-    } catch (e) {
-      throw new customError(ErrorCodes.FAIL_TO_SEND_NOTY, e.message);
+      if (opponentUser) {
+        sendGameOverNotification(opponentUser, user);
+      }
+
+      if (socket) {
+        await gameEndRHandler(socket);
+      }
+
+    } else {
+      await removeUser(socket);
     }
-    await gameEndRHandler(socket);
-    console.log('이것은 강제종료입니다.');
-  } else {
-    await removeUser(socket);
-    console.log('이것은 일반종료입니다..');
   }
 };
+
 
