@@ -57,7 +57,7 @@ class Game {
       ],
       monsters: [],
       baseHp: 100,
-      gold: 5000,
+      gold: 1500,
       score: 0,
       monsterLevel: 1,
     };
@@ -87,7 +87,7 @@ class Game {
   }
 
   removeInterval(session) {
-    this.intervalManager.removeUser(session.id);
+    this.intervalManager.removeInterval(session.id);
   }
 
   addTower(userId, towerData) {
@@ -156,9 +156,8 @@ class Game {
   }
 
   commenceSync() {
-    this.intervalManager.addUser(this.id, () => sendStateSyncNotification(this.id), 100);
+    this.intervalManager.addInterval(this.id, () => sendStateSyncNotification(this.id), 100);
   }
-
 }
 
 export default Game;
