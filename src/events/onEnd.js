@@ -17,7 +17,7 @@ export const onEnd = (socket) => async () => {
     const opponentUser = gameSession.users.find((u) => u.id !== user.id);
 
     try {
-      sendGameOverNotification(opponentUser, user);
+      sendGameOverNotification(user, opponentUser);
     } catch (e) {
       throw new customError(ErrorCodes.FAIL_TO_SEND_NOTY, e.message);
     }

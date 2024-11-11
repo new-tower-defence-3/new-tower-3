@@ -45,7 +45,7 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
 
     if (newBaseHp <= 0) {
       await sendGameOverNotification(user, opponentUser);
-      await gameEndRHandler(socket);
+      setTimeout(async () => await gameEndRHandler(socket), 2000);  // 지연시간 고려해 여유있게
       return;
     }
   }
