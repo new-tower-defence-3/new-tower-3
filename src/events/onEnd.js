@@ -1,4 +1,4 @@
-// src / events / onEnd.js
+// src/events/onEnd.js
 
 import gameEndRHandler from '../handler/game/gameEnd.handler.js';
 import { sendGameOverNotification } from '../handler/notification/gameOver.notification.js';

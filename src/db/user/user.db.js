@@ -1,8 +1,8 @@
+// src/db/user/user.db.js
+
 import { toCamelCase } from '../../utils/transformCase.js';
 import dbPool from '../database.js';
 import { USER_QUERIES } from './user.queries.js';
-
-// 기존 코드 참고용
 
 export const updateUserLocation = async (x, y, deviceId) => {
   await dbPool.query(USER_QUERIES.UPDATE_USER_LOCATION, [x, y, deviceId]);

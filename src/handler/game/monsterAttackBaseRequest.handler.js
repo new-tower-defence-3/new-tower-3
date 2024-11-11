@@ -1,4 +1,4 @@
-﻿// handlers/requests/monsterAttackBaseRequest.handler.js
+﻿// src/handler/game/monsterAttackBaseRequest.handler.js
 
 import { getUserBySocket } from '../../sessions/user.session.js';
 import { getGameSessionById } from '../../sessions/game.session.js';
