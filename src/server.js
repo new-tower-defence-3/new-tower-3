@@ -12,6 +12,7 @@ initServer()
     server.listen(PORT, HOST, async () => {
       await initRedisClient();
 
+      // 임시로 서버 실행시 마다 레디스 초기화 하도록 설정
       await testRedisReset();
       console.log(`서버가 ${HOST}:${PORT}에서 실행 중입니다.`);
     });

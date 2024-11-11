@@ -13,8 +13,7 @@ export const sendUpdateBaseHpNotification = async (user, isOpponent, baseHp) => 
   const payload = createResponse(PacketType.UPDATE_BASE_HP_NOTIFICATION, notification);
 
   try {
-    user.socket.write(payload);
-    console.log('UpdateBaseHpNotification sent to user:', user.id);
+    user.write(payload);
   } catch (error) {
     console.error('Failed to send UpdateBaseHpNotification:', error);
   }

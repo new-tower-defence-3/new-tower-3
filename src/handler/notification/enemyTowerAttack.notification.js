@@ -9,7 +9,6 @@ export const sendEnemyTowerAttackNotification = async (user, towerId, monsterId)
     monsterId,
   };
 
-  console.log('sadgljnlksdnflawkeng;alkwesdf', user, towerId, monsterId);
   const payload = createResponse(PacketType.ENEMY_TOWER_ATTACK_NOTIFICATION, notification);
 
   try {

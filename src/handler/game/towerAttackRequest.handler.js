@@ -1,20 +1,9 @@
-﻿// src/handler/game/towerAttackRequest.handler.js
-
-import { getUserBySocket } from '../../sessions/user.session.js';
-import { getGameSessionById } from '../../sessions/game.session.js';
-import { sendEnemyTowerAttackNotification } from '../notification/enemyTowerAttack.notification.js';
+﻿import { sendEnemyTowerAttackNotification } from '../notification/enemyTowerAttack.notification.js';
 import { findEnemyRedis } from '../../sessions/game.redis.js';
 import { saveSocket } from '../../events/onConnection.js';
 
 export const towerAttackRequestHandler = async ({ socket, payload }) => {
   console.log('towerAttackRequestHandler Called');
-
-  // const user = await getUserBySocket(socket);
-  // const gameSession = getGameSessionById(user.currentSessionId);
-
-  // if (!gameSession) {
-  //   console.error('Game session not found for user:', user.id);
-  //   return;
 
   const { towerId, monsterId } = payload;
   const findEnemySocketId = await findEnemyRedis(socket.id);

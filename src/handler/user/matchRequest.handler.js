@@ -1,5 +1,4 @@
 import matchStartNotification from '../../handler/notification/matchStart.notification.js';
-
 import { addMatchingUser } from '../../sessions/matching.redis.js';
 
 export const matchRequestHandler = async ({ socket }) => {
