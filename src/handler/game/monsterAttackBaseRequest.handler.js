@@ -32,22 +32,26 @@ export const monsterAttackBaseRequestHandler = async ({ socket, payload }) => {
 
   // Reduce the opponent's base HP
   const newBaseHp = gameSession.reduceBaseHp(user.id, damage);
+  let isOneofNewBaseHpZero = false;
 
   // Send base HP update to both users
   for (const sessionUser of gameSession.users) {
     const isOpponentNotification = sessionUser.id === opponentUser.id;
-    const baseHp = gameSession.getUserState(opponentUser.id).baseHp;
     await sendUpdateBaseHpNotification(
       sessionUser,
       isOpponentNotification,
       newBaseHp,
     );
-
+    
     if (newBaseHp <= 0) {
-      await sendGameOverNotification(user, opponentUser);
-      setTimeout(async () => await gameEndRHandler(socket), 2000);  // 지연시간 고려해 여유있게
-      return;
+      isOneofNewBaseHpZero = true;
     }
+  }
+
+  if (isOneofNewBaseHpZero) {
+    await sendGameOverNotification(user, opponentUser);
+    setTimeout(async () => await gameEndRHandler(socket), 2000);  // 지연시간 고려해 여유있게
+    return;
   }
 
   try {
