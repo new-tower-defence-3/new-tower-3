@@ -2,6 +2,8 @@
 
 ## 뉴 타워 디펜스
 
+클라이언트 : https://github.com/new-tower-defence-3/Tower-Client
+
 ## 과제 목표
 
 - **게임 서버 설계 및 구현**
@@ -54,6 +56,9 @@
 패킷만 먼저 보내고 반환값을 서버에게 받았을 때 타워를 생성하도록 수정
 
 (타워ID를 부여받기 전에 클라이언트에서 미리 지어진 타워가 공격하는것을 방지)
+
+https://github.com/new-tower-defence-3/Tower-Client
+
 
 2. 게임 오버 시, highScore 갱신 및 
 
