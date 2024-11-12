@@ -22,8 +22,7 @@ export const onEnd = (socket) => async () => {
       if (socket) {
         await gameEndRHandler(socket);
       }
-      await removeUser(socket);
-    } else {
+
       await removeUser(socket);
     }
   }
